@@ -4,4 +4,4 @@ stages:
 build:
  stage: build
  script:
-   - ../pollstar/gradlew build
+   - Get-Location
