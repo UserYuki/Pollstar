@@ -11,4 +11,5 @@ build:
 test:
  stage: test
  script:
-   - ./pollstar/gradlew test
+   - cd pollstar
+   - ./gradlew test
