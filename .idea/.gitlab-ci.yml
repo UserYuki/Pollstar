@@ -5,7 +5,7 @@ stages:
 build:
  stage: build
  script:
-   - ./pollstar/gradlew build --test
+   - ../pollstar/gradlew build --test
 
 test:
  stage: test
