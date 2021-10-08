@@ -63,7 +63,7 @@ public class PollContainer
     {
         for (Poll poll : polls)
         {
-            if(pID == poll.getPollId())
+            if(pID == poll.getPollID())
             {
                 return poll;
             }

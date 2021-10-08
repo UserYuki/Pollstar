@@ -42,12 +42,12 @@ public class PollController
     {
         if(!pollContainer.addPoll(poll))
         {
-            String entity = "Poll with id " + poll.getPollId() + " already exists.";
+            String entity = "Poll with id " + poll.getPollID() + " already exists.";
             return new ResponseEntity(entity,HttpStatus.CONFLICT);
         }
         else
         {
-            String url = "student" + "/" + poll.getPollId();
+            String url = "student" + "/" + poll.getPollID();
             URI uri = URI.create(url);
             return new ResponseEntity(uri,HttpStatus.CREATED);
         }

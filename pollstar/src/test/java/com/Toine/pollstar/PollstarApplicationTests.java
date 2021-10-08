@@ -16,4 +16,5 @@ class PollstarApplicationTests {
 		Assertions.assertEquals(str1,str2);
 	}
 
+
 }
