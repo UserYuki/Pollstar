@@ -2,11 +2,13 @@ package com.Toine.pollstar.Api.Controller;
 
 import com.Toine.pollstar.Core.Model.Container.PollContainer;
 import com.Toine.pollstar.Core.Model.Poll;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/poll")
@@ -50,6 +52,16 @@ public class PollController
             String url = "student" + "/" + poll.getPollID();
             URI uri = URI.create(url);
             return new ResponseEntity(uri,HttpStatus.CREATED);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Poll>> getAllPolls() //add @RequestParam to check by pollOwner
+    {
+        if(pollContainer.getPolls() != null) {return ResponseEntity.ok().body(pollContainer.getPolls());}
+        else
+        {
+            return ResponseEntity.notFound().build();
         }
     }
 

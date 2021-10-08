@@ -70,6 +70,10 @@ public class PollContainer
         }
         return null;
     }
+    public List<Poll> getPolls()
+    {
+        return polls;
+    }
 
 
 }
