@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/poll")
 public class PollController
 {
@@ -49,7 +50,7 @@ public class PollController
         }
         else
         {
-            String url = "student" + "/" + poll.getPollID();
+            String url = "poll" + "/" + poll.getPollID();
             URI uri = URI.create(url);
             return new ResponseEntity(uri,HttpStatus.CREATED);
         }

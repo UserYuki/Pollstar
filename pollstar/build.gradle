@@ -2,6 +2,14 @@ plugins {
 	id 'org.springframework.boot' version '2.5.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.sonarqube" version "3.3"
+}
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "I442651_pollstar_AXx_BjVs0uNWWC_vtIJU"
+		property "sonar.qualitygate.wait", true
+	}
 }
 
 group = 'com.Toine'
