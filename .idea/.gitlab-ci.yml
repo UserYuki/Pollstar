@@ -21,7 +21,7 @@ build:
  stage: build
  script:
    - cd pollstar
-   - ./gradlew build
+   - ./gradlew build -x test
 
 test:
  stage: test
