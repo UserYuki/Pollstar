@@ -52,5 +52,12 @@ public class Poll
     public void setPollLockedStatus(boolean pollLockedStatus) {this.pollLockedStatus = pollLockedStatus;}
 
 
-
+    public boolean voterVoted(int voterID)
+    {
+        for(Choice c : pollChoices)
+        {
+            return c.voterVoted(voterID);
+        }
+        return false;
+    }
 }

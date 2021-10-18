@@ -4,11 +4,25 @@ import './App.css';
 import axios from "axios";
 import React from "react";
 import { Input } from 'reactstrap';
-//import Test from './components/Test.js';
+import Nav from './components/Nav.js';
+import UserPage from './components/UserSigning/UserPage.js';
+import CreatePoll from './components/Polls/CreatePoll.js';
 //import React, {Component} from 'react';
 
 const baseURL = "http://localhost:8080/";
 
+export default function App() 
+{
+  return(
+    <div>
+      <Nav/>
+      <CreatePoll/>
+    </div>
+  )
+}
+
+
+/*
 export default function App() {
   const [post, setPost] = React.useState(null);
   const [pollID, setPollID] = React.useState();
@@ -45,7 +59,8 @@ export default function App() {
   return (
     <div>
       
-
+      <Nav/>
+      <UserPage/>
 
       <h1>Poll Name = {post.pollName}</h1>
       <h1>Poll ID = {post.pollID}</h1>
@@ -55,7 +70,7 @@ export default function App() {
       <button onClick={readPost}>Read Post</button>
     </div>
   );
-}
+}*/
 
 /*class App extends Component {
   state = {
@@ -89,3 +104,4 @@ export default App;
 }
 
 export default App;*/
+
