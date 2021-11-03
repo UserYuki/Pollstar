@@ -60,4 +60,17 @@ public class Poll
         }
         return false;
     }
+    public boolean castVote(int voterID, int choiceID)
+    {
+        if(voterVoted(voterID)){return false;}
+        for(Choice c : pollChoices)
+        {
+            if(choiceID == c.getChoiceID())
+            {
+                c.AddVote(voterID);
+                return true;
+            }
+        }
+        return false;
+    }
 }

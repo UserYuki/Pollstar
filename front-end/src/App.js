@@ -7,18 +7,39 @@ import { Input } from 'reactstrap';
 import Nav from './components/Nav.js';
 import UserPage from './components/UserSigning/UserPage.js';
 import CreatePoll from './components/Polls/CreatePoll.js';
-//import React, {Component} from 'react';
+import ViewPoll from './components/Polls/ViewPoll.js';
+import VotePoll from './components/Polls/VotePoll.js';
+import Home from './components/Home.js';
 
-const baseURL = "http://localhost:8080/";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 export default function App() 
 {
   return(
-    <div>
+    <>
+     
+      <Router>
       <Nav/>
-      <CreatePoll/>
-    </div>
-  )
+      <Switch>
+          <Route path="/CreatePoll">
+            <CreatePoll />
+          </Route>
+          <Route path="/ViewPoll/:passedPollID">
+            <ViewPoll />
+          </Route>
+          <Route path="/VotePoll">
+            <VotePoll />
+          </Route>
+        </Switch>
+      </Router>
+
+    </>
+  );
 }
 
 

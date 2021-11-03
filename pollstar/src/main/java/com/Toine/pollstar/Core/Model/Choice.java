@@ -17,6 +17,12 @@ public class Choice
         this.choiceName = name;
         this.voters = new ArrayList<>();
     }
+    public Choice(int cID, String name, List<Integer> voters)
+    {
+        this.choiceID = cID;
+        this.choiceName = name;
+        this.voters = voters;
+    }
 
     public Choice(){}
 

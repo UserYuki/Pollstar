@@ -2,6 +2,7 @@ package com.Toine.pollstar.Api.Controller;
 
 import com.Toine.pollstar.Core.Model.Container.PollContainer;
 import com.Toine.pollstar.Core.Model.Poll;
+import com.Toine.pollstar.Core.Model.Voter;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,24 @@ public class PollController
         {
             String url = "poll" + "/" + poll.getPollID();
             URI uri = URI.create(url);
-            return new ResponseEntity(uri,HttpStatus.CREATED);
+            return new ResponseEntity(poll.getPollID(),HttpStatus.CREATED);
+        }
+    }
+
+    @PostMapping("{id}")
+    //POST at http://localhost:XXXX/poll/id number where a vote needs to be added
+    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @PathVariable(value = "id") int id)
+    {
+        try
+        {
+            pollContainer.getPoll(id).castVote(voter.getVoterID(), id);
+            return ResponseEntity.ok().body(pollContainer.getPoll(id));
+
+        }
+        catch(Exception ex)
+        {
+            String entity = "Poll with id " + id + " does not exist. or something else maybe";
+            return new ResponseEntity(entity,HttpStatus.CONFLICT);
         }
     }
 

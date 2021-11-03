@@ -15,7 +15,10 @@ public class User extends Voter
 
     public User(String userName, String eMailAddr, String password, boolean admin)
     {
-
+        this.userName = userName;
+        this.eMailAddr = eMailAddr;
+        this.password = password;
+        this.admin = admin;
     }
 
     //getters and setters

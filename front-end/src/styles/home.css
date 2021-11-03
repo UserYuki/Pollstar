@@ -1,0 +1,7 @@
+.Section1{
+    background: url("../images/bigToad.jpg");
+    background-size: cover;
+    background-position: 50% 35%;
+    background-repeat: no-repeat;
+    min-height: 60vh;
+}
