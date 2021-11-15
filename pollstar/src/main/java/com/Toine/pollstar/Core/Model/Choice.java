@@ -21,7 +21,7 @@ public class Choice
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pollID")
     private Poll poll;
-    @Column(name = "choiceName")
+    @Column(name = "choice_name")
     private String choiceName;
 
     @ManyToMany(cascade = { CascadeType.ALL })

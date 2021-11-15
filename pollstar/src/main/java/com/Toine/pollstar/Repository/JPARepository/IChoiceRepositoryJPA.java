@@ -11,4 +11,5 @@ public interface IChoiceRepositoryJPA extends JpaRepository<Choice, Long>
     //List<Choice> getAllByPollPollID(Poll poll);
     List<Choice> getChoiceByPoll(Poll poll);
 
+
 }

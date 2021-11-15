@@ -1,11 +1,11 @@
-package com.Toine.pollstar;
+package com.Toine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.Toine"})
 public class PollstarApplication {
 
 	public static void main(String[] args) {
