@@ -2,14 +2,26 @@ package com.Toine.pollstar.Core.Model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import javax.naming.Name;
+import javax.persistence.*;
+import java.util.List;
 
-public class User extends Voter
+@Entity
+@Table(name = "user")
+public class User
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long userID;
+    @Column()
     private String userName;
+    @Column()
     private String eMailAddr;
+    @Column()
     private String password;
+    @Column()
     private boolean admin;
+    @OneToMany(mappedBy = "user")
+    private List<Poll> poll;
 
     public User() {     }
 

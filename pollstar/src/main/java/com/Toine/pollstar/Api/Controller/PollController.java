@@ -6,6 +6,7 @@ import com.Toine.pollstar.Core.Model.Voter;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -57,13 +58,15 @@ public class PollController
         }
     }
 
+
     @PostMapping("{id}")
     //POST at http://localhost:XXXX/poll/id number where a vote needs to be added
     public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @PathVariable(value = "id") int id)
     {
         try
         {
-            pollContainer.getPoll(id).castVote(voter.getVoterID(), id);
+
+            pollContainer.getPoll(id).castVote(voter, id);
             return ResponseEntity.ok().body(pollContainer.getPoll(id));
 
         }

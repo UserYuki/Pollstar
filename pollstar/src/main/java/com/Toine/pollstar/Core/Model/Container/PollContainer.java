@@ -2,11 +2,13 @@ package com.Toine.pollstar.Core.Model.Container;
 
 import com.Toine.pollstar.Core.Model.Choice;
 import com.Toine.pollstar.Core.Model.Poll;
+import com.Toine.pollstar.Core.Model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
 
 public class PollContainer
 {
@@ -19,10 +21,10 @@ public class PollContainer
     {
      polls = new ArrayList<>();
      //choiceContainer = new ChoiceContainer();
-     polls.add(new Poll(0,"Test", null, new Date(), 1, false ));
+     polls.add(new Poll(0,"Test", null, new Date(), new User(), false ));
     }
 
-    public boolean addPoll(int id, String name, List<Choice> choices, Date date, int ownerID, boolean locked)
+    public boolean addPoll(int id, String name, List<Choice> choices, Date date, User ownerID, boolean locked)
     {
         try
         {
@@ -36,7 +38,7 @@ public class PollContainer
 
     }
 
-    public boolean addPoll(int id, String name, Date date, int ownerID, boolean locked)
+    public boolean addPoll(int id, String name, Date date, User ownerID, boolean locked)
     {
         try
         {
@@ -80,7 +82,7 @@ public class PollContainer
         return polls;
     }
 
-    public Poll CreatePoll(String pollName, List<String> tbChoices, int pollOwnerID) //accept linkedlist of choice names, give list to create choice list -> create choice
+    public Poll CreatePoll(String pollName, List<String> tbChoices, User pollOwnerID) //accept linkedlist of choice names, give list to create choice list -> create choice
     {
         //insert pollname, list of strings to be choices, pollowner / pollownerid idk yet
         Poll temp = new Poll(polls.size(), pollName, CreateChoiceList(tbChoices), new Date(), pollOwnerID, false);//TODO: createchoice is passed by value, is subject to change
