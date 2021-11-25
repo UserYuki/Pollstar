@@ -1,26 +1,44 @@
 package com.Toine.pollstar.Core.Model.Container;
 
 import com.Toine.pollstar.Core.Interface.IUserContainer;
+import com.Toine.pollstar.Core.Model.Request.UserCreateRequest;
 import com.Toine.pollstar.Core.Model.User;
 import com.Toine.pollstar.Repository.Interfaces.IUserStorage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserContainer implements IUserContainer
 {
     public List<User> users;
-
-    public UserContainer()
-    {
-        this.users = new ArrayList<>();
-    }
+    private final BCryptPasswordEncoder passwordEncoder;
+    //public UserContainer() { this.users = new ArrayList<>();  }
 
     @Autowired
     IUserStorage DAL;
+
+    public User readUserByUsername (String username) {
+        return DAL.returnUserbyUserNameinDB(username).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public void CreateUser(UserCreateRequest userCreateRequest) {
+        User user = new User();
+        Optional<User> byUsername = DAL.returnUserbyUserNameinDB(userCreateRequest.getUsername());
+        if (byUsername.isPresent()) {
+            throw new RuntimeException("User already registered. Please use different username.");
+        }
+        user.setUserName(userCreateRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
+        DAL.saveUsertoDB(user);
+    }
 
     public boolean CreateUser(String userName, String eMailAddr, String password, boolean admin)
     {
