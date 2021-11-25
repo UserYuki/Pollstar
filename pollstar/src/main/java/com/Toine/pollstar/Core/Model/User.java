@@ -1,10 +1,13 @@
 package com.Toine.pollstar.Core.Model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "user")
 public class User
@@ -14,8 +17,11 @@ public class User
     private long userID;
     @Column()
     private String userName;
+
+    @Getter
+    @Setter
     @Column()
-    private String eMailAddr;
+    private String eMailAddress;
     @Column()
     private String password;
     @Column()
@@ -25,10 +31,10 @@ public class User
 
     public User() {     }
 
-    public User(String userName, String eMailAddr, String password, boolean admin)
+    public User(String userName, String eMailAddress, String password, boolean admin)
     {
         this.userName = userName;
-        this.eMailAddr = eMailAddr;
+        this.eMailAddress = eMailAddress;
         this.password = password;
         this.admin = admin;
     }
@@ -36,8 +42,8 @@ public class User
     //getters and setters
     public String getUserName() {return userName;}
     public void setUserName(String userName) {this.userName = userName;}
-    public String getEMailAddr() {return eMailAddr;}
-    public void setEMailAddr(String eMailAddr) {this.eMailAddr = eMailAddr;}
+    //public String getEMailAddr() {return eMailAddress;}
+    //public void setEMailAddr(String eMailAddr) {this.eMailAddress = eMailAddr;}
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}
     public boolean getAdmin() {return admin;}
@@ -69,9 +75,9 @@ public class User
             return false;
         }
     }
-    public boolean EmailVerify(String EmailAddr, String Pwd)
+    public boolean EmailVerify(String eMailAddress, String Pwd)
     {
-        if(eMailAddr.equals(EmailAddr) && password.equals(Pwd))
+        if(eMailAddress.equals(eMailAddress) && password.equals(Pwd))
         {
             return true;
         }
@@ -109,14 +115,15 @@ public class User
     {
         if(Verify(null, password))
         {
-            setEMailAddr(Email);
-            return getEMailAddr().equals(Email);
+            setEMailAddress(Email);
+            return getEMailAddress().equals(Email);
         }
         else
         {
             return false;
         }
     }
+
 
 
 }

@@ -1,19 +1,26 @@
 package com.Toine.pollstar.Core.Model.Container;
 
+import com.Toine.pollstar.Core.Interface.IPollContainer;
 import com.Toine.pollstar.Core.Model.Choice;
 import com.Toine.pollstar.Core.Model.Poll;
 import com.Toine.pollstar.Core.Model.User;
+import com.Toine.pollstar.Repository.Interfaces.IPollStorage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-
-public class PollContainer
+@Service
+public class PollContainer implements IPollContainer
 {
     private List<Poll> polls;
     private List<Choice> choices;
+
+    @Autowired
+    IPollStorage DAL;
 
     //private ChoiceContainer choiceContainer;
 
@@ -21,7 +28,7 @@ public class PollContainer
     {
      polls = new ArrayList<>();
      //choiceContainer = new ChoiceContainer();
-     polls.add(new Poll(0,"Test", null, new Date(), new User(), false ));
+
     }
 
     public boolean addPoll(int id, String name, List<Choice> choices, Date date, User ownerID, boolean locked)
@@ -108,5 +115,10 @@ public class PollContainer
     }
 
 
-
+    @Override
+    public void savePoll(Poll poll)
+    {
+        addPoll(poll);
+        DAL.savePoll(poll);
+    }
 }

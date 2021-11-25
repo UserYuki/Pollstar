@@ -1,15 +1,21 @@
 package com.Toine.pollstar.Api.Controller;
 
+import com.Toine.pollstar.Core.Interface.IPollContainer;
 import com.Toine.pollstar.Core.Model.Container.PollContainer;
 import com.Toine.pollstar.Core.Model.Poll;
+import com.Toine.pollstar.Core.Model.User;
 import com.Toine.pollstar.Core.Model.Voter;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -17,19 +23,21 @@ import java.util.List;
 @RequestMapping("/poll")
 public class PollController
 {
-    private final PollContainer pollContainer = new PollContainer();
+    @Autowired
+    IPollContainer IPC;
 
     @GetMapping("/test")
     @ResponseBody
     public String ConfirmTest()
     {
+        IPC.savePoll(new Poll(0,"Test", new LinkedList<>(), new Date(), new User(), false ));
         return "Works!";
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Poll> getPoll(@PathVariable(value = "id") int id)
     {
-        Poll poll = pollContainer.getPoll(id);
+        Poll poll = IPC.getPoll(id);
 
         if(poll != null)
         {
@@ -45,7 +53,7 @@ public class PollController
     //POST at http://localhost:XXXX/poll/
     public ResponseEntity<Poll> createPoll(@RequestBody Poll poll)
     {
-        if(!pollContainer.addPoll(poll))
+        if(!IPC.addPoll(poll))
         {
             String entity = "Poll with id " + poll.getPollID() + " already exists.";
             return new ResponseEntity(entity,HttpStatus.CONFLICT);
@@ -66,8 +74,8 @@ public class PollController
         try
         {
 
-            pollContainer.getPoll(id).castVote(voter, id);
-            return ResponseEntity.ok().body(pollContainer.getPoll(id));
+            IPC.getPoll(id).castVote(voter, id);
+            return ResponseEntity.ok().body(IPC.getPoll(id));
 
         }
         catch(Exception ex)
@@ -80,7 +88,7 @@ public class PollController
     @GetMapping
     public ResponseEntity<List<Poll>> getAllPolls() //add @RequestParam to check by pollOwner
     {
-        if(pollContainer.getPolls() != null) {return ResponseEntity.ok().body(pollContainer.getPolls());}
+        if(IPC.getPolls() != null) {return ResponseEntity.ok().body(IPC.getPolls());}
         else
         {
             return ResponseEntity.notFound().build();

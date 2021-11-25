@@ -1,11 +1,16 @@
 package com.Toine.pollstar.Core.Model.Container;
 
+import com.Toine.pollstar.Core.Interface.IUserContainer;
 import com.Toine.pollstar.Core.Model.User;
+import com.Toine.pollstar.Repository.Interfaces.IUserStorage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserContainer
+@Service
+public class UserContainer implements IUserContainer
 {
     public List<User> users;
 
@@ -14,6 +19,8 @@ public class UserContainer
         this.users = new ArrayList<>();
     }
 
+    @Autowired
+    IUserStorage DAL;
 
     public boolean CreateUser(String userName, String eMailAddr, String password, boolean admin)
     {
@@ -55,5 +62,17 @@ public class UserContainer
             return false;
         }
     }
+
+    public boolean NameVerify(String UserN, String Pwd)
+    {
+        return DAL.VerifyAccountbyUserNameinDB(UserN, Pwd);
+    }
+
+    public boolean EmailVerify(String EmailAddr, String Pwd)
+    {
+        return DAL.VerifyAccountbyEmailinDB(EmailAddr, Pwd);
+    }
+
+
 
 }

@@ -33,7 +33,9 @@ public class Choice
     private List<Voter> voters; //maybe just the int of the voter
 
 
-    public Choice() {
+    public Choice()
+    {
+        this.voters = new ArrayList<>();
     }
     public Choice(int cID, String name)
     {
@@ -85,7 +87,14 @@ public class Choice
 
     public boolean voterVoted(int voterID)
     {
-        return voters.contains((Integer) voterID);
+        for(Voter voter : voters)
+        {
+            if(voter.getVoterID() == voterID)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getVoteAmount()

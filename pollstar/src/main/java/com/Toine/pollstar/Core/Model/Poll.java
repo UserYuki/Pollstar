@@ -59,7 +59,7 @@ public class Poll
         this.pollLockedStatus = pollLockedStatus;
     }
 
-    public Poll(){}
+    public Poll(){    }
 
     //Getters and setters D:
     public int getPollID() {return pollID;}
@@ -82,19 +82,20 @@ public class Poll
     {
         for(Choice c : pollChoices)
         {
-            return c.voterVoted(voterID);
+            return c.voterVoted(voterID); //TODO: add if statement, now only returns false
         }
         return false;
     }
+
     public boolean castVote(Voter voter, int choiceID)
     {
-        if(voterVoted(voter.getVoterID())){return false;}
-        for(Choice c : pollChoices)
+        if(!voterVoted(voter.getVoterID()))
         {
-            if(choiceID == c.getChoiceID())
-            {
-                c.AddVote(voter);
-                return true;
+            for (Choice c : pollChoices) {
+                if (choiceID == c.getChoiceID()) {
+                    c.AddVote(voter);
+                    return true;
+                }
             }
         }
         return false;

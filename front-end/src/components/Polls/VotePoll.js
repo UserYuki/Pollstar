@@ -22,7 +22,12 @@ const VotePoll = (props) => {
     });
   }
 
-  if (!post) return "No post!"
+  if (!post) return (
+    <div>
+    <Input placeholder="Poll ID" min={0} max={100} type="number" onChange={event => setPollID(event.target.value)}/>
+    <button onClick={readPost}>Read Post</button>
+    </div>
+  )
 
   return (
     <div>

@@ -10,7 +10,8 @@ class PollstarApplicationTests {
 
 
 	@Test
-	public void twoStringsTest() {
+	public void twoStringsTest()
+	{
 		String str1 = "Hello";
 		String str2 = "Hello";
 		Assertions.assertEquals(str1,str2);
