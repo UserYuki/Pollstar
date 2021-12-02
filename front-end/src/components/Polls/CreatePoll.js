@@ -11,6 +11,7 @@ const CreatePoll = (props) => {
   //const [post, setPost] = React.useState(null);
   const [pollID, setPollID] = React.useState();
   const [PostedID, setID] = React.useState();
+  const JWT = localStorage.getItem("JWT");
 
   function createPost() {
     //document.getElementById("pollName").value; krijg poll input box value
@@ -21,22 +22,27 @@ let pollChoicess =
   [
     { choiceID: 0,
       choiceName: document.getElementById("o1").value,
-      voters: [0]   
+      voters: []   
     }, 
     { choiceID: 1,
       choiceName: document.getElementById("o2").value,
-      voters: [1] 
+      voters: [] 
     }
   ]
 
+  let headerConfig = {
+    headers: {
+      Authorization: JWT
+    }
+  }
 //document.getElementById("o1").value = JSON.stringify(pollChoices);
     axios
       .post(`${baseURL}poll/`, {
         pollName: document.getElementById("pollName").value,
-        pollID: pollID,
+        //pollID: pollID,
         pollCreationDate: date,
         pollChoices: pollChoicess
-      })
+      }, headerConfig)
       .then((response) => {
         setID("/ViewPoll/" + response.data);
         axios.get(`${baseURL}poll/`+response.data).then((res) => {

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController
 {
     @Autowired

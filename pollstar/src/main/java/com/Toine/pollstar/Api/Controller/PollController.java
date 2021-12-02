@@ -60,9 +60,10 @@ public class PollController
         }
         else
         {
-            String url = "poll" + "/" + poll.getPollID();
-            URI uri = URI.create(url);
-            return new ResponseEntity(poll.getPollID(),HttpStatus.CREATED);
+            Poll cPoll = IPC.addPolltoDBandGetBack(poll);
+//            String url = "poll" + "/" + poll.getPollID();
+//            URI uri = URI.create(url);
+            return new ResponseEntity(cPoll.getPollID(),HttpStatus.CREATED);
         }
     }
 

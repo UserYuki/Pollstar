@@ -10,4 +10,8 @@ public interface IPollStorage
 
     Poll savePoll(Poll poll);
 
+    void savePolltoDB(Poll poll);
+
+    Poll savePolltoDBandGet(Poll poll);
+
 }
