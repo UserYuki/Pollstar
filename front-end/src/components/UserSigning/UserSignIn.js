@@ -1,78 +1,92 @@
-import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React from "react";
+import axios from "axios";
+import { Button, Form, FormGroup, Label, Input, FormText, Alert } from "reactstrap";
+
+const baseURL = "http://localhost:8080/";
 
 const UserSignIn = (props) => {
-  return (
-    <Form>
-      <FormGroup>
-        <Label for="exampleEmail">Email</Label>
-        <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="examplePassword">Password</Label>
-        <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleSelect">Select</Label>
-        <Input type="select" name="select" id="exampleSelect">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleSelectMulti">Select Multiple</Label>
-        <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleText">Text Area</Label>
-        <Input type="textarea" name="text" id="exampleText" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleFile">File</Label>
-        <Input type="file" name="file" id="exampleFile" />
-        <FormText color="muted">
-          This is some placeholder block-level help text for the above input.
-          It's a bit lighter and easily wraps to a new line.
-        </FormText>
-      </FormGroup>
-      <FormGroup tag="fieldset">
-        <legend>Radio Buttons</legend>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            Option one is this and that—be sure to include why it's great
-          </Label>
-        </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            Option two can be something else and selecting it will deselect option one
-          </Label>
-        </FormGroup>
-        <FormGroup check disabled>
-          <Label check>
-            <Input type="radio" name="radio1" disabled />{' '}
-            Option three is disabled
-          </Label>
-        </FormGroup>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" />{' '}
-          Check me out
-        </Label>
-      </FormGroup>
-      <Button>Submit</Button>
-    </Form>
-  );
+  const [email, setEmail] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  localStorage.removeItem("JWT");
+
+
+async function submitUsername(e) 
+{  
+  e.preventDefault()
+  await axios
+  .post(`${baseURL}login`, {
+    userName: username,
+    password: password
+  })
+  .then((response) => {
+    localStorage.setItem("JWT", response.data.Authorization)
+    //alert(response.data.Authorization)
+  });
 }
+
+function submitEmail() 
+{
+  alert(email + password);
+  return false;
+}
+ 
+  return (
+    <>
+      <div class="float-container">
+        <div class="float-child">
+        <Form onSubmit={submitUsername}>
+            <FormGroup>
+              <Label for="UserName">Username</Label>
+              <Input
+                type="text"
+                name="username"
+                id="UserName"
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter username here..."
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="examplePassword">Password</Label>
+              <Input
+                type="password"
+                name="password"
+                id="examplePassword"
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Please input password..."
+              />
+            </FormGroup>
+            <Button type="submit" value="Submit">Submit</Button>
+          </Form>
+        </div>
+        <div class="float-child2">
+          <Form onSubmit={submitEmail}>
+            <FormGroup>
+              <Label for="exampleEmail">Email</Label>
+              <Input
+                type="email"
+                name="email"
+                id="exampleEmail"
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter Email here..."
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="examplePassword">Password</Label>
+              <Input
+                type="password"
+                name="password"
+                id="examplePassword"
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Please input password..."
+              />
+            </FormGroup>
+            <Button>Submit</Button>
+          </Form>
+        </div>
+      </div>
+
+    </>
+  );
+};
 export default UserSignIn;

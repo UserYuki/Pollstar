@@ -11,4 +11,6 @@ public interface IPollContainer
     boolean addPoll(Poll poll);
     List<Poll> getPolls();
 
+    Poll addPolltoDBandGetBack(Poll poll);
+
 }

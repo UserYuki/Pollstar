@@ -31,8 +31,10 @@ public class PollContainer implements IPollContainer
 
     }
 
+
+
     public boolean addPoll(int id, String name, List<Choice> choices, Date date, User ownerID, boolean locked)
-    {
+     {
         try
         {
             polls.add(new Poll(id, name, choices, date, ownerID, locked));
@@ -87,6 +89,13 @@ public class PollContainer implements IPollContainer
     public List<Poll> getPolls()
     {
         return polls;
+    }
+
+    @Override
+    public Poll addPolltoDBandGetBack(Poll poll) {
+        Poll saved = DAL.savePolltoDBandGet(poll);
+
+        return poll;
     }
 
     public Poll CreatePoll(String pollName, List<String> tbChoices, User pollOwnerID) //accept linkedlist of choice names, give list to create choice list -> create choice

@@ -17,6 +17,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import UserSignUp from './components/UserSigning/UserSignUp';
+import UserSignIn from './components/UserSigning/UserSignIn';
 
 export default function App() 
 {
@@ -35,7 +37,13 @@ export default function App()
           <Route path="/VotePoll">
             <VotePoll />
           </Route>
-        </Switch>
+          <Route exact path="/User/SignIn">
+            <UserSignIn />
+          </Route>
+          <Route exact path="/User/SignUp">
+            <UserSignUp />
+          </Route>
+      </Switch>
       </Router>
 
     </>

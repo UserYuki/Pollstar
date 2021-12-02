@@ -10,7 +10,7 @@ const ViewPoll = (props) => {
   const {passedPollID} = useParams();
   const [post, setPost] = React.useState(null);
   const [pollID, setPollID] = React.useState();
-
+  const JWT = localStorage.getItem("JWT");
 
 
   React.useEffect(() => {
@@ -19,13 +19,21 @@ const ViewPoll = (props) => {
     {
       id = passedPollID;
     }
-    axios.get(`${baseURL}poll/${id}`).then((response) => {
+
+    let headerConfig = {
+      headers: {
+        Authorization: JWT
+      }
+    }
+
+    axios.get(`${baseURL}poll/${id}`, headerConfig).then((response) => {
       setPost(response.data);
     });
   }, [])
 
   function readPost()
   {
+
     axios.get(`${baseURL}poll/` + pollID).then((response) => {
       setPost(response.data);
     });

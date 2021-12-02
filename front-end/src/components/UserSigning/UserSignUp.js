@@ -2,7 +2,11 @@ import React from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 const UserSignUp = (props) => {
+  const saved = localStorage.getItem("JWT");
   return (
+    <div>
+      Signup: {saved}
+      
     <Form>
       <FormGroup>
         <Label for="exampleEmail">Email</Label>
@@ -73,6 +77,7 @@ const UserSignUp = (props) => {
       </FormGroup>
       <Button>Submit</Button>
     </Form>
+    </div>
   );
 }
 export default UserSignUp;

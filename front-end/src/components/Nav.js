@@ -67,6 +67,12 @@ const NavBar = (props) => {
               </UncontrolledDropdown>
             </Nav>
             <NavbarText>Simple Text</NavbarText>
+            <Link to="/User/SignIn">
+               Login
+            </Link>
+            <Link to="/User/SignUp">
+               Register
+            </Link>
           </Collapse>
         </Navbar>
 
