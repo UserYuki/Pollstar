@@ -2,13 +2,14 @@ package com.Toine.pollstar.Repository.JPARepository;
 
 import com.Toine.pollstar.Core.Model.User;
 import com.Toine.pollstar.Repository.Interfaces.IUserStorage;
+import com.Toine.pollstar.Repository.JPARepository.JPA.IUserRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public class UserStorageJPA implements IUserStorage
+public class UserStorage implements IUserStorage
 {
     @Autowired
     IUserRepositoryJPA repo;

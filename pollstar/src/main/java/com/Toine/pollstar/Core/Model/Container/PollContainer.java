@@ -4,6 +4,8 @@ import com.Toine.pollstar.Core.Interface.IPollContainer;
 import com.Toine.pollstar.Core.Model.Choice;
 import com.Toine.pollstar.Core.Model.Poll;
 import com.Toine.pollstar.Core.Model.User;
+import com.Toine.pollstar.Core.Model.Voter;
+import com.Toine.pollstar.Repository.Interfaces.IChoiceStorage;
 import com.Toine.pollstar.Repository.Interfaces.IPollStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,10 @@ public class PollContainer implements IPollContainer
     private List<Choice> choices;
 
     @Autowired
-    IPollStorage DAL;
+    IPollStorage pollDAL;
+
+    @Autowired
+    IChoiceStorage choiceDAL;
 
     //private ChoiceContainer choiceContainer;
 
@@ -31,35 +36,7 @@ public class PollContainer implements IPollContainer
 
     }
 
-
-
-    public boolean addPoll(int id, String name, List<Choice> choices, Date date, User ownerID, boolean locked)
-     {
-        try
-        {
-            polls.add(new Poll(id, name, choices, date, ownerID, locked));
-            return true;
-        }
-        catch (Exception exception)
-        {
-            return false;
-        }
-
-    }
-
-    public boolean addPoll(int id, String name, Date date, User ownerID, boolean locked)
-    {
-        try
-        {
-            polls.add(new Poll(id, name, date, ownerID, locked));
-            return true;
-        }
-        catch (Exception exception)
-        {
-            return false;
-        }
-
-    }
+    //public Poll dbGetPoll() {pollDAL.getPollByID()}
 
     public boolean addPoll(Poll poll)
     {
@@ -86,17 +63,46 @@ public class PollContainer implements IPollContainer
         }
         return null;
     }
+
     public List<Poll> getPolls()
     {
         return polls;
     }
 
     @Override
-    public Poll addPolltoDBandGetBack(Poll poll) {
-        Poll saved = DAL.savePolltoDBandGet(poll);
-
-        return poll;
+    public Poll getPollfromDBbyID(int ID) {
+        return pollDAL.getPollByID(ID);
     }
+
+    @Override
+    public Poll addPolltoDBandGetBack(Poll poll) //not necessary, big!
+    {
+        Poll saved = pollDAL.savePolltoDBandGet(poll);
+
+        for(Choice c : saved.getPollChoices()) //putting poll in choice and saving them to db
+        {
+            c.setPoll(saved);
+            choiceDAL.saveChoicetoDBandGet(c).getChoiceID();
+            //c.setChoiceID(choiceDAL.saveChoicetoDBandGet(c).getChoiceID());
+        }
+
+        saved.setPollChoices(choiceDAL.GetAllByPoll(saved));
+        return saved;
+    }
+
+    @Override
+    public boolean CastVotetoDB(Voter voter, int Choiceid) {
+        Poll poll = pollDAL.getPollbyChoiceID(Choiceid);
+
+        poll.getPollChoices().forEach(choice -> System.out.println(choice.getChoiceName()));
+
+        return poll.castVote(voter, Choiceid);
+    }
+
+//    @Override
+//    public boolean CastVotetoDB(Voter voter, Poll poll, int Choiceid) {
+//        return getPollfromDBbyID(poll.getPollID()).castVote(voter, Choiceid);
+//    }
 
     public Poll CreatePoll(String pollName, List<String> tbChoices, User pollOwnerID) //accept linkedlist of choice names, give list to create choice list -> create choice
     {
@@ -128,6 +134,6 @@ public class PollContainer implements IPollContainer
     public void savePoll(Poll poll)
     {
         addPoll(poll);
-        DAL.savePoll(poll);
+        pollDAL.savePoll(poll);
     }
 }

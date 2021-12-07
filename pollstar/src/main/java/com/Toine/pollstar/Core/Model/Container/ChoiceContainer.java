@@ -5,9 +5,10 @@ import com.Toine.pollstar.Core.Model.Choice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChoiceContainer
-{
+public class ChoiceContainer {
     private List<Choice> choices;
+
+
 
     public ChoiceContainer()
     {

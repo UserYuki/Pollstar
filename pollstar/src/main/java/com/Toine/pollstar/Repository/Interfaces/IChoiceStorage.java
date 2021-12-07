@@ -9,4 +9,6 @@ public interface IChoiceStorage
 {
     //List<Choice> getChoiceForFirstPollById(int id);
     List<Choice> GetAllChoicesByPoll(Poll poll);
+    List<Choice> GetAllByPoll(Poll poll);
+    Choice saveChoicetoDBandGet(Choice Choice);
 }

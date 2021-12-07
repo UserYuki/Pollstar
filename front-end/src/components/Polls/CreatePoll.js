@@ -20,13 +20,11 @@ var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
 //document.getElementById("o1").value = date;
 let pollChoicess = 
   [
-    { choiceID: 0,
-      choiceName: document.getElementById("o1").value,
-      voters: []   
+    { 
+      choiceName: document.getElementById("o1").value
     }, 
-    { choiceID: 1,
-      choiceName: document.getElementById("o2").value,
-      voters: [] 
+    {
+      choiceName: document.getElementById("o2").value
     }
   ]
 
@@ -36,6 +34,7 @@ let pollChoicess =
     }
   }
 //document.getElementById("o1").value = JSON.stringify(pollChoices);
+console.log(pollChoicess);
     axios
       .post(`${baseURL}poll/`, {
         pollName: document.getElementById("pollName").value,

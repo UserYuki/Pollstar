@@ -1,6 +1,7 @@
 package com.Toine.pollstar.Api.Controller;
 
 import com.Toine.pollstar.Core.Interface.IPollContainer;
+import com.Toine.pollstar.Core.Model.Choice;
 import com.Toine.pollstar.Core.Model.Container.PollContainer;
 import com.Toine.pollstar.Core.Model.Poll;
 import com.Toine.pollstar.Core.Model.User;
@@ -19,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/poll")
 public class PollController
 {
@@ -61,6 +62,9 @@ public class PollController
         else
         {
             Poll cPoll = IPC.addPolltoDBandGetBack(poll);
+
+            System.out.println(poll.ToString());
+            cPoll.getPollChoices().forEach((Choice c) -> System.out.println("c: " + c.getChoiceName()));
 //            String url = "poll" + "/" + poll.getPollID();
 //            URI uri = URI.create(url);
             return new ResponseEntity(cPoll.getPollID(),HttpStatus.CREATED);
@@ -68,14 +72,35 @@ public class PollController
     }
 
 
+//    @PostMapping("{id}")
+//    //POST at http://localhost:XXXX/poll/id number where a vote needs to be added
+//    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @PathVariable(value = "id") int id)
+//    {
+//        try
+//        {
+//
+//            IPC.getPoll(id).castVote(voter, id);
+//            return ResponseEntity.ok().body(IPC.getPoll(id));
+//
+//        }
+//        catch(Exception ex)
+//        {
+//            String entity = "Poll with id " + id + " does not exist. or something else maybe";
+//            return new ResponseEntity(entity,HttpStatus.CONFLICT);
+//        }
+//    }
+
     @PostMapping("{id}")
     //POST at http://localhost:XXXX/poll/id number where a vote needs to be added
-    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @PathVariable(value = "id") int id)
+    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @RequestBody int pollID, @PathVariable(value = "id") int id)
     {
+        System.out.println("a");
+        System.out.println(voter);
+        System.out.println(pollID);
         try
         {
 
-            IPC.getPoll(id).castVote(voter, id);
+            IPC.CastVotetoDB(voter, pollID, id);
             return ResponseEntity.ok().body(IPC.getPoll(id));
 
         }

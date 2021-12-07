@@ -1,15 +1,14 @@
 package com.Toine.pollstar.Repository.JPARepository;
 
+import com.Toine.pollstar.Core.Model.Choice;
 import com.Toine.pollstar.Core.Model.Poll;
-import com.Toine.pollstar.Core.Model.User;
 import com.Toine.pollstar.Repository.Interfaces.IPollStorage;
+import com.Toine.pollstar.Repository.JPARepository.JPA.IPollRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public class PollStorageJPA implements IPollStorage
+public class PollStorage implements IPollStorage
 {
 
     @Autowired
@@ -33,6 +32,14 @@ public class PollStorageJPA implements IPollStorage
     @Override
     public Poll savePolltoDBandGet(Poll poll) {
        return repo.save(poll);
+    }
+
+    @Override
+    public Poll getPollbyChoiceID(int ChoiceID)
+    {
+        Choice c = new Choice();
+        c.setChoiceID(ChoiceID);
+        return repo.getPollByPollAndPollChoicesContains(c);
     }
 
 }

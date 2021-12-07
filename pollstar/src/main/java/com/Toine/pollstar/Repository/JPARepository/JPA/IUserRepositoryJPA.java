@@ -1,4 +1,4 @@
-package com.Toine.pollstar.Repository.JPARepository;
+package com.Toine.pollstar.Repository.JPARepository.JPA;
 
 import com.Toine.pollstar.Core.Model.Poll;
 import com.Toine.pollstar.Core.Model.User;

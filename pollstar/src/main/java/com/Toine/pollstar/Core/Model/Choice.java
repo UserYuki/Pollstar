@@ -1,6 +1,7 @@
 package com.Toine.pollstar.Core.Model;
 
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name ="choice")
 public class Choice
 {
@@ -50,37 +52,38 @@ public class Choice
         this.voters = voter;
     }
 
-    public int getChoiceID() {
-        return choiceID;
-    }
+//    public int getChoiceID() {
+//        return choiceID;
+//    }
+//
+//    public void setChoiceID(int choiceID) {
+//        this.choiceID = choiceID;
+//    }
+//
+//    public Poll getPoll() {
+//        return poll;
+//    }
+//
+//    public void setPoll(Poll poll) {
+//        this.poll = poll;
+//    }
+//
+//    public String getChoiceName() {
+//        return choiceName;
+//    }
+//
+//    public void setChoiceName(String choiceName) {
+//        this.choiceName = choiceName;
+//    }
+//
+//    public List<Voter> getVoters() {
+//        return voters;
+//    }
+//
+//    public void setVoters(List<Voter> voters) {
+//        this.voters = voters;
+//    }
 
-    public void setChoiceID(int choiceID) {
-        this.choiceID = choiceID;
-    }
-
-    public Poll getPoll() {
-        return poll;
-    }
-
-    public void setPoll(Poll poll) {
-        this.poll = poll;
-    }
-
-    public String getChoiceName() {
-        return choiceName;
-    }
-
-    public void setChoiceName(String choiceName) {
-        this.choiceName = choiceName;
-    }
-
-    public List<Voter> getVoters() {
-        return voters;
-    }
-
-    public void setVoters(List<Voter> voters) {
-        this.voters = voters;
-    }
 
     //public Voter getVoter(int voterID) {for(Voter voter : voters) {if(voterID == voter.getVoterID()){return voter;}}return null;}
     //public boolean addVoter(Voter voter) {if (voters.add(voter)){return true;} return false;}

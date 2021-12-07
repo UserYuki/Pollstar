@@ -2,15 +2,17 @@ package com.Toine.pollstar.Core.Model.Container;
 
 import com.Toine.pollstar.Core.Interface.IUserContainer;
 import com.Toine.pollstar.Core.Model.Request.UserCreateRequest;
+import com.Toine.pollstar.Core.Model.Request.VoterCreateRequest;
 import com.Toine.pollstar.Core.Model.User;
+import com.Toine.pollstar.Core.Model.Voter;
 import com.Toine.pollstar.Repository.Interfaces.IUserStorage;
+import com.Toine.pollstar.Repository.Interfaces.IVoterStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,21 +25,35 @@ public class UserContainer implements IUserContainer
     //public UserContainer() { this.users = new ArrayList<>();  }
 
     @Autowired
-    IUserStorage DAL;
+    IUserStorage userDAL;
+
+    @Autowired
+    IVoterStorage voterDAL;
 
     public User readUserByUsername (String username) {
-        return DAL.returnUserbyUserNameinDB(username).orElseThrow(EntityNotFoundException::new);
+        return userDAL.returnUserbyUserNameinDB(username).orElseThrow(EntityNotFoundException::new);
     }
 
     public void CreateUser(UserCreateRequest userCreateRequest) {
         User user = new User();
-        Optional<User> byUsername = DAL.returnUserbyUserNameinDB(userCreateRequest.getUsername());
+        Optional<User> byUsername = userDAL.returnUserbyUserNameinDB(userCreateRequest.getUsername());
         if (byUsername.isPresent()) {
             throw new RuntimeException("User already registered. Please use different username.");
         }
         user.setUserName(userCreateRequest.getUsername());
         user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
-        DAL.saveUsertoDB(user);
+        userDAL.saveUsertoDB(user);
+    }
+
+    @Override
+    public void CreateVoter(VoterCreateRequest voterCreateRequest) {
+        Voter voter = new Voter();
+
+        voter.setUUID1(voterCreateRequest.getUUID1());
+        voter.setUUID2(voterCreateRequest.getUUID2());
+        System.out.println(voterCreateRequest.getUUID1());
+        System.out.println(voter.getUUID1());
+        voterDAL.saveVotertoDB(voter);
     }
 
     public boolean CreateUser(String userName, String eMailAddr, String password, boolean admin)
@@ -83,12 +99,12 @@ public class UserContainer implements IUserContainer
 
     public boolean NameVerify(String UserN, String Pwd)
     {
-        return DAL.VerifyAccountbyUserNameinDB(UserN, Pwd);
+        return userDAL.VerifyAccountbyUserNameinDB(UserN, Pwd);
     }
 
     public boolean EmailVerify(String EmailAddr, String Pwd)
     {
-        return DAL.VerifyAccountbyEmailinDB(EmailAddr, Pwd);
+        return userDAL.VerifyAccountbyEmailinDB(EmailAddr, Pwd);
     }
 
 

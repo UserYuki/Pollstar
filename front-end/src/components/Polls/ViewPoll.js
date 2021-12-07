@@ -27,6 +27,7 @@ const ViewPoll = (props) => {
     }
 
     axios.get(`${baseURL}poll/${id}`, headerConfig).then((response) => {
+      console.log(response.data);
       setPost(response.data);
     });
   }, [])

@@ -1,6 +1,7 @@
 package com.Toine.pollstar.Core.Interface;
 
 import com.Toine.pollstar.Core.Model.Request.UserCreateRequest;
+import com.Toine.pollstar.Core.Model.Request.VoterCreateRequest;
 import com.Toine.pollstar.Core.Model.User;
 
 public interface IUserContainer
@@ -10,5 +11,9 @@ public interface IUserContainer
     boolean NameVerify(String UserN, String Pwd);
     User readUserByUsername (String username);
     void CreateUser(UserCreateRequest userCreateRequest);
+
+
+    //------------------ Voter Stuff
+    void CreateVoter(VoterCreateRequest voterCreateRequest);
 
 }

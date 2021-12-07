@@ -1,5 +1,6 @@
-package com.Toine.pollstar.Core.Model.Container;
+package com.Toine.pollstar.Core.Model.Service;
 
+import com.Toine.pollstar.Core.Model.Container.UserContainer;
 import com.Toine.pollstar.Core.Model.User;
 
 import org.springframework.security.core.userdetails.UserDetails;

@@ -14,4 +14,6 @@ public interface IPollStorage
 
     Poll savePolltoDBandGet(Poll poll);
 
+    Poll getPollbyChoiceID(int ChoiceID);
+
 }

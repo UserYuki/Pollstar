@@ -1,4 +1,4 @@
-package com.Toine.pollstar.Repository.JPARepository;
+package com.Toine.pollstar.Repository.JPARepository.JPA;
 
 import com.Toine.pollstar.Core.Model.Choice;
 import com.Toine.pollstar.Core.Model.Poll;
@@ -10,6 +10,7 @@ public interface IChoiceRepositoryJPA extends JpaRepository<Choice, Long>
 {
     //List<Choice> getAllByPollPollID(Poll poll);
     List<Choice> getChoiceByPoll(Poll poll);
+    List<Choice> getAllByPoll(Poll poll);
 
 
 }
