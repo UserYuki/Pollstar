@@ -1,6 +1,7 @@
 package com.Toine.pollstar.Core.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,12 +21,13 @@ public class Choice
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int choiceID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pollID")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "poll_id")
     private Poll poll;
     @Column(name = "choice_name")
     private String choiceName;
 
+    @JsonIgnore
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "Choice_Voter",
@@ -37,7 +39,7 @@ public class Choice
 
     public Choice()
     {
-        this.voters = new ArrayList<>();
+        this.voters = new ArrayList<Voter>();
     }
     public Choice(int cID, String name)
     {
@@ -60,13 +62,13 @@ public class Choice
 //        this.choiceID = choiceID;
 //    }
 //
-//    public Poll getPoll() {
-//        return poll;
-//    }
-//
-//    public void setPoll(Poll poll) {
-//        this.poll = poll;
-//    }
+    public Poll getPoll() {
+        return poll;
+    }
+
+    public void setPoll(Poll poll) {
+        this.poll = poll;
+    }
 //
 //    public String getChoiceName() {
 //        return choiceName;

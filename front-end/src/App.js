@@ -40,7 +40,10 @@ export default function App()
           <Route exact path="/User/SignIn">
             <UserSignIn />
           </Route>
-          <Route exact path="/User/SignUp">
+          <Route exact path="/User/SignUp:passedUserName">
+            <UserSignUp />
+          </Route>
+          <Route exact path="/User/SignUp:passedEMail">
             <UserSignUp />
           </Route>
       </Switch>

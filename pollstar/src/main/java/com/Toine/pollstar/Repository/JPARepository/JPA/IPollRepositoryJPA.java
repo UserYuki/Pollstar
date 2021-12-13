@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IPollRepositoryJPA extends JpaRepository<Poll, Integer>
 {
-    Poll getPollByPollID(int pollid);
-    Poll getPollByPollAndPollChoicesContains(Choice choice);
+    Poll getPollByPollID(int pollID);
+    //Poll getPollByPollAndPollChoicesContains(Choice choice);
+    Poll getPollByPollChoicesContains(Choice choice);
 }

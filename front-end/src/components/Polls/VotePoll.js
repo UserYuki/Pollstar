@@ -8,6 +8,7 @@ const baseURL = "http://localhost:8080/";
 const VotePoll = (props) => {
   const [post, setPost] = React.useState(null);
   const [pollID, setPollID] = React.useState();
+  const saved = localStorage.getItem("JWT");
 
   React.useEffect(() => {
     axios.get(`${baseURL}poll/6`).then((response) => {

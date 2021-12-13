@@ -7,6 +7,8 @@ import com.Toine.pollstar.Repository.JPARepository.JPA.IPollRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 @Repository
 public class PollStorage implements IPollStorage
 {
@@ -19,6 +21,7 @@ public class PollStorage implements IPollStorage
         return repo.getPollByPollID(pollid);
     }
 
+    @Transactional
     @Override
     public Poll savePoll(Poll poll) {
         return repo.saveAndFlush(poll);
@@ -39,7 +42,7 @@ public class PollStorage implements IPollStorage
     {
         Choice c = new Choice();
         c.setChoiceID(ChoiceID);
-        return repo.getPollByPollAndPollChoicesContains(c);
+        return repo.getPollByPollChoicesContains(c);
     }
 
 }

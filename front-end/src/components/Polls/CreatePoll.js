@@ -68,7 +68,7 @@ console.log(pollChoicess);
             <Label for="pollOption">Option2:</Label>
             <Input type="text" name="option" id="o2" placeholder="Enter option 2"/>
          </FormGroup>
-         <Link  to="ViewPoll/0"> TEST </Link>
+        
     </Form>
     
     <button onClick={createPost}>Savu!</button>

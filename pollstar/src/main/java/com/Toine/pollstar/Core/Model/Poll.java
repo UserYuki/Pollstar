@@ -2,6 +2,8 @@ package com.Toine.pollstar.Core.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,13 +18,14 @@ public class Poll
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "pollID")
+    @Column(name = "poll_id")
     private int pollID;
     @Column()
     private String pollName;
-    @OneToMany(mappedBy = "choiceID")
-    @JsonIgnore
-    private List<Choice> pollChoices;
+
+
+    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
+    private List<Choice> pollChoices = new ArrayList<>();
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date pollCreationDate;
 
@@ -31,7 +34,7 @@ public class Poll
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_user_id", unique = true)
+    @JoinColumn(name = "user_user_id")
     private User user;
 
     public User getUser() {
@@ -63,7 +66,18 @@ public class Poll
         this.pollLockedStatus = pollLockedStatus;
     }
 
-    public Poll(){  this.pollChoices = new ArrayList<>();  }
+    public Poll(){  }//this.pollChoices = new ArrayList<>();  }
+
+    public void addChoice(Choice choice){
+        //As said Hibernate will ignore it when persist this relationship.
+        //Add it mainly for the consistency of this relationship for both side in the Java instance
+        System.out.println("D id: " + choice.getChoiceID());
+
+        this.pollChoices.add(choice);
+
+        choice.setPoll(this);
+
+    }
 
     //Getters and setters D:
     public int getPollID() {return pollID;}
@@ -71,7 +85,7 @@ public class Poll
     public String getPollName() {return pollName;}
     public void setPollName(String pollName) {this.pollName = pollName;}
     public List<Choice> getPollChoices() {return pollChoices;}
-    public void setPollChoices(List<Choice> pollChoices) {this.pollChoices = pollChoices;}
+    //public void setPollChoices(List<Choice> pollChoices) {this.pollChoices = pollChoices;}
     public Date getPollCreationDate() {return pollCreationDate;}
     public void setPollCreationDate(Date pollCreationDate) {this.pollCreationDate = pollCreationDate;}
 //    public User getUserID() {return user;}
@@ -107,9 +121,11 @@ public class Poll
 
     public String ToString()
     {
-        AtomicReference<String> test = new AtomicReference<>("");
+        //AtomicReference<String> test = new AtomicReference<>("");
+        String test = "";
         pollChoices.forEach((Choice c) -> {
-            test.set(test + c.getChoiceName());
+            test.concat(", ");
+            test.concat(c.getChoiceName());
         });
         return pollName + "(" + pollID + ")" + "Choices; \'" + test + "\'";
     }

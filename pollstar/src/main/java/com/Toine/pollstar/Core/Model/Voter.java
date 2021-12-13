@@ -26,8 +26,8 @@ public class Voter
     @Column(name = "UUID2")
     private String UUID2;
 
-    @ManyToMany(mappedBy = "voters")
-    public List<Choice> choices;
+    @ManyToMany(mappedBy = "voters", cascade = CascadeType.ALL)
+    public List<Choice> choices = new java.util.ArrayList<>();
 
     public Voter(){}
 
