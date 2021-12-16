@@ -29,7 +29,7 @@ docker:
   services:
     - docker:19.03.12-dind
   before_script:
-    -docker info
+    - docker info
   script:
     - cd pollstar
     - docker build -t my-docker-image .
