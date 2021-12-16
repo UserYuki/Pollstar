@@ -18,4 +18,9 @@ public class VoterStorage implements IVoterStorage
         repo.save(voter);
     }
 
+    @Override
+    public Voter getVoterfromDBbyID(int id) {
+        return repo.findVoterByVoterID(id);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.Toine.pollstar.Core.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Voter
     private String UUID2;
 
     @ManyToMany(mappedBy = "voters", cascade = CascadeType.ALL)
+    @JsonBackReference
     public List<Choice> choices = new java.util.ArrayList<>();
 
     public Voter(){}

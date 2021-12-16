@@ -1,6 +1,7 @@
 package com.Toine.pollstar.Core.Model.Container;
 
 import com.Toine.pollstar.Core.Interface.IPollContainer;
+import com.Toine.pollstar.Core.Interface.IUserContainer;
 import com.Toine.pollstar.Core.Model.Choice;
 import com.Toine.pollstar.Core.Model.Poll;
 import com.Toine.pollstar.Core.Model.User;
@@ -28,6 +29,9 @@ public class PollContainer implements IPollContainer
 
     @Autowired
     IChoiceStorage choiceDAL;
+
+    @Autowired
+    IUserContainer IUC;
 
     //private ChoiceContainer choiceContainer;
 
@@ -81,19 +85,21 @@ public class PollContainer implements IPollContainer
     public Poll addPolltoDBandGetBack(@NotNull Poll poll) //not necessary, big!
     {
         //Poll save = pollDAL.savePoll(new Poll(poll.getPollID(), poll.getPollName(), poll.getPollCreationDate(), poll.getUser(), poll.getPollLockedStatus() ));
+        poll.getPollChoices().forEach((Choice c) -> c.setPoll(poll) );
+
         Poll save = pollDAL.savePoll(poll);
 
-        save.getPollChoices().forEach((Choice c) -> System.out.println("t: " + c.getChoiceName() + c.getChoiceID()));
+        save.getPollChoices().forEach((Choice c) -> System.out.println("n: " + c.getChoiceName() + ", id: " + c.getChoiceID()));
 
 
         //saved.setPollChoices(poll.getPollChoices());
-        for(Choice c : save.getPollChoices()) //putting poll in choice and saving them to db
-        {
-            //save.addChoice(c);
-            c.setPoll(save);
-            //choiceDAL.saveChoicetoDBandGet(c).getChoiceID();
-            //c.setChoiceID(choiceDAL.saveChoicetoDBandGet(c).getChoiceID());
-        }
+//        for(Choice c : poll.getPollChoices()) //putting poll in choice and saving them to db
+//        {
+//            //save.addChoice(c);
+//            c.setPoll(save);
+//            //choiceDAL.saveChoicetoDBandGet(c).getChoiceID();
+//            //c.setChoiceID(choiceDAL.saveChoicetoDBandGet(c).getChoiceID());
+//        }
 
 //        saved.setPollChoices(choiceDAL.GetAllByPoll(saved));
         return save;
@@ -104,10 +110,10 @@ public class PollContainer implements IPollContainer
         //Poll poll = pollDAL.getPollbyChoiceID(Choiceid);
         Poll poll = pollDAL.getPollByID(pollID);
         System.out.println(poll);
+        Voter votee = IUC.DBGetVoter(voter.getVoterID());
+        poll.getPollChoices().forEach(choice -> System.out.println(choice.getChoiceName() + " " + choice.getVoteAmount()));
 
-        poll.getPollChoices().forEach(choice -> System.out.println(choice.getChoiceName()));
-
-        return poll.castVote(voter, Choiceid);
+        return poll.castVote(votee, Choiceid);
     }
 
 //    @Override

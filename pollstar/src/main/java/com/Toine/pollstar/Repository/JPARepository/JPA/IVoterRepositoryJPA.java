@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IVoterRepositoryJPA extends JpaRepository<Voter, Integer>
 {
-
+    Voter findVoterByVoterID(int VoterID);
 }

@@ -2,11 +2,13 @@ package com.Toine.pollstar.Core.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
@@ -14,33 +16,36 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name ="choice")
-public class Choice
-{
+@Table(name = "choice", indexes = {
+        @Index(name = "idx_choice_poll_id", columnList = "poll_id")
+})
+public class Choice {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(nullable = false, updatable = false)
     private int choiceID;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "poll_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "poll_id", nullable = false)
+    @JsonIgnore
     private Poll poll;
     @Column(name = "choice_name")
     private String choiceName;
 
-    @JsonIgnore
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(targetEntity = com.Toine.pollstar.Core.Model.Voter.class, cascade = { CascadeType.ALL })
     @JoinTable(
             name = "Choice_Voter",
             joinColumns = { @JoinColumn(name = "choiceID") },
             inverseJoinColumns = { @JoinColumn(name = "voterID") }
     )
-    private List<Voter> voters; //maybe just the int of the voter
+    @JsonManagedReference
+    public List<Voter> voters = new ArrayList<>(); //maybe just the int of the voter
 
 
-    public Choice()
-    {
-        this.voters = new ArrayList<Voter>();
-    }
+    public Choice() {
+    }//this.voters = new ArrayList<Voter>();
+
     public Choice(int cID, String name)
     {
         this.choiceID = cID;
@@ -106,9 +111,12 @@ public class Choice
     {
         return voters.size();
     }
+
+    @Transactional
     public boolean AddVote(Voter voter)    {
         //FIXME: maybe check if not voted somewhere else, already?
-        return voters.add(voter);
+        voter.getChoices().add(this);
+        return this.voters.add(voter);
     }
 
     public boolean RemoveVote(Voter voter)

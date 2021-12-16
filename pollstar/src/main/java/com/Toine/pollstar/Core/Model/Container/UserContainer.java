@@ -56,6 +56,11 @@ public class UserContainer implements IUserContainer
         voterDAL.saveVotertoDB(voter);
     }
 
+    @Override
+    public Voter DBGetVoter(int voterID) {
+        return voterDAL.getVoterfromDBbyID(voterID);
+    }
+
     public boolean CreateUser(String userName, String eMailAddr, String password, boolean admin)
     {
         try

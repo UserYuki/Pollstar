@@ -3,6 +3,7 @@ package com.Toine.pollstar.Core.Interface;
 import com.Toine.pollstar.Core.Model.Request.UserCreateRequest;
 import com.Toine.pollstar.Core.Model.Request.VoterCreateRequest;
 import com.Toine.pollstar.Core.Model.User;
+import com.Toine.pollstar.Core.Model.Voter;
 
 public interface IUserContainer
 {
@@ -15,5 +16,6 @@ public interface IUserContainer
 
     //------------------ Voter Stuff
     void CreateVoter(VoterCreateRequest voterCreateRequest);
+    Voter DBGetVoter(int voterID);
 
 }

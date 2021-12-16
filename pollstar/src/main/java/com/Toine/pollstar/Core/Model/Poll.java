@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class Poll
 
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
-    private List<Choice> pollChoices = new ArrayList<>();
+    private List<Choice> pollChoices = new ArrayList<Choice>();
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date pollCreationDate;
 
@@ -36,6 +37,7 @@ public class Poll
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_user_id")
     private User user;
+
 
     public User getUser() {
         return user;
@@ -68,10 +70,11 @@ public class Poll
 
     public Poll(){  }//this.pollChoices = new ArrayList<>();  }
 
+    @Transactional
     public void addChoice(Choice choice){
         //As said Hibernate will ignore it when persist this relationship.
         //Add it mainly for the consistency of this relationship for both side in the Java instance
-        System.out.println("D id: " + choice.getChoiceID());
+        //System.out.println("D id: " + choice.getChoiceID());
 
         this.pollChoices.add(choice);
 
@@ -112,6 +115,7 @@ public class Poll
             for (Choice c : pollChoices) {
                 if (choiceID == c.getChoiceID()) {
                     c.AddVote(voter);
+                    System.out.println("amount of votes: " + c.getVoteAmount());
                     return true;
                 }
             }

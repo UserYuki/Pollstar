@@ -88,27 +88,27 @@ public class PollController
 //        }
 //    }
 
-//    @PostMapping()
-//    //POST at http://localhost:XXXX/poll/id number where a vote needs to be added
-//    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @RequestParam int pollID, @RequestParam int id) //use Request param
-//    {
-//        System.out.println(id);
-//        System.out.println(voter);
-//        //System.out.println(pollID);
-//        try
-//        {
-//            //IPC.CastVotetoDB(voter, id);
-//            IPC.CastVotetoDB(voter, pollID, id);
-//            return ResponseEntity.ok().body(IPC.getPoll(id));
-//
-//        }
-//        catch(Exception ex)
-//        {
-//            System.out.println(ex);
-//            String entity = "Poll with id " + id + " does not exist. or something else maybe";
-//            return new ResponseEntity(entity,HttpStatus.CONFLICT);
-//        }
-//    }
+    @PostMapping("/vote")
+    //POST at http://localhost:XXXX/poll/id number where a vote needs to be added
+    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @RequestParam int pollID, @RequestParam int id) //use Request param
+    {
+        System.out.println(id);
+        System.out.println(voter);
+        //System.out.println(pollID);
+        try
+        {
+            //IPC.CastVotetoDB(voter, id);
+            IPC.CastVotetoDB(voter, pollID, id);
+            return ResponseEntity.ok().body(IPC.getPoll(id));
+
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+            String entity = "Poll with id " + id + " does not exist. or something else maybe";
+            return new ResponseEntity(entity,HttpStatus.CONFLICT);
+        }
+    }
 
     @GetMapping
     public ResponseEntity<List<Poll>> getAllPolls() //add @RequestParam to check by pollOwner
