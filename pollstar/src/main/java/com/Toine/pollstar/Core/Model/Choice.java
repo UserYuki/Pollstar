@@ -33,13 +33,12 @@ public class Choice {
     @Column(name = "choice_name")
     private String choiceName;
 
+
     @ManyToMany(targetEntity = com.Toine.pollstar.Core.Model.Voter.class, cascade = { CascadeType.ALL })
     @JoinTable(
             name = "Choice_Voter",
             joinColumns = { @JoinColumn(name = "choiceID") },
-            inverseJoinColumns = { @JoinColumn(name = "voterID") }
-    )
-    @JsonManagedReference
+            inverseJoinColumns = { @JoinColumn(name = "voterID") })
     public List<Voter> voters = new ArrayList<>(); //maybe just the int of the voter
 
 
@@ -112,11 +111,24 @@ public class Choice {
         return voters.size();
     }
 
-    @Transactional
-    public boolean AddVote(Voter voter)    {
-        //FIXME: maybe check if not voted somewhere else, already?
-        voter.getChoices().add(this);
-        return this.voters.add(voter);
+//    @Transactional
+//    public boolean AddVote(Voter voter)    {
+//        //FIXME: maybe check if not voted somewhere else, already?
+//        voter.getChoices().add(this);
+//        return this.voters.add(voter);
+//    }
+
+    public void addVote(Voter voter) {
+        if (!voters.contains(voter)) {
+            voters.add(voter);
+            voter.addChoice(this);
+        }
+    }
+    public void removeVote(Voter voter) {
+        if (voters.contains(voter)) {
+            voters.remove(voter);
+            voter.removeChoice(this);
+        }
     }
 
     public boolean RemoveVote(Voter voter)
@@ -124,4 +136,9 @@ public class Choice {
         return voters.remove(voter);
     }
 
+    @Override
+    public String toString()
+    {
+        return choiceName + choiceID + getVoteAmount();
+    }
 }

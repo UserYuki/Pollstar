@@ -57,6 +57,11 @@ public class UserContainer implements IUserContainer
     }
 
     @Override
+    public void DBSaveVoter(Voter voter) {
+        voterDAL.saveVotertoDB(voter);
+    }
+
+    @Override
     public Voter DBGetVoter(int voterID) {
         return voterDAL.getVoterfromDBbyID(voterID);
     }

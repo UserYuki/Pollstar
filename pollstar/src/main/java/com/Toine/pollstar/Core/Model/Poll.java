@@ -99,23 +99,34 @@ public class Poll
     /*
     TODO
      */
-    public boolean voterVoted(int voterID)
+    public boolean voterVoted(Voter voter)
     {
         for(Choice c : pollChoices)
         {
-            if(c.voterVoted(voterID)) {return true;} //TODO: add if statement, now only returns false
+            if(c.voterVoted(voter.getVoterID()))
+            {
+                try
+                {
+                    c.removeVote(voter);
+                 return false;
+                }
+                catch (Exception ex)
+                {
+                    return c.voterVoted(voter.getVoterID());
+                }
+            }
+
         }
         return false;
     }
 
     public boolean castVote(Voter voter, int choiceID)
     {
-        if(!voterVoted(voter.getVoterID()) && !pollLockedStatus)
+        if(!voterVoted(voter) && !pollLockedStatus)
         {
             for (Choice c : pollChoices) {
                 if (choiceID == c.getChoiceID()) {
-                    c.AddVote(voter);
-                    System.out.println("amount of votes: " + c.getVoteAmount());
+                    c.addVote(voter);
                     return true;
                 }
             }

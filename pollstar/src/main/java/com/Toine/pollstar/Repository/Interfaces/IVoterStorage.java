@@ -6,4 +6,5 @@ public interface IVoterStorage
 {
     void saveVotertoDB(Voter voter);
     Voter getVoterfromDBbyID(int id);
+
 }

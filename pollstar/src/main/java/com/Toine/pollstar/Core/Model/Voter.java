@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,9 +28,23 @@ public class Voter
     @Column(name = "UUID2")
     private String UUID2;
 
-    @ManyToMany(mappedBy = "voters", cascade = CascadeType.ALL)
-    @JsonBackReference
-    public List<Choice> choices = new java.util.ArrayList<>();
+
+    @ManyToMany( targetEntity = com.Toine.pollstar.Core.Model.Choice.class, mappedBy = "voters", cascade = CascadeType.ALL)
+    public List<Choice> choices = new ArrayList<>();
+
+    public void addChoice(Choice choice) {
+        if (!choices.contains(choice)) {
+            choices.add(choice);
+            choice.addVote(this);
+        }
+    }
+
+    public void removeChoice(Choice choice) {
+        if (choices.contains(choice)) {
+            choices.remove(choice);
+            choice.removeVote(this);
+        }
+    }
 
     public Voter(){}
 
