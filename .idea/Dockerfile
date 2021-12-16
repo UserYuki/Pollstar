@@ -1,19 +1,14 @@
-FROM gradle:7.2.0-jdk11
+FROM gradle:4.7.0-jdk8-alpine AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon 
 
-# application placed into /opt/app
-RUN mkdir -p /opt/vendor
-WORKDIR /opt/vendor
+FROM openjdk:8-jre-slim
 
-# selectively add the POM file and
-# install dependencies
-COPY build.gradle /opt/vendor
-RUN gradle init
+EXPOSE 8080
 
-# rest of the project
-COPY src /opt/vendor/src
+RUN mkdir /app
 
-# local application port
-EXPOSE 8081
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
 
-# execute it
-CMD ["gradle", "Pollstar.java"]
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]

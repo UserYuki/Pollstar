@@ -1,9 +1,19 @@
+buildscript {
+	repositories { mavenCentral() }
+	dependencies {
+		classpath 'se.transmode.gradle:gradle-docker:1.1'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.5.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id "org.sonarqube" version "3.3"
 }
+
+apply plugin: 'application'
+apply plugin: 'docker'
 
 sonarqube {
 	properties {
@@ -15,6 +25,11 @@ sonarqube {
 group = 'com.Toine'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+mainClassName = 'com.Toine.pollstar.PollstarApplication'
+
+distDocker {
+	exposePort 8080
+}
 
 configurations {
 	compileOnly {
