@@ -18,7 +18,7 @@ sonarqube-check:
   script: gradle sonarqube
   allow_failure: true
   only:
-    - main # or the name of your main branch
+    - Docker-part-2 # or the name of your main branch
     - ./gradlew.bat --stop
 
 docker:
