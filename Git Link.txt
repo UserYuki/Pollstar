@@ -1,0 +1,7 @@
+https://git.fhict.nl/I442651/pollstar.git
+
+Sorry for the resubmission and being late...
+resub because I forgot the git link.
+Late because I tried to zip the dependencies, oops!
+
+anyway, the submission is a little bit lacking, but I got a good idea of what to do now, and I can assure the quality of the next one!

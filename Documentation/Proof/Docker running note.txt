@@ -1,0 +1,4 @@
+the Continues delivery part of CICD is working!
+My app is being updated in docker, but sadly, the database is not *YET*.
+The app is able to run, and starts up, but stops due to the fact that there is no mysql server to connect to...
+this will be fixed in a later iteration.
