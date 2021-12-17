@@ -15,12 +15,12 @@ build_and_test:
     - gradle build
   artifacts:
    paths:
-    - build/libs/*.jar     
+    - pollstar/build/libs/*.jar     
 
 package:
   stage: package
   script:
-    - docker build -t dock-image .
+    - docker build -t dock-image .idea/.
     - docker run my-docker-image ./gradlew test
     
 
