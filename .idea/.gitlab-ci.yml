@@ -21,7 +21,8 @@ package:
   stage: package
   script:
     - docker build -t dock-image .idea/.
-    - docker run my-docker-image ./gradlew test
+
+    - docker run --name dock-image ./gradlew test
     
 
 sonarqube-check:
