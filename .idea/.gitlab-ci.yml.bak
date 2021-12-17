@@ -5,7 +5,6 @@ services:
 stages:
 - buildtest
 - package
-- docker
 
 build_and_test:
   image: gradle:7.2-jdk11-alpine
