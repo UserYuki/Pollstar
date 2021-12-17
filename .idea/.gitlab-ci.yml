@@ -21,12 +21,11 @@ package:
   stage: package
   script:
     - docker build -t dock-image .
-    - docker run my-docker-image /script/to/run/tests
+    - docker run my-docker-image ./gradlew test
     
 
 sonarqube-check:
   before_script:
-    - echo "Execute this command before any 'script:' commands."
     - cd pollstar
   image: gradle:jre11-slim
   variables:
