@@ -45,15 +45,6 @@ const CreatePoll = (props) => {
     var today = new Date();
     var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
 
-    let pollChoicess = 
-      [
-        { 
-          choiceName: document.getElementById("o1").value
-        }, 
-        {
-          choiceName: document.getElementById("o2").value
-        }
-      ]
 
     let headerConfig = {
       headers: {
@@ -61,7 +52,6 @@ const CreatePoll = (props) => {
       }
     }
   //document.getElementById("o1").value = JSON.stringify(pollChoices);
-  console.log(pollChoicess.toString())
   console.log(JSON.stringify(inputList))
       axios
         .post(`${baseURL}poll/`, {
