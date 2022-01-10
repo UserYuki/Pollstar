@@ -24,8 +24,18 @@ public class UserController
     @PostMapping
     public ResponseEntity CreateUser (@RequestBody UserCreateRequest userCreateRequest)
     {
-        IUC.CreateUser(userCreateRequest);
+        try
+        {
+            IUC.CreateUser(userCreateRequest);
+
+        }
+        catch(RuntimeException rtEx)
+        {
+            return new ResponseEntity(rtEx, HttpStatus.IM_USED);
+        }
+
         return ResponseEntity.ok().build();
+
     }
 
     @GetMapping()

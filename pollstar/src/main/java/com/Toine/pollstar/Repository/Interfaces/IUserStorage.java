@@ -9,5 +9,6 @@ public interface IUserStorage
     boolean VerifyAccountbyUserNameinDB(String UserName, String Password);
     boolean VerifyAccountbyEmailinDB(String eMailAddress, String Password);
     Optional<User> returnUserbyUserNameinDB(String username);
+    Optional<User> returnUserbyeMailAddressinDB(String eMailAddress);
     void saveUsertoDB(User user);
 }

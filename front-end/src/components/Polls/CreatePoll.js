@@ -5,9 +5,14 @@ import { BrowserRouter as useHistory, Redirect, Router, Switch, Route, Link } fr
 import ViewPoll from "./ViewPoll";
 //import React, {Component} from 'react';
 
+import { useCookies } from 'react-cookie';
+
+
 const baseURL = "http://localhost:8080/";
 
 const CreatePoll = (props) => {
+  const [cookies, setCookie] = useCookies(['name']);
+  
   //const [post, setPost] = React.useState(null);
   const [pollID, setPollID] = React.useState();
   const [PostedID, setID] = React.useState();
@@ -56,6 +61,8 @@ console.log(pollChoicess);
 
   return (
     <div>
+    <h4>{cookies.name}</h4>
+
     <Form>
         <FormGroup>
             <Label for="pollId">Poll ID:</Label>

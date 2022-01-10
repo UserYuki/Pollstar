@@ -3,7 +3,9 @@ import './App.css';
 
 import axios from "axios";
 import React from "react";
-import { Input } from 'reactstrap';
+import {useState,useEffect} from 'react'
+import { useCookies } from 'react-cookie';
+import { CustomInput, FormText, Input } from 'reactstrap';
 import Nav from './components/Nav.js';
 import UserPage from './components/UserSigning/UserPage.js';
 import CreatePoll from './components/Polls/CreatePoll.js';
@@ -22,8 +24,43 @@ import UserSignIn from './components/UserSigning/UserSignIn';
 
 export default function App() 
 {
+    //creating IP state
+    const [ip, setIP] = useState('');
+    //creating cookie
+    const [cookies, setCookie] = useCookies(['IP']);
+    const baseURL = "http://localhost:8080/";
+    //creating function to load ip address from the API
+    const getData = async () => {
+      const res = await axios.get('https://geolocation-db.com/json/')
+      //console.log(res.data);
+      setIP(res.data.IPv4)
+      setCookie('IP', res.data.IPv4, { path: '/' });
+    }
+    
+    useEffect( () => {
+      //passing getData method to the lifecycle method
+      getData()
+    }, [])
+
+    function test()
+    {
+      axios
+      .post(`${baseURL}voter/create`, {
+        uuid1: cookies.IP,
+        uuid2: null
+      })
+      .then((response) => {
+        console.log(response.status)
+        
+      });
+      
+      
+  }
+    
+
   return(
     <>
+
      
       <Router>
       <Nav/>
@@ -32,6 +69,9 @@ export default function App()
             <CreatePoll />
           </Route>
           <Route path="/ViewPoll/:passedPollID">
+            <ViewPoll />
+          </Route>
+          <Route path="/ViewPoll">
             <ViewPoll />
           </Route>
           <Route path="/VotePoll">
@@ -43,12 +83,12 @@ export default function App()
           <Route exact path="/User/SignUp:passedUserName">
             <UserSignUp />
           </Route>
-          <Route exact path="/User/SignUp:passedEMail">
+          <Route exact path="/User/SignUp">
             <UserSignUp />
           </Route>
       </Switch>
       </Router>
-
+      <button onClick={test}>btn</button>
     </>
   );
 }

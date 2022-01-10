@@ -38,10 +38,12 @@ public class PollController
     @GetMapping("{id}")
     public ResponseEntity<Poll> getPoll(@PathVariable(value = "id") int id)
     {
-        Poll poll = IPC.getPoll(id);
+        System.out.println("found and built!");
+        Poll poll = IPC.getPollfromDBbyID(id);
 
         if(poll != null)
         {
+
             return ResponseEntity.ok().body(poll);
         }
         else
@@ -90,22 +92,22 @@ public class PollController
 
     @PostMapping("/vote")
     //POST at http://localhost:XXXX/poll/id number where a vote needs to be added
-    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @RequestParam int pollID, @RequestParam int id) //use Request param
+    public ResponseEntity<Poll> AddVoter(@RequestBody Voter voter, @RequestParam int pollID, @RequestParam int ChoiceID) //use Request param
     {
-        System.out.println(id);
+        System.out.println(ChoiceID);
         System.out.println(voter);
         //System.out.println(pollID);
         try
         {
             //IPC.CastVotetoDB(voter, id);
-            IPC.CastVotetoDB(voter, pollID, id);
-            return ResponseEntity.ok().body(IPC.getPoll(id));
+            IPC.CastVotetoDB(voter, pollID, ChoiceID);
+            return ResponseEntity.ok().body(IPC.getPoll(ChoiceID));
 
         }
         catch(Exception ex)
         {
             System.out.println(ex);
-            String entity = "Poll with id " + id + " does not exist. or something else maybe";
+            String entity = "Poll with id " + ChoiceID + " does not exist. or something else maybe";
             return new ResponseEntity(entity,HttpStatus.CONFLICT);
         }
     }

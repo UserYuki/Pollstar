@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+import { BrowserRouter as Redirect} from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 
@@ -10,31 +11,64 @@ const UserSignUp = (props) => {
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [errorMsg, setErrorMsg] = React.useState("");
   localStorage.removeItem("JWT");
 
   function checkPassword(e)
   {
-    if(e !=)
+    if(e !== password){
+      //document.getElementById("MatchErrorLabel").hidden = false;
+      setErrorMsg("Error: Passwords do not match");
+    }
+    else{
+      setErrorMsg("");
+    }
+    
+  }
+
+  function reCheckInput()
+  {
+    checkPassword(document.getElementById("confirmPassword").value)
   }
 
 
 async function submitUsername(e) 
 {  
   e.preventDefault()
-  await axios
-  .post(`${baseURL}login`, {
-    userName: username,
-    password: password
-  })
-  .then((response) => {
-    localStorage.setItem("JWT", response.data.Authorization)
-    //alert(response.data.Authorization)
-  });
+  reCheckInput()
+  if(errorMsg.length >= 1)
+  {
+
+  }
+  else
+  {
+    
+    await axios
+    .post(`${baseURL}api/user`, {
+      username: username,
+      password: password
+    })
+    .then((response) => {
+      if(response.status == 200)
+      {
+        //redirect
+        return(<Redirect to="/user/SignIn" />)
+      }
+      else
+      {
+        //if literally anything else, set the error to the error message
+        setErrorMsg(response.data['message'])
+      }
+      //alert(response.data.Authorization)
+    });
+  }
+
 }
+
   return (
     <>
       <div class="float-container">
-        <div class="float-child">
+        <div class="centered">
         <Form onSubmit={submitUsername}>
             <FormGroup>
               <Label for="UserName">Username</Label>
@@ -71,12 +105,13 @@ async function submitUsername(e)
               <Input
                 type="password"
                 name="password"
-                id="examplePassword"
+                id="confirmPassword"
                 onChange={(e) => checkPassword(e.target.value)}
                 placeholder="Please input password..."
               />
+              <Label id="MatchErrorLabel">{errorMsg}</Label>
             </FormGroup>
-            <Button type="submit" value="Submit">Submit</Button>
+            <Button type="submit" disabled={errorMsg.length} value="Submit">Submit</Button>
           </Form>      
         </div>
       </div>

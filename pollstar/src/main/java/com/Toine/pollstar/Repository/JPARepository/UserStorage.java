@@ -33,6 +33,11 @@ public class UserStorage implements IUserStorage
     }
 
     @Override
+    public Optional<User> returnUserbyeMailAddressinDB(String eMailAddress) {
+        return repo.findByeMailAddress(eMailAddress);
+    }
+
+    @Override
     public void saveUsertoDB(User user) {
         repo.save(user);
     }

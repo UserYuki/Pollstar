@@ -1,8 +1,10 @@
 package com.Toine.pollstar.Core.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +21,9 @@ import java.util.List;
 @Table(name = "choice", indexes = {
         @Index(name = "idx_choice_poll_id", columnList = "poll_id")
 })
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "choiceID")
 public class Choice {
 
     @Id

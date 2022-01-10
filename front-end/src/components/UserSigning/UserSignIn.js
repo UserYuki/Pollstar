@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { useParams } from "react-router";
 import { Button, Form, FormGroup, Label, Input, FormText, Alert } from "reactstrap";
 
 const baseURL = "http://localhost:8080/";
@@ -43,7 +44,7 @@ function submitEmail()
                 name="username"
                 id="UserName"
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter username here..."
+                placeholder="Please input username..."
               />
             </FormGroup>
             <FormGroup>

@@ -38,9 +38,14 @@ public class UserContainer implements IUserContainer
         User user = new User();
         Optional<User> byUsername = userDAL.returnUserbyUserNameinDB(userCreateRequest.getUsername());
         if (byUsername.isPresent()) {
-            throw new RuntimeException("User already registered. Please use different username.");
+            throw new RuntimeException("User "+ userCreateRequest.getUsername() +" already registered. Please use a different username.");
+        }
+        Optional<User> byeMail = userDAL.returnUserbyeMailAddressinDB(userCreateRequest.getEMailAddress());
+        if (byeMail.isPresent()) {
+            throw new RuntimeException("Email "+ userCreateRequest.getEMailAddress() +" already registered. Please use a different email, or login.");
         }
         user.setUserName(userCreateRequest.getUsername());
+        user.setEMailAddress(userCreateRequest.getEMailAddress());
         user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
         userDAL.saveUsertoDB(user);
     }
