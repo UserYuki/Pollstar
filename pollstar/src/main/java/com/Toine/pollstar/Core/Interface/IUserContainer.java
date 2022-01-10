@@ -12,10 +12,10 @@ public interface IUserContainer
     boolean NameVerify(String UserN, String Pwd);
     User readUserByUsername (String username);
     void CreateUser(UserCreateRequest userCreateRequest);
-
+    long readUserIDbyUsername (String username);
 
     //------------------ Voter Stuff
-    void CreateVoter(VoterCreateRequest voterCreateRequest);
+    Voter CreateVoter(VoterCreateRequest voterCreateRequest);
     void DBSaveVoter(Voter voter);
     Voter DBGetVoter(int voterID);
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Input, Form, FormGroup, Label } from 'reactstrap';
+import { BrowserRouter as useHistory, Redirect, Router, Switch, Route, Link } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { useTimer } from 'use-timer';
 //import React, {Component} from 'react';
@@ -10,7 +11,7 @@ const baseURL = "http://localhost:8080/";
 const VotePoll = (props) => {
   const [post, setPost] = React.useState(null);
   const [pollID, setPollID] = React.useState();
-
+  const [voted, setVoted] = React.useState(false);
   const [cookies, setCookie] = useCookies(['IP']);
   const JWT = localStorage.getItem("JWT");
   const { time, start, pause, reset, status, autostart } = useTimer({
@@ -30,16 +31,26 @@ const VotePoll = (props) => {
     });
   }, []);
 
-  function readPost()
+  function readPost(passedPID)
   {
-    let headerConfig = {
-      headers: {
-        Authorization: JWT
-      }
-    }
-    axios.get(`${baseURL}voter/getPoll/${pollID}`, headerConfig).then((response) => {
-      setPost(response.data);
-    });
+    var PID = pollID;
+    if ( passedPID > 0 ) {PID = passedPID;}
+    if (!PID || PID == undefined || PID == 0) {return;}
+    else {setPollID(PID)}
+    
+      axios.get(`${baseURL}voter/getPoll/` + PID).then((response) => {
+      
+        setPost(response.data);
+        if(!status == "RUNNING")
+        {
+          start();
+        }
+  
+      }).catch(function (error) {
+        pause();
+      });
+    
+
   }
 
   function vote(optionID)
@@ -49,13 +60,21 @@ const VotePoll = (props) => {
       voterID: 17,
       uuid1: cookies.IP,
       uuid2: "test2"
+    }).then((res) => {
+      if(res.status == 200)
+      {
+        setVoted(true);
+      }
     })
+    //
   }
+
+  if(voted) return(<Redirect to={"/ViewPoll/"+pollID} />) 
 
   if (!post) return (
     <div>
-    <Input placeholder="Poll ID" min={0} max={100} type="number" onChange={event => setPollID(event.target.value)}/>
-    <button onClick={readPost}>Read Post</button>
+    <Input placeholder="Poll ID" min={0} max={100} id="PollIDInput" type="number"/>
+    <button onClick={() => readPost(document.getElementById("PollIDInput").value)}>Read Post</button>
     </div>
   )
 
@@ -75,8 +94,8 @@ const VotePoll = (props) => {
         )}
       </tbody>
       </table>
-    <Input placeholder="Poll ID" min={0} max={100} type="number" onChange={event => setPollID(event.target.value)}/>
-    <button onClick={readPost}>Read Post</button>
+      <Input placeholder="Poll ID" min={0} max={100} id="PollIDInput" type="number"/>
+    <button onClick={() => readPost(document.getElementById("PollIDInput").value)}>Read Post</button>
   </div>
   );
 }

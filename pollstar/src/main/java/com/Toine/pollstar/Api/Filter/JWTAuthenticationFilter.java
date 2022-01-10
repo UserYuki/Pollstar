@@ -1,11 +1,14 @@
 package com.Toine.pollstar.Api.Filter;
 
+import com.Toine.pollstar.Core.Interface.IUserContainer;
+import com.Toine.pollstar.Core.Model.Container.UserContainer;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.Toine.pollstar.Api.Config.AuthenticationConfigConstants;
 import com.Toine.pollstar.Core.Model.User;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +29,9 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    @Autowired
+    IUserContainer IUC;
 
     private final AuthenticationManager authenticationManager;
 
@@ -56,5 +62,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().write(
                 "{\"" + AuthenticationConfigConstants.HEADER_STRING + "\":\"" + AuthenticationConfigConstants.TOKEN_PREFIX + token + "\"}"
         );
+
     }
 }

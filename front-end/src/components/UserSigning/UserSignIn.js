@@ -10,7 +10,7 @@ const UserSignIn = (props) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   localStorage.removeItem("JWT");
-
+  localStorage.removeItem("ID");
 
 async function submitUsername(e) 
 {  
@@ -22,10 +22,14 @@ async function submitUsername(e)
   })
   .then((response) => {
     localStorage.setItem("JWT", response.data.Authorization)
-    //alert(response.data.Authorization)
+
+    axios.post(`${baseURL}api/user/retrieveID`, {
+      userName: username
+    }, {headers: {Authorization: response.data.Authorization}}).then((res)=>{
+      localStorage.setItem("ID",res.data)
+    })
   });
 }
-
 function submitEmail() 
 {
   alert(email + password);

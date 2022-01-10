@@ -17,7 +17,7 @@ public class UserStorage implements IUserStorage
 
     @Override
     public boolean VerifyAccountbyUserNameinDB(String UserName, String Password) {
-        return repo.getUserByUserNameAndPassword(UserName, Password);
+        return repo.getUserByUserNameAndPassword(UserName, Password).isPresent();
     }
 
     @Override
@@ -40,5 +40,11 @@ public class UserStorage implements IUserStorage
     @Override
     public void saveUsertoDB(User user) {
         repo.save(user);
+    }
+
+    @Override
+    public long returnUserIDbyUsernameinDB(String username) {
+
+        return repo.findByUserName(username).get().getUserID();
     }
 }

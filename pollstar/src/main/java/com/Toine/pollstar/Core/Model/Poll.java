@@ -1,8 +1,6 @@
 package com.Toine.pollstar.Core.Model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -33,38 +31,32 @@ public class Poll
     @Column()
     private boolean pollLockedStatus;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_user_id")
     private User user;
 
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
 
 
-    public Poll(int pollID, String pollName, List<Choice> pollChoices, Date pollCreationDate, User userID, boolean pollLockedStatus)
+
+    public Poll(int pollID, String pollName, List<Choice> pollChoices, Date pollCreationDate, User user, boolean pollLockedStatus)
     {
         this.pollID = pollID;
         this.pollName = pollName;
         this.pollChoices = pollChoices;
         this.pollCreationDate = pollCreationDate;
-        this.user = userID;
+        this.user = user;
         this.pollLockedStatus = pollLockedStatus;
     }
-    public Poll(int pollID, String pollName, Date pollCreationDate, User userID, boolean pollLockedStatus)
+    public Poll(int pollID, String pollName, Date pollCreationDate, User user, boolean pollLockedStatus)
     {
         this.pollID = pollID;
         this.pollName = pollName;
         this.pollChoices = new ArrayList<>();
         this.pollCreationDate = pollCreationDate;
-        this.user = userID;
+        this.user = user;
         this.pollLockedStatus = pollLockedStatus;
     }
 
@@ -91,8 +83,12 @@ public class Poll
     //public void setPollChoices(List<Choice> pollChoices) {this.pollChoices = pollChoices;}
     public Date getPollCreationDate() {return pollCreationDate;}
     public void setPollCreationDate(Date pollCreationDate) {this.pollCreationDate = pollCreationDate;}
-//    public User getUserID() {return user;}
-//    public void setUserID(User pollOwnerID) {this.user = pollOwnerID;}
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
     public boolean getPollLockedStatus() {return pollLockedStatus;}
     public void setPollLockedStatus(boolean pollLockedStatus) {this.pollLockedStatus = pollLockedStatus;}
 
@@ -142,6 +138,6 @@ public class Poll
             test.concat(", ");
             test.concat(c.getChoiceName());
         });
-        return pollName + "(" + pollID + ")" + "Choices; \'" + test + "\'";
+        return pollName + "(" + pollID + ") Owner: "+user.toString()+  ", Choices; \'" + test + "\'";
     }
 }

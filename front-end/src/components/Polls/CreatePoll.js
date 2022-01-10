@@ -19,6 +19,7 @@ const CreatePoll = (props) => {
   const [inputList, setInputList] = useState([{ choiceName: "" }]);
 
   const JWT = localStorage.getItem("JWT");
+  const UID = localStorage.getItem("ID");
 
     // handle input change
     const handleInputChange = (e, index) => {
@@ -44,7 +45,7 @@ const CreatePoll = (props) => {
     //document.getElementById("pollName").value; krijg poll input box value
     var today = new Date();
     var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-
+    console.log(date)
 
     let headerConfig = {
       headers: {
@@ -54,17 +55,16 @@ const CreatePoll = (props) => {
   //document.getElementById("o1").value = JSON.stringify(pollChoices);
   console.log(JSON.stringify(inputList))
       axios
-        .post(`${baseURL}poll/`, {
+        .post(`${baseURL}poll`, {
           pollName: document.getElementById("pollName").value,
           //pollID: pollID,
+          pollChoices: inputList,
           pollCreationDate: date,
-          pollChoices: inputList
+          user: {userID: UID }
         }, headerConfig)
         .then((response) => {
           setID("/ViewPoll/" + response.data);
-          axios.get(`${baseURL}poll/`+response.data).then((res) => {
-            
-          });
+
         });
   }
 

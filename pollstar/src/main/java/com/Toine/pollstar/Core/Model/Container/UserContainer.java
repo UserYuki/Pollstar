@@ -51,14 +51,18 @@ public class UserContainer implements IUserContainer
     }
 
     @Override
-    public void CreateVoter(VoterCreateRequest voterCreateRequest) {
+    public long readUserIDbyUsername(String username) {
+        return userDAL.returnUserIDbyUsernameinDB(username);
+    }
+
+    @Override
+    public Voter CreateVoter(VoterCreateRequest voterCreateRequest) {
         Voter voter = new Voter();
 
         voter.setUUID1(voterCreateRequest.getUUID1());
         voter.setUUID2(voterCreateRequest.getUUID2());
-        System.out.println(voterCreateRequest.getUUID1());
-        System.out.println(voter.getUUID1());
-        voterDAL.saveVotertoDB(voter);
+
+        return voterDAL.saveVotertoDB(voter);
     }
 
     @Override
@@ -114,7 +118,9 @@ public class UserContainer implements IUserContainer
 
     public boolean NameVerify(String UserN, String Pwd)
     {
-        return userDAL.VerifyAccountbyUserNameinDB(UserN, Pwd);
+        Optional<User> test = userDAL.returnUserbyUserNameinDB(UserN);
+
+        return passwordEncoder.matches(Pwd, test.get().getPassword());
     }
 
     public boolean EmailVerify(String EmailAddr, String Pwd)

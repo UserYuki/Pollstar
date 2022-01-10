@@ -23,11 +23,19 @@ public class VoterController
     IPollContainer IPC;
 
     @PostMapping("/create")
-    public ResponseEntity CreateVoter (@RequestBody VoterCreateRequest voterCreateRequest)
+    public ResponseEntity<Voter> CreateVoter (@RequestBody VoterCreateRequest voterCreateRequest)
     {
-        IUC.CreateVoter(voterCreateRequest);
-        return ResponseEntity.ok().build();
+        try{
+            Voter v = IUC.CreateVoter(voterCreateRequest);
+            return ResponseEntity.ok().body(v);
+        }
+        catch(Exception ex) {
+            return new ResponseEntity(ex.toString(), HttpStatus.CONFLICT);
+        }
+
     }
+
+
 
     @GetMapping("/getPoll/{id}")
     public ResponseEntity<Poll> getPoll(@PathVariable(value = "id") int id)
@@ -56,8 +64,7 @@ public class VoterController
         {
             //IPC.CastVotetoDB(voter, id);
             IPC.CastVotetoDB(voter, pollID, ChoiceID);
-            return ResponseEntity.ok().body(IPC.getPoll(ChoiceID));
-
+            return new ResponseEntity(pollID, HttpStatus.OK);
         }
         catch(Exception ex)
         {

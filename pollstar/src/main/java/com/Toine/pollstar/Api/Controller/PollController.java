@@ -63,10 +63,11 @@ public class PollController
         }
         else
         {
+            System.out.println(poll.ToString());
             Poll cPoll = IPC.addPolltoDBandGetBack(poll);
 
             //System.out.println(poll.ToString());
-            poll.getPollChoices().forEach((Choice c) -> System.out.println("c: " + c.getChoiceName()));
+            //poll.getPollChoices().forEach((Choice c) -> System.out.println("c: " + c.getChoiceName()));
             return new ResponseEntity(cPoll.getPollID(),HttpStatus.CREATED);
         }
     }

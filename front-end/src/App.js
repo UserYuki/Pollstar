@@ -27,7 +27,7 @@ export default function App()
     //creating IP state
     const [ip, setIP] = useState('');
     //creating cookie
-    const [cookies, setCookie] = useCookies(['IP']);
+    const [cookies, setCookie] = useCookies(['Voter', 'IP', 'uuid2']);
     const baseURL = "http://localhost:8080/";
     //creating function to load ip address from the API
     const getData = async () => {
@@ -35,23 +35,52 @@ export default function App()
       //console.log(res.data);
       setIP(res.data.IPv4)
       setCookie('IP', res.data.IPv4, { path: '/' });
+
+      axios.post(`https://api.random.org/json-rpc/4/invoke`, {
+        "jsonrpc": "2.0",
+        "method": "getUsage",
+        "params": {
+            "apiKey": "598c9146-7fce-45fa-8eae-10ed6d6e9b01" //secret api key don't look!
+        },
+        "id": 15998
+      }).then((res) => {
+        if(res.data.result.requestsLeft < 15 ) {console.log("no requests remaining"); return;}
+      })
+
+      axios.post(`https://api.random.org/json-rpc/4/invoke`, {
+        "jsonrpc": "2.0",
+        "method": "generateUUIDs",
+        "params": {
+            "apiKey": "598c9146-7fce-45fa-8eae-10ed6d6e9b01",
+            "n": 1
+        },
+        "id": 15998
+      }).then((res) => {
+        setCookie('uuid2', res.data.result.random.data[0], { path: '/' });
+      })
     }
     
     useEffect( () => {
       //passing getData method to the lifecycle method
+      if(cookies.IP && cookies.uuid2) {return;}
+      console.log("gettin")
       getData()
+      if(!cookies.Voter || cookies.IP && cookies.uuid2)
+      {
+        push();
+      }
     }, [])
 
-    function test()
+    function push()
     {
       axios
       .post(`${baseURL}voter/create`, {
         uuid1: cookies.IP,
-        uuid2: null
+        uuid2: cookies.uuid2
       })
       .then((response) => {
         console.log(response.status)
-        
+        setCookie('Voter', response.data.voterID, { path: '/' });
       });
       
       
@@ -86,9 +115,11 @@ export default function App()
           <Route exact path="/User/SignUp">
             <UserSignUp />
           </Route>
+          <Route exact path="/User">
+            <UserPage />
+          </Route>
       </Switch>
       </Router>
-      <button onClick={test}>btn</button>
     </>
   );
 }

@@ -14,8 +14,8 @@ public class VoterStorage implements IVoterStorage
     IVoterRepositoryJPA repo;
 
     @Override
-    public void saveVotertoDB(Voter voter) {
-        repo.save(voter);
+    public Voter saveVotertoDB(Voter voter) {
+        return repo.saveAndFlush(voter);
     }
 
     @Override

@@ -18,8 +18,8 @@ const ViewPoll = (props) => {
     endTime: 0,
     timerType: 'DECREMENTAL',
     onTimeOver: () => {
-      readPost();
       start();
+      readPost();
     },
   })
 
@@ -35,14 +35,11 @@ const ViewPoll = (props) => {
   React.useEffect(() => {
     if(passedPollID > 0)
     {
-      setPollID(passedPollID)
+      readPost(passedPollID)
      
     }
   }, [passedPollID])
 
-  React.useEffect(() => {
-    readPost()
-  }, [pollID])
 
   React.useEffect(() => {
     if(post != null){
@@ -58,23 +55,33 @@ const ViewPoll = (props) => {
 
   }, [post])
 
-  function readPost()
+  function readPost(passedPID)
   {
-    console.log(passedPollID);
-    axios.get(`${baseURL}voter/getPoll/` + pollID).then((response) => {
+    var PID = pollID;
+    if ( passedPID > 0 ) {PID = passedPID;}
+    if (!PID || PID == undefined || PID == 0) {return;}
+    else {setPollID(PID)}
+    
+      axios.get(`${baseURL}voter/getPoll/` + PID).then((response) => {
       
-      setPost(response.data);
+        setPost(response.data);
+        if(!status == "RUNNING")
+        {
+          start();
+        }
+  
+      }).catch(function (error) {
+        pause();
+      });
+    
 
-
-
-    });
   }
 
 
   if (post == null) return (
     <div>
-    <Input placeholder="Poll ID" min={0} max={100} type="number" onChange={event => setPollID(event.target.value)}/>
-    <button onClick={readPost}>Read Post</button>
+    <Input placeholder="Poll ID" min={0} max={100} id="PollIDInput" type="number"/>
+    <button onClick={() => readPost(document.getElementById("PollIDInput").value)}>Read Post</button>
     </div>
   )
 
@@ -94,8 +101,8 @@ const ViewPoll = (props) => {
       )}
       </div>
  <p></p>
-    <Input placeholder="Poll ID" min={0} max={100} type="number" onChange={event => setPollID(event.target.value)}/>
-    <button onClick={readPost}>Read Post</button>
+ <Input placeholder="Poll ID" min={0} max={100} id="PollIDInput" type="number"/>
+    <button onClick={() => readPost(document.getElementById("PollIDInput").value)}>Read Post</button>
   </div>
   );
 }

@@ -1,17 +1,19 @@
 package com.Toine.pollstar.Core.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Setter
 @Data
 @Entity
 @Table(name = "user")
-public class User
-{
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userID;
@@ -26,8 +28,10 @@ public class User
     private String password;
     @Column()
     private boolean admin;
+
     @OneToMany(mappedBy = "user")
-    private List<Poll> poll;
+    @JsonBackReference
+    private List<Poll> poll = new ArrayList<>();
 
     public User() {     }
 
@@ -124,6 +128,10 @@ public class User
         }
     }
 
-
+    @Override
+    public String toString()
+    {
+        return "User: " + userName + " (" +userID+ ")";
+    }
 
 }

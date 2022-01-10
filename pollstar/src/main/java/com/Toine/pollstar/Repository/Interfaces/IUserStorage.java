@@ -11,4 +11,5 @@ public interface IUserStorage
     Optional<User> returnUserbyUserNameinDB(String username);
     Optional<User> returnUserbyeMailAddressinDB(String eMailAddress);
     void saveUsertoDB(User user);
+    long returnUserIDbyUsernameinDB(String username);
 }
