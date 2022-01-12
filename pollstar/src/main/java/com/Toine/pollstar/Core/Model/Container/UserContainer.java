@@ -1,7 +1,9 @@
 package com.Toine.pollstar.Core.Model.Container;
 
 import com.Toine.pollstar.Core.Interface.IUserContainer;
+import com.Toine.pollstar.Core.Model.DTO.UserDetails.UserDTO;
 import com.Toine.pollstar.Core.Model.Request.UserCreateRequest;
+import com.Toine.pollstar.Core.Model.Request.UserPatchRequest;
 import com.Toine.pollstar.Core.Model.Request.VoterCreateRequest;
 import com.Toine.pollstar.Core.Model.User;
 import com.Toine.pollstar.Core.Model.Voter;
@@ -47,13 +49,62 @@ public class UserContainer implements IUserContainer
         user.setUserName(userCreateRequest.getUsername());
         user.setEMailAddress(userCreateRequest.getEMailAddress());
         user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
-        userDAL.saveUsertoDB(user);
+
+
+
+
+        try{
+            user.setVoter( DBGetVoter(userCreateRequest.getVCR().getVoterID().get()));
+            User u = userDAL.saveGetUsertoDB(user);
+        }
+        catch(Exception exc){
+            System.out.println(exc);
+            userDAL.saveUsertoDB(user);
+            //failsafe
+        }
     }
 
     @Override
     public long readUserIDbyUsername(String username) {
         return userDAL.returnUserIDbyUsernameinDB(username);
     }
+
+    @Override
+    public UserDTO getUserDTOfromUserbyID(long id) {return userDAL.getUserByUserID(id);}
+
+    @Override
+    public void patchAccount(UserPatchRequest userPatchRequest) {
+        User user = userDAL.returnUserbyID(userPatchRequest.getUserID()).get();
+        if(!NameVerify(user.getUserName(), userPatchRequest.getCurrentPassword()))
+        {
+            throw new RuntimeException("The given ID doesn't match with the current account details.");
+        }
+        else {
+
+            if(userPatchRequest.getNewUsername() == null) {}
+            else
+            {
+                user.setUserName(userPatchRequest.getNewUsername());
+            }
+            if(userPatchRequest.getNewEMailAddress() == null) {}
+            else
+            {
+                user.setEMailAddress(userPatchRequest.getNewEMailAddress());
+            }
+            if(userPatchRequest.getNewPassword() == null ) {}
+            else if (!userPatchRequest.getNewPassword().equals(userPatchRequest.getConfirmedNewPassword()))
+            {
+                throw new RuntimeException("New password must be confirmed with an identical password.");
+            }
+            else
+            {
+                user.setPassword(passwordEncoder.encode(userPatchRequest.getNewPassword()));
+            }
+            userDAL.saveUsertoDB(user);
+        }
+
+    }
+
 
     @Override
     public Voter CreateVoter(VoterCreateRequest voterCreateRequest) {

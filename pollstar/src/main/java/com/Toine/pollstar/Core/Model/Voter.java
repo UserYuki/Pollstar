@@ -23,7 +23,7 @@ public class Voter
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "voterID")
     private int voterID;
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userID")
     private User user;
     @Column(name = "UUID1")

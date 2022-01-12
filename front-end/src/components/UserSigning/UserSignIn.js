@@ -23,11 +23,14 @@ async function submitUsername(e)
   .then((response) => {
     localStorage.setItem("JWT", response.data.Authorization)
 
-    axios.post(`${baseURL}api/user/retrieveID`, {
-      userName: username
-    }, {headers: {Authorization: response.data.Authorization}}).then((res)=>{
-      localStorage.setItem("ID",res.data)
-    })
+    axios.get(`${baseURL}api/user/retrieveID`, 
+    {headers: {Authorization: response.data.Authorization}}).then((res)=>{
+      if(res.status == 201){localStorage.setItem("ID", res.data )}
+      else
+      {
+        console.log(res.data)
+      }
+    }).catch((error) => console.log(error))
   });
 }
 function submitEmail() 

@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import CreatePoll from "./Polls/CreatePoll.js";
 import ViewPoll from "./Polls/ViewPoll.js";
+import AccountNavButtonPart from "./UserSigning/AccountNavButtonPart.js";
 
 //import { Navbar, Nav, NavLink } from "react-bootstrap";
 
@@ -54,7 +55,7 @@ const NavBar = (props) => {
                     <DropdownItem>Poll Creation</DropdownItem>
                   </Link>
                   <DropdownItem divider />
-                  <Link to={newTo}>
+                  <Link to="/ViewPoll">
                     <DropdownItem>View Poll</DropdownItem>
                   </Link>
                   <DropdownItem divider />
@@ -66,13 +67,7 @@ const NavBar = (props) => {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
-            <NavbarText>Simple Text</NavbarText>
-            <Link to="/User/SignIn">
-               Login
-            </Link>
-            <Link to="/User/SignUp">
-               Register
-            </Link>
+            <AccountNavButtonPart/>
           </Collapse>
         </Navbar>
 

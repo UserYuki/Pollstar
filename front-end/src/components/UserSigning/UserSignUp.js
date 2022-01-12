@@ -2,7 +2,7 @@ import React from 'react';
 import axios from "axios";
 import { BrowserRouter as Redirect} from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-
+import { useCookies } from 'react-cookie';
 
 const baseURL = "http://localhost:8080/";
 
@@ -12,6 +12,8 @@ const UserSignUp = (props) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [errorMsg, setErrorMsg] = React.useState("");
+
+  const [cookies, setCookie] = useCookies(['Voter']);
   localStorage.removeItem("JWT");
 
   function checkPassword(e)
@@ -42,11 +44,13 @@ async function submitUsername(e)
   }
   else
   {
-    
+    console.log(cookies.Voter)
     await axios
     .post(`${baseURL}api/user`, {
       username: username,
-      password: password
+      emailAddress: email, //doesn't make sense but needs to be formatted like this...
+      password: password,
+      vcr: cookies.Voter  //this also doesn't make sense but needs to be formatted like this...
     })
     .then((response) => {
       if(response.status == 200)
@@ -58,6 +62,7 @@ async function submitUsername(e)
       {
         //if literally anything else, set the error to the error message
         setErrorMsg(response.data['message'])
+        console.log(response.data['message'])
       }
       //alert(response.data.Authorization)
     });

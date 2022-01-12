@@ -84,9 +84,11 @@ public class PollContainer implements IPollContainer
 
         poll.getPollChoices().forEach((Choice c) -> c.setPoll(poll) );
 
+
         Poll save = pollDAL.savePoll(poll);
 
-        save.getPollChoices().forEach((Choice c) -> System.out.println("n: " + c.getChoiceName() + ", id: " + c.getChoiceID()));
+        //save.getPollChoices().forEach((Choice c) -> System.out.println("n: " + c.getChoiceName() + ", id: " + c.getChoiceID()));
+
 
 
         return save;

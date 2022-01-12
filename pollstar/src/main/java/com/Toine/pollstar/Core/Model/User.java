@@ -33,6 +33,13 @@ public class User {
     @JsonBackReference
     private List<Poll> poll = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Voter voter;
+
+    public Voter getVoter() {
+        return voter;
+    }
+
     public User() {     }
 
     public User(String userName, String eMailAddress, String password, boolean admin)

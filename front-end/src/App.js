@@ -5,9 +5,10 @@ import axios from "axios";
 import React from "react";
 import {useState,useEffect} from 'react'
 import { useCookies } from 'react-cookie';
-import { CustomInput, FormText, Input } from 'reactstrap';
+import { CustomInput, FormText, Button} from 'reactstrap';
 import Nav from './components/Nav.js';
 import UserPage from './components/UserSigning/UserPage.js';
+import UserAccountPage from './components/UserSigning/UserAccountPage';
 import CreatePoll from './components/Polls/CreatePoll.js';
 import ViewPoll from './components/Polls/ViewPoll.js';
 import VotePoll from './components/Polls/VotePoll.js';
@@ -24,16 +25,14 @@ import UserSignIn from './components/UserSigning/UserSignIn';
 
 export default function App() 
 {
-    //creating IP state
-    const [ip, setIP] = useState('');
+  
     //creating cookie
     const [cookies, setCookie] = useCookies(['Voter', 'IP', 'uuid2']);
     const baseURL = "http://localhost:8080/";
     //creating function to load ip address from the API
     const getData = async () => {
       const res = await axios.get('https://geolocation-db.com/json/')
-      //console.log(res.data);
-      setIP(res.data.IPv4)
+      
       setCookie('IP', res.data.IPv4, { path: '/' });
 
       axios.post(`https://api.random.org/json-rpc/4/invoke`, {
@@ -62,14 +61,23 @@ export default function App()
     
     useEffect( () => {
       //passing getData method to the lifecycle method
-      if(cookies.IP && cookies.uuid2) {return;}
-      console.log("gettin")
+      try{
+        if(cookies.Voter.voterID && cookies.Voter.uuid1 && cookies.Voter.uuid2) {return;}
+      }
+      catch(ex)
+      {
+        console.log("gettin")
+      }
+      
       getData()
       if(!cookies.Voter || cookies.IP && cookies.uuid2)
       {
         push();
       }
-    }, [])
+      else{
+        
+      }
+    }, [cookies.Voter])
 
     function push()
     {
@@ -80,9 +88,8 @@ export default function App()
       })
       .then((response) => {
         console.log(response.status)
-        setCookie('Voter', response.data.voterID, { path: '/' });
+        setCookie('Voter', {voterID: response.data.voterID, uuid1: cookies.IP, uuid2: cookies.uuid2}, { path: '/' });
       });
-      
       
   }
     
@@ -117,6 +124,9 @@ export default function App()
           </Route>
           <Route exact path="/User">
             <UserPage />
+          </Route>
+          <Route exact path="/Account">
+            <UserAccountPage />
           </Route>
       </Switch>
       </Router>
