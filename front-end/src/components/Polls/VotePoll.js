@@ -12,7 +12,7 @@ const VotePoll = (props) => {
   const [post, setPost] = React.useState(null);
   const [pollID, setPollID] = React.useState();
   const [voted, setVoted] = React.useState(false);
-  const [cookies, setCookie] = useCookies(['IP']);
+  const [cookies, setCookie] = useCookies(['Voter']);
   const JWT = localStorage.getItem("JWT");
   const { time, start, pause, reset, status, autostart } = useTimer({
     autostart: true,
@@ -56,11 +56,7 @@ const VotePoll = (props) => {
   function vote(optionID)
   {
     axios
-    .post(`${baseURL}voter/vote?pollID=`+pollID+`&ChoiceID=`+optionID, {
-      voterID: 17,
-      uuid1: cookies.IP,
-      uuid2: "test2"
-    }).then((res) => {
+    .post(`${baseURL}voter/vote?pollID=`+pollID+`&ChoiceID=`+optionID, cookies.Voter ).then((res) => {
       if(res.status == 200)
       {
         setVoted(true);

@@ -56,6 +56,7 @@ public class UserContainer implements IUserContainer
         try{
             user.setVoter( DBGetVoter(userCreateRequest.getVCR().getVoterID().get()));
             User u = userDAL.saveGetUsertoDB(user);
+            u.getVoter().setUser(u);
         }
         catch(Exception exc){
             System.out.println(exc);

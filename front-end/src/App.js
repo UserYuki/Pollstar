@@ -27,68 +27,41 @@ export default function App()
 {
   
     //creating cookie
-    const [cookies, setCookie] = useCookies(['Voter', 'IP', 'uuid2']);
+    const [cookies, setCookie] = useCookies(['Voter']);
     const baseURL = "http://localhost:8080/";
+    const [ipadd, setipadd] = useState("");
+    const [uuidadd, setuuidadd] = useState(0);
     //creating function to load ip address from the API
-    const getData = async () => {
-      const res = await axios.get('https://geolocation-db.com/json/')
-      
-      setCookie('IP', res.data.IPv4, { path: '/' });
+    const getData = async() => {
+      await axios.get('https://geolocation-db.com/json/').then((res) => {setipadd(res.data.IPv4)})
 
-      axios.post(`https://api.random.org/json-rpc/4/invoke`, {
-        "jsonrpc": "2.0",
-        "method": "getUsage",
-        "params": {
-            "apiKey": "598c9146-7fce-45fa-8eae-10ed6d6e9b01" //secret api key don't look!
-        },
-        "id": 15998
-      }).then((res) => {
-        if(res.data.result.requestsLeft < 15 ) {console.log("no requests remaining"); return;}
-      })
-
-      axios.post(`https://api.random.org/json-rpc/4/invoke`, {
-        "jsonrpc": "2.0",
-        "method": "generateUUIDs",
-        "params": {
-            "apiKey": "598c9146-7fce-45fa-8eae-10ed6d6e9b01",
-            "n": 1
-        },
-        "id": 15998
-      }).then((res) => {
-        setCookie('uuid2', res.data.result.random.data[0], { path: '/' });
-      })
+      setuuidadd(Math.floor(Math.random() * 101))
     }
-    
+    useEffect( () => {console.log("yee"); getData()}, [])
     useEffect( () => {
-      //passing getData method to the lifecycle method
-      try{
-        if(cookies.Voter.voterID && cookies.Voter.uuid1 && cookies.Voter.uuid2) {return;}
-      }
-      catch(ex)
-      {
-        console.log("gettin")
-      }
       
-      getData()
-      if(!cookies.Voter || cookies.IP && cookies.uuid2)
+      console.log(cookies.Voter)
+      console.log(ipadd)
+      console.log(uuidadd)
+      if(cookies.Voter == null && ipadd.length > 1 && uuidadd > 0)
       {
-        push();
+        push(ipadd, uuidadd);
       }
       else{
-        
+        console.log(cookies.Voter)
       }
-    }, [cookies.Voter])
+    }, [ipadd, uuidadd])
 
-    function push()
+    function push(ip, uuid2)
     {
       axios
       .post(`${baseURL}voter/create`, {
-        uuid1: cookies.IP,
-        uuid2: cookies.uuid2
+        uuid1: ip,
+        uuid2: uuid2
       })
       .then((response) => {
         console.log(response.status)
-        setCookie('Voter', {voterID: response.data.voterID, uuid1: cookies.IP, uuid2: cookies.uuid2}, { path: '/' });
+        setCookie('Voter', {voterID: response.data.voterID, uuid1: ip, uuid2: uuid2}, { path: '/' });
       });
       
   }
