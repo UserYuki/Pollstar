@@ -25,8 +25,7 @@ public class Voter
     private int voterID;
     @Getter
     @Setter
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "userID")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "voter", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     private User user;
     @Column(name = "UUID1")
     private String UUID1;

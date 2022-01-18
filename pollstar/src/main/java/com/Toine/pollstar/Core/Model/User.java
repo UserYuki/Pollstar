@@ -33,12 +33,14 @@ public class User {
     @JsonBackReference
     private List<Poll> poll = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "voter_voterid", referencedColumnName = "voterid")
     private Voter voter;
 
     public Voter getVoter() {
         return voter;
     }
+
 
     public User() {     }
 
@@ -60,80 +62,6 @@ public class User {
     public boolean getAdmin() {return admin;}
     public void setAdmin(boolean admin) {this.admin = admin;}
 
-    public boolean Verify(String Identifier, String Pwd)
-    {
-        if(Identifier == null)
-        {
-            return password.equals(Pwd);
-        }
-        else if(Identifier.contains("@"))
-        {
-            return EmailVerify(Identifier, Pwd);
-        }
-        else
-        {
-            return NameVerify(Identifier, Pwd);
-        }
-    }
-    public boolean NameVerify(String UserN, String Pwd)
-    {
-        if(userName.equals(UserN) && password.equals(Pwd))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public boolean EmailVerify(String eMailAddress, String Pwd)
-    {
-        if(eMailAddress.equals(eMailAddress) && password.equals(Pwd))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public boolean ChangeUserName(String newUserName, String Password)
-    {
-        if(Verify(null, Password))
-        {
-            setUserName(newUserName);
-            return getUserName().equals(newUserName);
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public boolean ChangePassword(String newPassword, String password)
-    {
-        if(Verify(null, password))
-        {
-            setPassword(newPassword);
-            return getPassword().equals(newPassword);
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public boolean ChangeEMail(String Email, String password)
-    {
-        if(Verify(null, password))
-        {
-            setEMailAddress(Email);
-            return getEMailAddress().equals(Email);
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     @Override
     public String toString()

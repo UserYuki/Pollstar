@@ -56,7 +56,7 @@ public class PollController
     //POST at http://localhost:XXXX/poll/
     public ResponseEntity<Poll> createPoll(@RequestBody Poll poll)
     {
-        if(!IPC.addPoll(poll))
+        if(!IPC.addPoll(poll)) //TODO: yeah this doesn't work, make it not locally
         {
             String entity = "Poll with id " + poll.getPollID() + " already exists.";
             return new ResponseEntity(entity,HttpStatus.CONFLICT);

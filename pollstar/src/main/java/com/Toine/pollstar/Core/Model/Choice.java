@@ -136,11 +136,6 @@ public class Choice {
         }
     }
 
-    public boolean RemoveVote(Voter voter)
-    {
-        return voters.remove(voter);
-    }
-
     @Override
     public String toString()
     {
