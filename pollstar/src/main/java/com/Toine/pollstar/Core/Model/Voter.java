@@ -52,6 +52,7 @@ public class Voter
 
     public Voter(){}
 
+
     public String getUUID1() {
         return UUID1;
     }
