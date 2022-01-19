@@ -1,14 +1,16 @@
 buildscript {
 	repositories {
-		mavenCentral()
+
 		maven { url 'https://maven.aliyun.com/repository/google/' }
 		maven { url 'https://maven.aliyun.com/repository/public/' }
 		maven { url 'https://maven.aliyun.com/repository/spring/' }
 		maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
 		maven { url 'https://maven.aliyun.com/repository/spring-plugin/' }
+		mavenCentral()
 	}
 	dependencies {
 		classpath 'se.transmode.gradle:gradle-docker:1.1'
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.5.5")
 	}
 }
 
