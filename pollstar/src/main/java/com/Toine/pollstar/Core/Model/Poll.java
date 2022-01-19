@@ -50,15 +50,7 @@ public class Poll
         this.user = user;
         this.pollLockedStatus = pollLockedStatus;
     }
-    public Poll(int pollID, String pollName, Date pollCreationDate, User user, boolean pollLockedStatus)
-    {
-        this.pollID = pollID;
-        this.pollName = pollName;
-        this.pollChoices = new ArrayList<>();
-        this.pollCreationDate = pollCreationDate;
-        this.user = user;
-        this.pollLockedStatus = pollLockedStatus;
-    }
+
 
     public Poll(){  }//this.pollChoices = new ArrayList<>();  }
 
@@ -104,7 +96,27 @@ public class Poll
                 try
                 {
                     c.removeVote(voter);
-                 return false;
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    return c.voterVoted(voter.getVoterID());
+                }
+            }
+
+        }
+        return false;
+    }
+
+    public boolean voterVotedwithoutDeletingIt(Voter voter)
+    {
+        for(Choice c : pollChoices)
+        {
+            if(c.voterVoted(voter.getVoterID()))
+            {
+                try
+                {
+                    return true;
                 }
                 catch (Exception ex)
                 {
