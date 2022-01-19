@@ -11,8 +11,6 @@ const UserSignIn = (props) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const[redirect, setRedirect] = React.useState();
-  localStorage.removeItem("JWT");
-  localStorage.removeItem("ID");
 
 async function submitUsername(e) 
 {  
@@ -27,7 +25,7 @@ async function submitUsername(e)
 
     axios.get(`${baseURL}api/user/retrieveID`, 
     {headers: {Authorization: response.data.Authorization}}).then((res)=>{
-      if(res.status == 201){localStorage.setItem("ID", res.data ); setRedirect("/")}
+      if(res.status == 201){localStorage.setItem("ID", res.data ); setRedirect("/Account")}
       else
       {
         console.log(res.data)
@@ -41,7 +39,7 @@ function submitEmail()
   alert(email + password);
   return false;
 }
-if(redirect!= undefined) {return(<a href="/Account"/>)}
+if(redirect!= undefined) return(<Redirect to={redirect} />) 
 
   return (
     <>

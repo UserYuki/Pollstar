@@ -14,7 +14,6 @@ const UserSignUp = (props) => {
   const [errorMsg, setErrorMsg] = React.useState("");
 
   const [cookies, setCookie] = useCookies(['Voter']);
-  localStorage.removeItem("JWT");
 
   function checkPassword(e)
   {
