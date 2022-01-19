@@ -7,6 +7,8 @@ import com.Toine.pollstar.Repository.JPARepository.JPA.IVoterRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class VoterStorage implements IVoterStorage
 {
@@ -21,6 +23,11 @@ public class VoterStorage implements IVoterStorage
     @Override
     public Voter getVoterfromDBbyID(int id) {
         return repo.findVoterByVoterID(id);
+    }
+
+    @Override
+    public Optional<Voter> getVoterfromDBbyUuid1and2(String id1, String id2) {
+        return repo.findVoterByUUID1AndUUID2(id1, id2);
     }
 
 }

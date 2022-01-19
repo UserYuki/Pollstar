@@ -35,6 +35,19 @@ public class VoterController
 
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Voter> ReturnVoter (@RequestBody VoterCreateRequest voterCreateRequest)
+    {
+        try{
+            Voter v = IUC.LoginVoter(voterCreateRequest);
+            return ResponseEntity.ok().body(v);
+        }
+        catch(RuntimeException ex) {
+            return new ResponseEntity(ex.toString(), HttpStatus.IM_USED);
+        }
+
+    }
+
 
 
     @GetMapping("/getPoll/{id}")

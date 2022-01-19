@@ -20,6 +20,7 @@ public interface IUserContainer
 
     //------------------ Voter Stuff
     Voter CreateVoter(VoterCreateRequest voterCreateRequest);
+    Voter LoginVoter(VoterCreateRequest voterCreateRequest);
     void DBSaveVoter(Voter voter);
     Voter DBGetVoter(int voterID);
 
