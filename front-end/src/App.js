@@ -31,6 +31,7 @@ export default function App()
     const baseURL = "http://localhost:8080/";
     const [ipadd, setipadd] = useState("");
     const [uuidadd, setuuidadd] = useState(0);
+    const [currentPage, setCurrentPage] = useState("Welcome!");
     //creating function to load ip address from the API
     const getData = async() => {
       await axios.get('https://geolocation-db.com/json/').then((res) => {setipadd(res.data.IPv4)})
@@ -40,16 +41,12 @@ export default function App()
     useEffect( () => {console.log("yee"); getData()}, [])
     useEffect( () => {
       
-      console.log(cookies.Voter)
-      console.log(ipadd)
-      console.log(uuidadd)
-      if(cookies.Voter == null && ipadd.length > 1 && uuidadd > 0)
+      
+      if(cookies.Voter === undefined && ipadd.length > 1 && uuidadd >= 0)
       {
         push(ipadd, uuidadd);
       }
-      else{
-        console.log(cookies.Voter)
-      }
+      
     }, [ipadd, uuidadd])
 
     function push(ip, uuid2)

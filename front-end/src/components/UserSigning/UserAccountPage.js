@@ -42,10 +42,22 @@ const UserAccountPage = (props) => {
       setRedirect("/ViewPoll/" + selectedPollID);
     }
 
+    function logout(e)
+    {
+      e.preventDefault()
+      localStorage.removeItem("JWT");
+      localStorage.removeItem("ID");
+      setRedirect("/User");
+      console.log(redirect);
+    }
+
     if(redirect!= undefined) return(<Redirect to={redirect} />) 
 
   return (
     <div>
+
+
+
       <div class="split left">
         <div class="centered">
           <Form>
@@ -103,9 +115,11 @@ const UserAccountPage = (props) => {
             </FormGroup>
             <Button> Submitto! </Button>
           </Form>
+          
         </div>
+        
       </div>
-
+      
       <div class="split right">
         <div class="centered">
           <Form onSubmit={PollRedirect}>
@@ -119,8 +133,13 @@ const UserAccountPage = (props) => {
             </FormGroup>
             <Button>Go to selected Poll</Button>
           </Form>
+          <br/>
+          <br/>
+          <br/>
+          <Button class="rightLogoutButton" onClick={logout}> Logout </Button>
         </div>
       </div>
+      
     </div>
   );
 };

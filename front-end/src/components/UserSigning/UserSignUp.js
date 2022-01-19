@@ -73,7 +73,6 @@ async function submitUsername(e)
   return (
     <>
       <div class="float-container">
-        <div class="centered">
         <Form onSubmit={submitUsername}>
             <FormGroup>
               <Label for="UserName">Username</Label>
@@ -118,7 +117,6 @@ async function submitUsername(e)
             </FormGroup>
             <Button type="submit" disabled={errorMsg.length} value="Submit">Submit</Button>
           </Form>      
-        </div>
       </div>
 
     </>

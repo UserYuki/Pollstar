@@ -35,11 +35,15 @@
     padding: 20px;
 }
 
+.rightLogoutButton {
+ right: 1px;
+ position:relative;
+}
+
 .float-child {
     width: 45%;
     float: left;
     padding: 20px;
-    border: 2px solid red;
 }  
 .float-child2 {
   width: 45%;

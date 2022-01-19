@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Button, Form, FormGroup, Label, Input, FormText, Alert } from "reactstrap";
+import { BrowserRouter as useHistory, Redirect, Router, Switch, Route, Link } from "react-router-dom";
 
 const baseURL = "http://localhost:8080/";
 
@@ -9,6 +10,7 @@ const UserSignIn = (props) => {
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const[redirect, setRedirect] = React.useState();
   localStorage.removeItem("JWT");
   localStorage.removeItem("ID");
 
@@ -25,7 +27,7 @@ async function submitUsername(e)
 
     axios.get(`${baseURL}api/user/retrieveID`, 
     {headers: {Authorization: response.data.Authorization}}).then((res)=>{
-      if(res.status == 201){localStorage.setItem("ID", res.data )}
+      if(res.status == 201){localStorage.setItem("ID", res.data ); setRedirect("/")}
       else
       {
         console.log(res.data)
@@ -33,16 +35,17 @@ async function submitUsername(e)
     }).catch((error) => console.log(error))
   });
 }
+
 function submitEmail() 
 {
   alert(email + password);
   return false;
 }
- 
+if(redirect!= undefined) {return(<a href="/Account"/>)}
+
   return (
     <>
       <div class="float-container">
-        <div class="float-child">
         <Form onSubmit={submitUsername}>
             <FormGroup>
               <Label for="UserName">Username</Label>
@@ -66,7 +69,7 @@ function submitEmail()
             </FormGroup>
             <Button type="submit" value="Submit">Submit</Button>
           </Form>
-        </div>
+        {/* 
         <div class="float-child2">
           <Form onSubmit={submitEmail}>
             <FormGroup>
@@ -92,6 +95,7 @@ function submitEmail()
             <Button>Submit</Button>
           </Form>
         </div>
+        */}
       </div>
 
     </>

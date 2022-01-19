@@ -38,6 +38,7 @@ public class UserContainer implements IUserContainer
 
     public void CreateUser(UserCreateRequest userCreateRequest) {
         User user = new User();
+
         Optional<User> byUsername = userDAL.returnUserbyUserNameinDB(userCreateRequest.getUsername());
         if (byUsername.isPresent()) {
             throw new RuntimeException("User "+ userCreateRequest.getUsername() +" already registered. Please use a different username.");
@@ -54,6 +55,7 @@ public class UserContainer implements IUserContainer
 
 
         try{
+
             user.setVoter( DBGetVoter(userCreateRequest.getVCR().getVoterID().get()));
             User u = userDAL.saveGetUsertoDB(user);
             u.getVoter().setUser(u);
@@ -118,6 +120,19 @@ public class UserContainer implements IUserContainer
     }
 
     @Override
+    public Voter LoginVoter(VoterCreateRequest voterCreateRequest) {
+        Optional<Voter> voter = voterDAL.getVoterfromDBbyUuid1and2(voterCreateRequest.getUUID1(), voterCreateRequest.getUUID2());
+        if(voter.isPresent())
+        {
+            return voter.get();
+        }
+        else
+        {
+            throw new RuntimeException("Doesn't exist?");
+        }
+    }
+
+    @Override
     public void DBSaveVoter(Voter voter) {
         voterDAL.saveVotertoDB(voter);
     }
@@ -125,20 +140,6 @@ public class UserContainer implements IUserContainer
     @Override
     public Voter DBGetVoter(int voterID) {
         return voterDAL.getVoterfromDBbyID(voterID);
-    }
-
-    public boolean CreateUser(String userName, String eMailAddr, String password, boolean admin)
-    {
-        try
-        {
-            users.add(new User(userName, eMailAddr, password, admin));
-            return true;
-        }
-        catch(Exception ex)
-        {
-            return false;
-        }
-
     }
 
     public boolean OPUser(User admin, User user)
