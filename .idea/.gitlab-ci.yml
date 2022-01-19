@@ -4,8 +4,8 @@ services:
   
 stages:
 - buildtest
-- package
 - test
+- package
 
 build_and_test:
   image: gradle
