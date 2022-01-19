@@ -35,7 +35,7 @@ sonarqube-check:
     key: "${CI_JOB_NAME}"
     paths:
       - .sonar/cache
-  script: .\gradlew sonarqube
+  script: gradlew sonarqube
   allow_failure: true
   only:
     - main # or the name of your main branch
