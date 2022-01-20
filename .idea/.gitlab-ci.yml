@@ -13,9 +13,9 @@ build_and_test:
   script:
     - cd pollstar
     - gradle build
-  artifacts:
-   paths:
-    - pollstar/build/libs/*.jar     
+  #artifacts:
+  # paths:
+  #  - pollstar/build/libs/*.jar     
 
 package:
   stage: package
