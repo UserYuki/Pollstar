@@ -1,3 +1,4 @@
+RUN adduser --defaults user
 FROM node:14.18.0 as front-end
 WORKDIR /front-end
 COPY front-end .
@@ -13,6 +14,6 @@ FROM openjdk:11
 COPY --from=pollstar /pollstar/build/libs/pollstar-0.0.1-SNAPSHOT.jar ./app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 EXPOSE 8080
-RUN adduser -D user
+
 USER user
-CMD [ "sh", "-c", "java -Dserver.port=$PORT -Djava.security.egd=file:/dev/./urandom -jar app.jar" ]
+CMD [ "sh", "-c", "java -Dserver.port=$PORT -Djava.security.e gd=file:/dev/./urandom -jar app.jar" ]
