@@ -23,7 +23,7 @@ import java.util.Optional;
 public class UserContainer implements IUserContainer
 {
     public List<User> users;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //might not be allowed to init like this... (if break check this)
     //public UserContainer() { this.users = new ArrayList<>();  }
 
     @Autowired
@@ -32,10 +32,27 @@ public class UserContainer implements IUserContainer
     @Autowired
     IVoterStorage voterDAL;
 
+    public UserContainer( IUserStorage userDAL, IVoterStorage voterDAL ) //for Testing using mocks
+    {
+        this.userDAL = userDAL;
+        this.voterDAL = voterDAL;
+    }
+
     public User readUserByUsername (String username) {
         return userDAL.returnUserbyUserNameinDB(username).orElseThrow(EntityNotFoundException::new);
     }
 
+    public User CreateUser(long userID, String userName, String eMailAddress, String password, boolean admin)
+    {
+        User createdUser = new User();
+        createdUser.setUserID(userID);
+        createdUser.setUserName(userName);
+        createdUser.setEMailAddress(eMailAddress);
+        createdUser.setPassword(passwordEncoder.encode(password));
+        createdUser.setAdmin(admin);
+
+        return createdUser;
+    }
     public void CreateUser(UserCreateRequest userCreateRequest) {
         User user = new User();
 
@@ -51,20 +68,13 @@ public class UserContainer implements IUserContainer
         user.setEMailAddress(userCreateRequest.getEMailAddress());
         user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
 
-
-
-
-        try{
-
             user.setVoter( DBGetVoter(userCreateRequest.getVCR().getVoterID().get()));
             User u = userDAL.saveGetUsertoDB(user);
             u.getVoter().setUser(u);
-        }
-        catch(Exception exc){
-            System.out.println(exc);
-            userDAL.saveUsertoDB(user);
-            //failsafe
-        }
+
+        System.out.println(DBGetVoter(userCreateRequest.getVCR().getVoterID().get()).getUser());
+
+
     }
 
     @Override
@@ -94,15 +104,20 @@ public class UserContainer implements IUserContainer
             {
                 user.setEMailAddress(userPatchRequest.getNewEMailAddress());
             }
-            if(userPatchRequest.getNewPassword() == null ) {}
-            else if (!userPatchRequest.getNewPassword().equals(userPatchRequest.getConfirmedNewPassword()))
+            if(userPatchRequest.getNewPassword() != null ) {
+            if(userPatchRequest.getNewPassword() == userPatchRequest.getConfirmedNewPassword())
             {
-                throw new RuntimeException("New password must be confirmed with an identical password.");
+                System.out.println("1" + userPatchRequest.getNewPassword());
+                System.out.println("2" + userPatchRequest.getConfirmedNewPassword());
+                user.setPassword(passwordEncoder.encode(userPatchRequest.getNewPassword()));
+
             }
             else
             {
-                user.setPassword(passwordEncoder.encode(userPatchRequest.getNewPassword()));
+                throw new RuntimeException("New password must be confirmed with an identical password.");
             }
+            }
+            System.out.println("a");
             userDAL.saveUsertoDB(user);
         }
 
@@ -128,7 +143,7 @@ public class UserContainer implements IUserContainer
         }
         else
         {
-            throw new RuntimeException("Doesn't exist?");
+            throw new RuntimeException("Doesn't exist");
         }
     }
 
@@ -172,6 +187,8 @@ public class UserContainer implements IUserContainer
     public boolean NameVerify(String UserN, String Pwd)
     {
         Optional<User> test = userDAL.returnUserbyUserNameinDB(UserN);
+
+        if(test.isEmpty()) { return false; }
 
         return passwordEncoder.matches(Pwd, test.get().getPassword());
     }

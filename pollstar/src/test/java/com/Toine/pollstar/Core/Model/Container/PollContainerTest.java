@@ -8,6 +8,7 @@ import com.Toine.pollstar.Core.Model.Voter;
 import com.Toine.pollstar.Repository.Interfaces.IChoiceStorage;
 import com.Toine.pollstar.Repository.Interfaces.IPollStorage;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -37,8 +38,10 @@ class PollContainerTest {
 
     //test data:
     private Poll poll;
+    private Voter voter;
+    private User user;
 
-    @Before
+    @BeforeEach
     public void setup(){
         pollDAL = mock(IPollStorage.class);
         choiceDAL = mock(IChoiceStorage.class);
@@ -55,7 +58,11 @@ class PollContainerTest {
         choices.add(new Choice(2, "Choice one"));
         choices.add(new Choice(3, "Choice two"));
         choices.add(new Choice(4, "Choice three"));
-        User user = new User("Tester", "Test@Email.nothing", "veryyStrong", false);
+        user = new User(6,"Tester", "Test@Email.nothing", "veryyStrong", false);
+        voter = new Voter();
+        voter.setVoterID(5);
+        voter.setUUID1("RandomIp");
+        voter.setUUID2("98532608492 (Random int/String)");
         poll = new Poll(1, "Test Poll", choices, new Date(), user, false);
     }
 
@@ -74,19 +81,28 @@ class PollContainerTest {
     @Test
     public void savePollandgetbyID()
     {
-        setup();
-        poll.setPollID(10);
-        pollDAL.savePolltoDB(poll);
-        Poll pollDB = pollContainer.getPollfromDBbyID(10);
+        //Arrange
+        when(pollDAL.getPollByID(poll.getPollID())).thenReturn(poll);
+
+        //Act
+        Poll pollDB = pollContainer.getPollfromDBbyID(poll.getPollID());
+
+        //Assert
         assertEquals(poll, pollDB);
+        verify(pollDAL, times(1)).getPollByID(poll.getPollID());
     }
 
     @Test
     public void addPolltoDBandGetBack()
     {
-        setup();
-        poll.setPollID(15);
+        //Arrange
+        //TODO: add when then return
+
+        //Act
         Poll pollDB = pollContainer.addPolltoDBandGetBack(poll);
+
+        //Assert
+        //TODO: assert output to input
         verify(pollDAL, times(1)).savePoll(poll);
 
     }
@@ -94,20 +110,14 @@ class PollContainerTest {
     @Test
     public void castVotetoDB()
     {
-        setup();
-
-
-        poll.setPollID(20);
-        Voter voter = new Voter();
-        voter.setVoterID(5);
-        voter.setUUID1("RandomIp");
-        voter.setUUID2("number random 2");
-
+        //Arrange
         when(userDAL.DBGetVoter(voter.getVoterID())).thenReturn(voter);
         when(pollDAL.getPollByID(poll.getPollID())).thenReturn(poll);
 
-        pollContainer.CastVotetoDB(voter, 20, 2);
+        //Act
+        pollContainer.CastVotetoDB(voter, poll.getPollID(), poll.getPollChoices().get(1).getChoiceID());
 
+        //Assert
         assertTrue(poll.voterVotedwithoutDeletingIt(voter));
         verify(userDAL, times(1)).DBSaveVoter(voter);
 
@@ -116,10 +126,10 @@ class PollContainerTest {
     @Test
     public void savePoll()
     {
-        setup();
-        poll.setPollID(25);
+        //Act
         pollContainer.savePoll(poll);
 
+        //Assert
         verify(pollDAL, times(1)).savePolltoDB(poll);
         assertTrue(pollContainer.getPolls().contains(poll));
     }
