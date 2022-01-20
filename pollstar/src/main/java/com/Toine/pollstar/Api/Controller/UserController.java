@@ -5,7 +5,9 @@ import com.Toine.pollstar.Core.Model.DTO.JWTPayload;
 import com.Toine.pollstar.Core.Model.DTO.UserDetails.UserDTO;
 import com.Toine.pollstar.Core.Model.Request.UserCreateRequest;
 import com.Toine.pollstar.Core.Model.Request.UserPatchRequest;
+import com.Toine.pollstar.Core.Model.Request.VoterCreateRequest;
 import com.Toine.pollstar.Core.Model.User;
+import com.Toine.pollstar.Core.Model.Voter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +78,29 @@ public class UserController
         }
             long entity = IUC.readUserIDbyUsername(jwtP.getSub());
             return new ResponseEntity(entity, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getVoter")
+    public ResponseEntity<VoterCreateRequest> getVoter(@RequestHeader("Authorization") String Authorization)
+    {
+        JWTPayload jwtP = new JWTPayload();
+        try {
+            String[] chunks = Authorization.split("\\.");
+            Base64.Decoder decoder = Base64.getUrlDecoder();
+            String payload = new String(decoder.decode(chunks[1]));
+            ObjectMapper objm = new ObjectMapper();
+            jwtP = objm.readValue(payload, JWTPayload.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            String entity = "Something went wrong, please try logging out and back in.";
+            return new ResponseEntity(entity, HttpStatus.CONFLICT);
+        }
+        Voter voter = IUC.readUserByUsername(jwtP.getSub()).getVoter();
+        VoterCreateRequest vCR = new VoterCreateRequest();
+        vCR.setVoterID(java.util.Optional.of(voter.getVoterID()));
+        vCR.setUUID1(voter.getUUID1());
+        vCR.setUUID2(voter.getUUID2());
+        return new ResponseEntity(vCR, HttpStatus.OK);
     }
 
     @PatchMapping("/update")

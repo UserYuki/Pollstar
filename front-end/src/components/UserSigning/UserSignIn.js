@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useParams } from "react-router";
+import { useCookies } from 'react-cookie';
 import { Button, Form, FormGroup, Label, Input, FormText, Alert } from "reactstrap";
 import { BrowserRouter as useHistory, Redirect, Router, Switch, Route, Link } from "react-router-dom";
 
@@ -10,6 +11,7 @@ const UserSignIn = (props) => {
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [cookies, setCookie] = useCookies(['JWT', 'ID']);
   const[redirect, setRedirect] = React.useState();
 
 async function submitUsername(e) 
@@ -22,10 +24,28 @@ async function submitUsername(e)
   })
   .then((response) => {
     localStorage.setItem("JWT", response.data.Authorization)
+    var today = new Date();
+    var result = today.setDate(today.getDate() + 10);
+    console.log(result)
+    setCookie('JWT', response.data.Authorization, { path: '/', expires: new Date(result) });
 
     axios.get(`${baseURL}api/user/retrieveID`, 
     {headers: {Authorization: response.data.Authorization}}).then((res)=>{
-      if(res.status == 201){localStorage.setItem("ID", res.data ); setRedirect("/Account")}
+      if(res.status == 201){setCookie('ID', res.data, { path: '/' }); setRedirect("/Account")}
+      else
+      {
+        console.log(res.data)
+      }
+    }).catch((error) => console.log(error))
+
+    axios.get(`${baseURL}api/user/getVoter`, 
+    {headers: {Authorization: response.data.Authorization}}).then((res)=>{
+      if(res.status == 201)
+      {
+        localStorage.setItem("uID", res.data.uuid2);
+        setCookie('Voter', {voterID: res.data.voterID, uuid1: res.data.uuid1, uuid2: res.data.uuid2}, { path: '/' });
+      setRedirect("/Account")
+      }
       else
       {
         console.log(res.data)

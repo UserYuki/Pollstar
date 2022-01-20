@@ -43,7 +43,7 @@ public class VoterController
             return ResponseEntity.ok().body(v);
         }
         catch(RuntimeException ex) {
-            return new ResponseEntity(ex.toString(), HttpStatus.IM_USED);
+            return CreateVoter(voterCreateRequest);
         }
 
     }

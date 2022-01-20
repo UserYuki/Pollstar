@@ -3,23 +3,33 @@ import UserPage from "./UserPage.js";
 import './UserPagesStyle.css';
 import {useState,useEffect} from 'react'
 import axios from "axios";
+import { useCookies } from 'react-cookie';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const baseURL = "http://localhost:8080/";
 
 const AccountNavButtonPart = (props) => {
     const [username, setUsername] = useState();
-    const JWT = localStorage.getItem("JWT");
+    const [cookies, setCookie] = useCookies(['JWT']);
+    
     useEffect(() => {
-        let headerConfig = {
-            headers: {
-              Authorization: JWT
-            }
-          }
-        axios.get(`${baseURL}api/user/name`, headerConfig).then((response) => {
-            if(response.status == 200){setUsername(response.data);}
-            console.log("reload")
-        })
+        try
+        {
+            const JWT = cookies.get('JWT');
+
+            let headerConfig = {
+                headers: {
+                  Authorization: JWT
+                }
+              }
+            axios.get(`${baseURL}api/user/name`, headerConfig).then((response) => {
+                if(response.status == 200){setUsername(response.data);}
+            })
+        }
+        catch(Exception)
+        {
+            console.log(Exception);
+        }
     }, [])
 
     if(!username) {return ( <div>

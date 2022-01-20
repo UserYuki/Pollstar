@@ -27,23 +27,58 @@ export default function App()
 {
   
     //creating cookie
-    const [cookies, setCookie] = useCookies(['Voter']);
+    const [cookies, setCookie] = useCookies(['Voter', 'JWT', 'ID' ]);
     const baseURL = "http://localhost:8080/";
     const [ipadd, setipadd] = useState("");
     const [uuidadd, setuuidadd] = useState(0);
-    const [currentPage, setCurrentPage] = useState("Welcome!");
     //creating function to load ip address from the API
     const getData = async() => {
       await axios.get('https://geolocation-db.com/json/').then((res) => {setipadd(res.data.IPv4)})
 
-      setuuidadd(Math.floor(Math.random() * 101))
-    }
-    useEffect( () => {console.log("yee"); getData()}, [])
-    useEffect( () => {
+      if(localStorage.getItem("uID") === null || localStorage.getItem("uID").length === 0 ) 
+      {
+        setuuidadd(Math.floor(Math.random() * 101))
+      }
+      else
+      {
+        setuuidadd(localStorage.getItem("uID"));
+      }
       
+    }
+    useEffect( () => {
+      getData()
+      try{
+        console.log(1);
+        if(cookies.get('ID') < 3) {console.log("wat"); return;}
+        console.log(2);
+      }
+      catch(Exception)
+      {
+        try
+        {
+          if(cookies.JWT === null) {return;}
+          console.log(3);
+            axios.get(`${baseURL}api/user/retrieveID`, 
+            {headers: {Authorization: cookies.JWT}}).then((res)=>{
+              if(res.status == 201){setCookie('ID', res.data, { path: '/' });}
+              else
+              {
+                console.log(res.data)
+              }
+            }).catch((error) => console.log(error))
+        }
+        catch(Exc)
+        {
+
+        }
+      }
+    }, [])
+
+    useEffect( () => {
       
       if(cookies.Voter === undefined && ipadd.length > 1 && uuidadd >= 0)
       {
+        localStorage.setItem("uID", uuidadd);
         push(ipadd, uuidadd);
       }
       
@@ -52,7 +87,7 @@ export default function App()
     function push(ip, uuid2)
     {
       axios
-      .post(`${baseURL}voter/create`, {
+      .post(`${baseURL}voter/login`, {
         uuid1: ip,
         uuid2: uuid2
       })
