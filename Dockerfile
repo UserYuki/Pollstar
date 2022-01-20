@@ -1,7 +1,7 @@
 FROM node as front-end
 WORKDIR /front-end
 COPY front-end .
-RUN npm ci
+RUN npm install
 RUN npm run-script build
 FROM gradle as pollstar
 WORKDIR /pollstar
