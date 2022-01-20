@@ -23,7 +23,8 @@ package:
   script:
     - ls
     - docker build -t dock-image .
-    - docker run dock-image ./gradlew test
+    - docker run -p 8080:8080 dock-image
+    #- docker run dock-image ./gradlew test
     - ls
     
 
