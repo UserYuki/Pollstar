@@ -20,6 +20,7 @@ build_and_test:
 package:
   stage: package
   script:
+    - ls
     - docker build -t dock-image .
     - docker run dock-image ./gradlew test
     
