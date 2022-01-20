@@ -19,8 +19,8 @@ const UserAccountPage = (props) => {
     const[redirect, setRedirect] = react.useState();
     const [cookies, setCookie, removeCookie] = useCookies(['Voter', 'JWT', 'ID' ]);
 
-    const JWT = cookies.get('JWT');
-    const UID = cookies.get('ID');
+    const JWT = cookies.JWT
+    const UID = cookies.ID
 
     useEffect( () => {
         if(polls){return;}
@@ -47,6 +47,7 @@ const UserAccountPage = (props) => {
     function logout(e)
     {
       e.preventDefault()
+      cookies.JWT = 0;
       removeCookie("JWT");
       removeCookie("ID");
       setRedirect("/User");

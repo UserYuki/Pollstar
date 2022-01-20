@@ -15,8 +15,8 @@ const AccountNavButtonPart = (props) => {
     useEffect(() => {
         try
         {
-            const JWT = cookies.get('JWT');
-
+            const JWT = cookies.JWT
+            console.log(JWT);
             let headerConfig = {
                 headers: {
                   Authorization: JWT
@@ -24,13 +24,13 @@ const AccountNavButtonPart = (props) => {
               }
             axios.get(`${baseURL}api/user/name`, headerConfig).then((response) => {
                 if(response.status == 200){setUsername(response.data);}
-            })
+            }).catch((ex) => {console.log(ex); setUsername(null);})
         }
         catch(Exception)
         {
             console.log(Exception);
         }
-    }, [])
+    }, [cookies.JWT])
 
     if(!username) {return ( <div>
             <Link to="/User">

@@ -20,8 +20,8 @@ const CreatePoll = (props) => {
   const [inputList, setInputList] = useState([{ choiceName: "" }]);
   const [cookies, setCookie] = useCookies(['Voter', 'JWT', 'ID' ]);
 
-  const JWT = cookies.get('JWT');
-  const UID = cookies.get('ID');
+  const JWT = cookies.JWT
+  const UID = cookies.ID
 
     // handle input change
     const handleInputChange = (e, index) => {

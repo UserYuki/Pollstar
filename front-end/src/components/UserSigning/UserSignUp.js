@@ -43,7 +43,6 @@ async function submitUsername(e)
   }
   else
   {
-    console.log(cookies.Voter)
     await axios
     .post(`${baseURL}api/user`, {
       username: username,

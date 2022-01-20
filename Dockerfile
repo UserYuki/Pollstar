@@ -1,4 +1,4 @@
-FROM node as front-end
+FROM node:14.18.0 as front-end
 WORKDIR /front-end
 COPY front-end .
 RUN npm ci
