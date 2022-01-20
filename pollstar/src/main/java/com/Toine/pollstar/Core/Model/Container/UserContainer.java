@@ -55,7 +55,22 @@ public class UserContainer implements IUserContainer
     }
     public void CreateUser(UserCreateRequest userCreateRequest) {
         User user = new User();
-
+        Voter voter = new Voter();
+        if(userCreateRequest.getVCR().getVoterID().isEmpty())
+        {
+            if(!userCreateRequest.getVCR().getUUID1().isEmpty() && !userCreateRequest.getVCR().getUUID2().isEmpty())
+            {
+                voter = CreateVoter(userCreateRequest.getVCR());
+            }
+            else
+            {
+                throw new RuntimeException("No voter, please restart");
+            }
+        }
+        else
+        {
+            voter = DBGetVoter(userCreateRequest.getVCR().getVoterID().get());
+        }
         Optional<User> byUsername = userDAL.returnUserbyUserNameinDB(userCreateRequest.getUsername());
         if (byUsername.isPresent()) {
             throw new RuntimeException("User "+ userCreateRequest.getUsername() +" already registered. Please use a different username.");
@@ -64,15 +79,18 @@ public class UserContainer implements IUserContainer
         if (byeMail.isPresent()) {
             throw new RuntimeException("Email "+ userCreateRequest.getEMailAddress() +" already registered. Please use a different email, or login.");
         }
+        Optional<User> byVoter = userDAL.returnUserbyVoterIDinDB(voter.getVoterID());
+        if (byVoter.isPresent()) {
+            throw new RuntimeException("This device is already bound to another user, please login or properly reset the site.");
+        }
         user.setUserName(userCreateRequest.getUsername());
         user.setEMailAddress(userCreateRequest.getEMailAddress());
         user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
 
-            user.setVoter( DBGetVoter(userCreateRequest.getVCR().getVoterID().get()));
+            user.setVoter( voter );
             User u = userDAL.saveGetUsertoDB(user);
             u.getVoter().setUser(u);
 
-        System.out.println(DBGetVoter(userCreateRequest.getVCR().getVoterID().get()).getUser());
 
 
     }

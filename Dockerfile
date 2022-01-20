@@ -10,7 +10,7 @@ RUN mkdir -p src/main/resources/static
 COPY --from=front-end /front-end/build src/main/resources/static
 RUN gradle clean check
 FROM openjdk:11
-COPY --from=backend /pollstar/build/libs/pollstar-0.0.1-SNAPSHOT.jar ./app.jar
+COPY --from=pollstar /pollstar/build/libs/pollstar-0.0.1-SNAPSHOT.jar ./app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 EXPOSE 8080
 RUN adduser -D user

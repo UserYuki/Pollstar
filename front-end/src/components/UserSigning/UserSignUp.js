@@ -12,7 +12,7 @@ const UserSignUp = (props) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [errorMsg, setErrorMsg] = React.useState("");
-
+  const[redirect, setRedirect] = React.useState();
   const [cookies, setCookie] = useCookies(['Voter']);
 
   function checkPassword(e)
@@ -54,7 +54,7 @@ async function submitUsername(e)
       if(response.status == 200)
       {
         //redirect
-        return(<Redirect to="/user/SignIn" />)
+        setRedirect("/SignIn")
       }
       else
       {
@@ -67,6 +67,8 @@ async function submitUsername(e)
   }
 
 }
+
+if(redirect!= undefined) return(<div> Please login! <br/> <h1> {"<====="} </h1> </div>) 
 
   return (
     <>

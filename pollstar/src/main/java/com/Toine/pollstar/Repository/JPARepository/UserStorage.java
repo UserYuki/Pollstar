@@ -43,6 +43,11 @@ public class UserStorage implements IUserStorage
     }
 
     @Override
+    public Optional<User> returnUserbyVoterIDinDB(int voterID) {
+        return repo.findByVoterVoterID(voterID);
+    }
+
+    @Override
     public void saveUsertoDB(User user) {
         repo.save(user);
     }

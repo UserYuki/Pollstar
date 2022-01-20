@@ -11,6 +11,7 @@ public interface IUserStorage
     boolean VerifyAccountbyEmailinDB(String eMailAddress, String Password);
     Optional<User> returnUserbyUserNameinDB(String username);
     Optional<User> returnUserbyeMailAddressinDB(String eMailAddress);
+    Optional<User> returnUserbyVoterIDinDB(int voterID);
     void saveUsertoDB(User user);
     long returnUserIDbyUsernameinDB(String username);
     Optional<User> returnUserbyID(long id);
