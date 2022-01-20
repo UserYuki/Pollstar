@@ -33,9 +33,22 @@ const UserAccountPage = (props) => {
             setUsername(response.data.userName);
             setPolls(response.data.poll)
             setEMailAddress(response.data.emailAddress)
-            console.log("reload")
         })
     }, [cookies.JWT])
+
+    async function accountPatch(e)
+    {
+      e.preventDefault();
+      let headerConfig = {
+        headers: {
+          Authorization: JWT
+        }
+      }
+
+      //let accountPatch = {userID: UID, newUsername: username, newEMailAddress: eMailAddress, newPassword: newPassword, confirmedNewPassword: confirmNewPassword, currentPassword: currentPassword};
+      
+      await axios.patch(`${baseURL}api/user/update`, {userID: UID, newUsername: username, newEMailAddress: eMailAddress, newPassword: newPassword, confirmedNewPassword: confirmNewPassword, currentPassword: currentPassword}, headerConfig).then((res) => {logout(e);}).catch((Ex) => {console.log(Ex.response.data);})
+    }
 
     function PollRedirect(e) 
     {  
@@ -51,7 +64,6 @@ const UserAccountPage = (props) => {
       removeCookie("JWT");
       removeCookie("ID");
       setRedirect("/User");
-      console.log(redirect);
     }
 
     if(redirect!= undefined) return(<Redirect to={redirect} />) 
@@ -63,7 +75,7 @@ const UserAccountPage = (props) => {
 
       <div class="split left">
         <div class="centered">
-          <Form>
+          <Form onSubmit={accountPatch}>
             <FormGroup>
                 <Label>Username:</Label>
                 <Input

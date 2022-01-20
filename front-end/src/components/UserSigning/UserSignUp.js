@@ -29,7 +29,7 @@ const UserSignUp = (props) => {
 
   function reCheckInput()
   {
-    checkPassword(document.getElementById("confirmPassword").value)
+    checkPassword(document.getElementById("confirmPasswordUp").value)
   }
 
 
@@ -79,7 +79,7 @@ if(redirect!= undefined) return(<div> Please login! <br/> <h1> {"<====="} </h1> 
               <Input
                 type="text"
                 name="username"
-                id="UserName"
+                id="UserNameUp"
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username here..."
               />
@@ -89,7 +89,7 @@ if(redirect!= undefined) return(<div> Please login! <br/> <h1> {"<====="} </h1> 
               <Input
                 type="email"
                 name="email"
-                id="exampleEmail"
+                id="EmailUp"
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter Email here..."
               />
@@ -99,7 +99,7 @@ if(redirect!= undefined) return(<div> Please login! <br/> <h1> {"<====="} </h1> 
               <Input
                 type="password"
                 name="password"
-                id="examplePassword"
+                id="PasswordUp"
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Please input password..."
               />
@@ -109,7 +109,7 @@ if(redirect!= undefined) return(<div> Please login! <br/> <h1> {"<====="} </h1> 
               <Input
                 type="password"
                 name="password"
-                id="confirmPassword"
+                id="confirmPasswordUp"
                 onChange={(e) => checkPassword(e.target.value)}
                 placeholder="Please input password..."
               />

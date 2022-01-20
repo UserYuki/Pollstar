@@ -70,7 +70,7 @@ if(redirect!= undefined) return(<Redirect to={redirect} />)
               <Input
                 type="text"
                 name="username"
-                id="UserName"
+                id="UserNameIn"
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Please input username..."
               />
@@ -80,7 +80,7 @@ if(redirect!= undefined) return(<Redirect to={redirect} />)
               <Input
                 type="password"
                 name="password"
-                id="examplePassword"
+                id="PasswordIn"
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Please input password..."
               />

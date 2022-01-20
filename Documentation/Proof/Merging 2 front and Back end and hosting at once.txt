@@ -1,0 +1,832 @@
+[0KRunning with gitlab-runner 14.2.0 (58ba2b95)[0;m
+[0K  on runner2 q6fvDamW[0;m
+section_start:1642711255:prepare_executor[0K[0K[36;1mPreparing the "docker" executor[0;m[0;m
+[0KUsing Docker executor with image docker:latest ...[0;m
+[0KStarting service docker:dind ...[0;m
+[0KPulling docker image docker:dind ...[0;m
+[0KUsing docker image sha256:175122d895c3ac2d1a9e3eeaa4885972ffcf3cf86c6e14261fd58db58ca77139 for docker:dind with digest docker@sha256:1f50d3a86f7035805843779f803e81e8f4ce96b62ed68fc70cdcf4922f43470b ...[0;m
+[0KWaiting for services to be up and running...[0;m
+[0KPulling docker image docker:latest ...[0;m
+[0KUsing docker image sha256:15a9bc7c6340df2ac9d6c8196ca1d905180ddf2ca8b29a8d98f5422e2e5ccf85 for docker:latest with digest docker@sha256:a729cce205a05b0b86dc8dca87823efaffc3f74979fe7dc86a707c2fbf631b61 ...[0;m
+section_end:1642711267:prepare_executor[0Ksection_start:1642711267:prepare_script[0K[0K[36;1mPreparing environment[0;m[0;m
+Running on runner-q6fvdamw-project-37946-concurrent-0 via Yukis-Lenovo...
+section_end:1642711268:prepare_script[0Ksection_start:1642711268:get_sources[0K[0K[36;1mGetting source from Git repository[0;m[0;m
+[32;1mFetching changes with git depth set to 50...[0;m
+Reinitialized existing Git repository in /builds/I442651/pollstar/.git/
+[32;1mChecking out 83d7ecf2 as main...[0;m
+
+[32;1mSkipping Git submodules setup[0;m
+section_end:1642711270:get_sources[0Ksection_start:1642711270:step_script[0K[0K[36;1mExecuting "step_script" stage of the job script[0;m[0;m
+[0KUsing docker image sha256:15a9bc7c6340df2ac9d6c8196ca1d905180ddf2ca8b29a8d98f5422e2e5ccf85 for docker:latest with digest docker@sha256:a729cce205a05b0b86dc8dca87823efaffc3f74979fe7dc86a707c2fbf631b61 ...[0;m
+[32;1m$ ls[0;m
+Dockerfile
+Dockerfile.bak
+Documentation
+Git Link.txt
+front-end
+pollstar
+[32;1m$ docker build -t dock-image .[0;m
+Sending build context to Docker daemon  19.89MB
+Step 1/18 : FROM node:14.18.0 as front-end
+14.18.0: Pulling from library/node
+af4c2580c6c3: Pulling fs layer
+4ea40d27a2cf: Pulling fs layer
+523d612e9cd2: Pulling fs layer
+8fee6a1847b0: Pulling fs layer
+60cce3519052: Pulling fs layer
+4bae1011637c: Pulling fs layer
+ecf48b6c1f43: Pulling fs layer
+856f69196742: Pulling fs layer
+e86a512b6f8c: Pulling fs layer
+4bae1011637c: Waiting
+ecf48b6c1f43: Waiting
+856f69196742: Waiting
+60cce3519052: Waiting
+523d612e9cd2: Verifying Checksum
+523d612e9cd2: Download complete
+4ea40d27a2cf: Verifying Checksum
+4ea40d27a2cf: Download complete
+af4c2580c6c3: Verifying Checksum
+af4c2580c6c3: Download complete
+4bae1011637c: Verifying Checksum
+4bae1011637c: Download complete
+af4c2580c6c3: Pull complete
+4ea40d27a2cf: Pull complete
+523d612e9cd2: Pull complete
+8fee6a1847b0: Download complete
+8fee6a1847b0: Pull complete
+856f69196742: Verifying Checksum
+856f69196742: Download complete
+e86a512b6f8c: Verifying Checksum
+e86a512b6f8c: Download complete
+ecf48b6c1f43: Verifying Checksum
+ecf48b6c1f43: Download complete
+60cce3519052: Verifying Checksum
+60cce3519052: Download complete
+60cce3519052: Pull complete
+4bae1011637c: Pull complete
+ecf48b6c1f43: Pull complete
+856f69196742: Pull complete
+e86a512b6f8c: Pull complete
+Digest: sha256:72a8a250e0af2940b22c22841c9d63cbf88faaf5410b5ec0e809208984385149
+Status: Downloaded newer image for node:14.18.0
+ ---> 8cf18d365a37
+Step 2/18 : WORKDIR /front-end
+ ---> Running in 7bd2025bc49a
+Removing intermediate container 7bd2025bc49a
+ ---> 0924024ba961
+Step 3/18 : COPY front-end .
+ ---> be9b86aea211
+Step 4/18 : RUN npm ci
+ ---> Running in 0c82904ef4da
+
+> cypress@9.3.1 postinstall /front-end/node_modules/cypress
+> node index.js --exec install
+
+Installing Cypress (version: 9.3.1)
+
+[STARTED] Task without title.
+[TITLE]  Downloading Cypress      0% 0s
+[TITLE]  Downloading Cypress      1% 10s
+[TITLE]  Downloading Cypress      1% 30s
+[TITLE]  Downloading Cypress      1% 40s
+[TITLE]  Downloading Cypress      1% 194s
+[TITLE]  Downloading Cypress      2% 101s
+[TITLE]  Downloading Cypress      2% 112s
+[TITLE]  Downloading Cypress      2% 117s
+[TITLE]  Downloading Cypress      2% 190s
+[TITLE]  Downloading Cypress      3% 129s
+[TITLE]  Downloading Cypress      3% 150s
+[TITLE]  Downloading Cypress      3% 153s
+[TITLE]  Downloading Cypress      3% 174s
+[TITLE]  Downloading Cypress      4% 131s
+[TITLE]  Downloading Cypress      4% 134s
+[TITLE]  Downloading Cypress      4% 168s
+[TITLE]  Downloading Cypress      4% 171s
+[TITLE]  Downloading Cypress      4% 176s
+[TITLE]  Downloading Cypress      5% 141s
+[TITLE]  Downloading Cypress      5% 170s
+[TITLE]  Downloading Cypress      5% 172s
+[TITLE]  Downloading Cypress      5% 177s
+[TITLE]  Downloading Cypress      6% 147s
+[TITLE]  Downloading Cypress      6% 171s
+[TITLE]  Downloading Cypress      6% 173s
+[TITLE]  Downloading Cypress      6% 182s
+[TITLE]  Downloading Cypress      7% 156s
+[TITLE]  Downloading Cypress      7% 164s
+[TITLE]  Downloading Cypress      7% 166s
+[TITLE]  Downloading Cypress      7% 186s
+[TITLE]  Downloading Cypress      8% 162s
+[TITLE]  Downloading Cypress      8% 165s
+[TITLE]  Downloading Cypress      8% 166s
+[TITLE]  Downloading Cypress      8% 184s
+[TITLE]  Downloading Cypress      9% 163s
+[TITLE]  Downloading Cypress      9% 165s
+[TITLE]  Downloading Cypress      9% 166s
+[TITLE]  Downloading Cypress      9% 181s
+[TITLE]  Downloading Cypress      10% 162s
+[TITLE]  Downloading Cypress      10% 164s
+[TITLE]  Downloading Cypress      10% 165s
+[TITLE]  Downloading Cypress      10% 179s
+[TITLE]  Downloading Cypress      11% 162s
+[TITLE]  Downloading Cypress      11% 164s
+[TITLE]  Downloading Cypress      11% 165s
+[TITLE]  Downloading Cypress      11% 177s
+[TITLE]  Downloading Cypress      12% 162s
+[TITLE]  Downloading Cypress      12% 163s
+[TITLE]  Downloading Cypress      12% 164s
+[TITLE]  Downloading Cypress      12% 175s
+[TITLE]  Downloading Cypress      13% 160s
+[TITLE]  Downloading Cypress      13% 164s
+[TITLE]  Downloading Cypress      13% 165s
+[TITLE]  Downloading Cypress      13% 169s
+[TITLE]  Downloading Cypress      14% 156s
+[TITLE]  Downloading Cypress      14% 165s
+[TITLE]  Downloading Cypress      14% 166s
+[TITLE]  Downloading Cypress      14% 167s
+[TITLE]  Downloading Cypress      14% 168s
+[TITLE]  Downloading Cypress      15% 155s
+[TITLE]  Downloading Cypress      15% 164s
+[TITLE]  Downloading Cypress      15% 165s
+[TITLE]  Downloading Cypress      16% 154s
+[TITLE]  Downloading Cypress      16% 162s
+[TITLE]  Downloading Cypress      17% 151s
+[TITLE]  Downloading Cypress      17% 153s
+[TITLE]  Downloading Cypress      17% 160s
+[TITLE]  Downloading Cypress      18% 150s
+[TITLE]  Downloading Cypress      18% 153s
+[TITLE]  Downloading Cypress      18% 157s
+[TITLE]  Downloading Cypress      19% 147s
+[TITLE]  Downloading Cypress      19% 153s
+[TITLE]  Downloading Cypress      19% 154s
+[TITLE]  Downloading Cypress      19% 155s
+[TITLE]  Downloading Cypress      20% 145s
+[TITLE]  Downloading Cypress      20% 151s
+[TITLE]  Downloading Cypress      20% 152s
+[TITLE]  Downloading Cypress      20% 154s
+[TITLE]  Downloading Cypress      21% 146s
+[TITLE]  Downloading Cypress      21% 148s
+[TITLE]  Downloading Cypress      21% 149s
+[TITLE]  Downloading Cypress      21% 154s
+[TITLE]  Downloading Cypress      22% 146s
+[TITLE]  Downloading Cypress      22% 147s
+[TITLE]  Downloading Cypress      22% 152s
+[TITLE]  Downloading Cypress      23% 144s
+[TITLE]  Downloading Cypress      23% 145s
+[TITLE]  Downloading Cypress      23% 150s
+[TITLE]  Downloading Cypress      24% 143s
+[TITLE]  Downloading Cypress      24% 144s
+[TITLE]  Downloading Cypress      24% 145s
+[TITLE]  Downloading Cypress      24% 147s
+[TITLE]  Downloading Cypress      25% 139s
+[TITLE]  Downloading Cypress      25% 144s
+[TITLE]  Downloading Cypress      25% 145s
+[TITLE]  Downloading Cypress      26% 138s
+[TITLE]  Downloading Cypress      26% 142s
+[TITLE]  Downloading Cypress      26% 143s
+[TITLE]  Downloading Cypress      26% 144s
+[TITLE]  Downloading Cypress      27% 137s
+[TITLE]  Downloading Cypress      27% 141s
+[TITLE]  Downloading Cypress      28% 135s
+[TITLE]  Downloading Cypress      28% 139s
+[TITLE]  Downloading Cypress      29% 132s
+[TITLE]  Downloading Cypress      29% 134s
+[TITLE]  Downloading Cypress      29% 136s
+[TITLE]  Downloading Cypress      30% 130s
+[TITLE]  Downloading Cypress      30% 133s
+[TITLE]  Downloading Cypress      30% 134s
+[TITLE]  Downloading Cypress      31% 128s
+[TITLE]  Downloading Cypress      31% 131s
+[TITLE]  Downloading Cypress      31% 132s
+[TITLE]  Downloading Cypress      32% 126s
+[TITLE]  Downloading Cypress      32% 129s
+[TITLE]  Downloading Cypress      32% 130s
+[TITLE]  Downloading Cypress      32% 131s
+[TITLE]  Downloading Cypress      33% 125s
+[TITLE]  Downloading Cypress      33% 126s
+[TITLE]  Downloading Cypress      33% 127s
+[TITLE]  Downloading Cypress      33% 130s
+[TITLE]  Downloading Cypress      34% 124s
+[TITLE]  Downloading Cypress      34% 126s
+[TITLE]  Downloading Cypress      34% 127s
+[TITLE]  Downloading Cypress      35% 122s
+[TITLE]  Downloading Cypress      35% 125s
+[TITLE]  Downloading Cypress      36% 120s
+[TITLE]  Downloading Cypress      36% 123s
+[TITLE]  Downloading Cypress      37% 118s
+[TITLE]  Downloading Cypress      37% 121s
+[TITLE]  Downloading Cypress      38% 116s
+[TITLE]  Downloading Cypress      38% 119s
+[TITLE]  Downloading Cypress      38% 120s
+[TITLE]  Downloading Cypress      39% 115s
+[TITLE]  Downloading Cypress      39% 116s
+[TITLE]  Downloading Cypress      40% 112s
+[TITLE]  Downloading Cypress      40% 114s
+[TITLE]  Downloading Cypress      41% 110s
+[TITLE]  Downloading Cypress      41% 112s
+[TITLE]  Downloading Cypress      41% 113s
+[TITLE]  Downloading Cypress      42% 109s
+[TITLE]  Downloading Cypress      42% 110s
+[TITLE]  Downloading Cypress      42% 112s
+[TITLE]  Downloading Cypress      43% 108s
+[TITLE]  Downloading Cypress      43% 110s
+[TITLE]  Downloading Cypress      43% 111s
+[TITLE]  Downloading Cypress      44% 106s
+[TITLE]  Downloading Cypress      44% 107s
+[TITLE]  Downloading Cypress      44% 109s
+[TITLE]  Downloading Cypress      45% 105s
+[TITLE]  Downloading Cypress      45% 106s
+[TITLE]  Downloading Cypress      46% 103s
+[TITLE]  Downloading Cypress      46% 104s
+[TITLE]  Downloading Cypress      47% 100s
+[TITLE]  Downloading Cypress      47% 101s
+[TITLE]  Downloading Cypress      47% 102s
+[TITLE]  Downloading Cypress      48% 99s
+[TITLE]  Downloading Cypress      48% 100s
+[TITLE]  Downloading Cypress      49% 96s
+[TITLE]  Downloading Cypress      49% 98s
+[TITLE]  Downloading Cypress      50% 95s
+[TITLE]  Downloading Cypress      50% 96s
+[TITLE]  Downloading Cypress      51% 93s
+[TITLE]  Downloading Cypress      51% 94s
+[TITLE]  Downloading Cypress      51% 95s
+[TITLE]  Downloading Cypress      52% 91s
+[TITLE]  Downloading Cypress      52% 92s
+[TITLE]  Downloading Cypress      52% 93s
+[TITLE]  Downloading Cypress      53% 89s
+[TITLE]  Downloading Cypress      53% 90s
+[TITLE]  Downloading Cypress      53% 91s
+[TITLE]  Downloading Cypress      54% 87s
+[TITLE]  Downloading Cypress      54% 88s
+[TITLE]  Downloading Cypress      54% 89s
+[TITLE]  Downloading Cypress      55% 86s
+[TITLE]  Downloading Cypress      55% 88s
+[TITLE]  Downloading Cypress      56% 84s
+[TITLE]  Downloading Cypress      57% 81s
+[TITLE]  Downloading Cypress      57% 82s
+[TITLE]  Downloading Cypress      58% 79s
+[TITLE]  Downloading Cypress      58% 80s
+[TITLE]  Downloading Cypress      58% 81s
+[TITLE]  Downloading Cypress      59% 77s
+[TITLE]  Downloading Cypress      59% 78s
+[TITLE]  Downloading Cypress      59% 79s
+[TITLE]  Downloading Cypress      60% 76s
+[TITLE]  Downloading Cypress      60% 77s
+[TITLE]  Downloading Cypress      61% 74s
+[TITLE]  Downloading Cypress      61% 75s
+[TITLE]  Downloading Cypress      62% 72s
+[TITLE]  Downloading Cypress      62% 73s
+[TITLE]  Downloading Cypress      63% 70s
+[TITLE]  Downloading Cypress      63% 71s
+[TITLE]  Downloading Cypress      64% 68s
+[TITLE]  Downloading Cypress      64% 69s
+[TITLE]  Downloading Cypress      64% 70s
+[TITLE]  Downloading Cypress      65% 67s
+[TITLE]  Downloading Cypress      65% 68s
+[TITLE]  Downloading Cypress      66% 65s
+[TITLE]  Downloading Cypress      66% 66s
+[TITLE]  Downloading Cypress      67% 63s
+[TITLE]  Downloading Cypress      67% 64s
+[TITLE]  Downloading Cypress      68% 61s
+[TITLE]  Downloading Cypress      68% 62s
+[TITLE]  Downloading Cypress      69% 59s
+[TITLE]  Downloading Cypress      69% 60s
+[TITLE]  Downloading Cypress      70% 57s
+[TITLE]  Downloading Cypress      70% 58s
+[TITLE]  Downloading Cypress      71% 56s
+[TITLE]  Downloading Cypress      72% 54s
+[TITLE]  Downloading Cypress      73% 52s
+[TITLE]  Downloading Cypress      74% 50s
+[TITLE]  Downloading Cypress      75% 47s
+[TITLE]  Downloading Cypress      75% 48s
+[TITLE]  Downloading Cypress      76% 46s
+[TITLE]  Downloading Cypress      77% 44s
+[TITLE]  Downloading Cypress      78% 42s
+[TITLE]  Downloading Cypress      78% 43s
+[TITLE]  Downloading Cypress      79% 40s
+[TITLE]  Downloading Cypress      79% 41s
+[TITLE]  Downloading Cypress      80% 38s
+[TITLE]  Downloading Cypress      80% 39s
+[TITLE]  Downloading Cypress      81% 36s
+[TITLE]  Downloading Cypress      81% 37s
+[TITLE]  Downloading Cypress      82% 34s
+[TITLE]  Downloading Cypress      82% 35s
+[TITLE]  Downloading Cypress      83% 33s
+[TITLE]  Downloading Cypress      84% 31s
+[TITLE]  Downloading Cypress      85% 29s
+[TITLE]  Downloading Cypress      86% 27s
+[TITLE]  Downloading Cypress      87% 25s
+[TITLE]  Downloading Cypress      88% 23s
+[TITLE]  Downloading Cypress      89% 21s
+[TITLE]  Downloading Cypress      90% 19s
+[TITLE]  Downloading Cypress      91% 17s
+[TITLE]  Downloading Cypress      92% 15s
+[TITLE]  Downloading Cypress      93% 13s
+[TITLE]  Downloading Cypress      94% 11s
+[TITLE]  Downloading Cypress      94% 12s
+[TITLE]  Downloading Cypress      95% 10s
+[TITLE]  Downloading Cypress      96% 8s
+[TITLE]  Downloading Cypress      97% 6s
+[TITLE]  Downloading Cypress      98% 4s
+[TITLE]  Downloading Cypress      99% 2s
+[TITLE]  Downloading Cypress      100% 0s
+[TITLE]  Downloaded Cypress     
+[SUCCESS]  Downloaded Cypress     
+[STARTED] Task without title.
+[TITLE]  Unzipping Cypress        0% 0s
+[TITLE]  Unzipping Cypress        1% 82s
+[TITLE]  Unzipping Cypress        1% 83s
+[TITLE]  Unzipping Cypress        1% 84s
+[TITLE]  Unzipping Cypress        1% 85s
+[TITLE]  Unzipping Cypress        1% 86s
+[TITLE]  Unzipping Cypress        2% 43s
+[TITLE]  Unzipping Cypress        2% 44s
+[TITLE]  Unzipping Cypress        2% 45s
+[TITLE]  Unzipping Cypress        3% 29s
+[TITLE]  Unzipping Cypress        3% 30s
+[TITLE]  Unzipping Cypress        3% 31s
+[TITLE]  Unzipping Cypress        4% 23s
+[TITLE]  Unzipping Cypress        4% 24s
+[TITLE]  Unzipping Cypress        4% 26s
+[TITLE]  Unzipping Cypress        4% 27s
+[TITLE]  Unzipping Cypress        4% 28s
+[TITLE]  Unzipping Cypress        4% 29s
+[TITLE]  Unzipping Cypress        5% 23s
+[TITLE]  Unzipping Cypress        5% 24s
+[TITLE]  Unzipping Cypress        6% 20s
+[TITLE]  Unzipping Cypress        6% 21s
+[TITLE]  Unzipping Cypress        7% 18s
+[TITLE]  Unzipping Cypress        8% 16s
+[TITLE]  Unzipping Cypress        9% 14s
+[TITLE]  Unzipping Cypress        9% 15s
+[TITLE]  Unzipping Cypress        10% 13s
+[TITLE]  Unzipping Cypress        11% 12s
+[TITLE]  Unzipping Cypress        11% 13s
+[TITLE]  Unzipping Cypress        11% 14s
+[TITLE]  Unzipping Cypress        11% 15s
+[TITLE]  Unzipping Cypress        12% 13s
+[TITLE]  Unzipping Cypress        12% 14s
+[TITLE]  Unzipping Cypress        13% 13s
+[TITLE]  Unzipping Cypress        14% 12s
+[TITLE]  Unzipping Cypress        15% 11s
+[TITLE]  Unzipping Cypress        16% 11s
+[TITLE]  Unzipping Cypress        17% 10s
+[TITLE]  Unzipping Cypress        18% 10s
+[TITLE]  Unzipping Cypress        19% 9s
+[TITLE]  Unzipping Cypress        20% 9s
+[TITLE]  Unzipping Cypress        21% 8s
+[TITLE]  Unzipping Cypress        22% 8s
+[TITLE]  Unzipping Cypress        23% 7s
+[TITLE]  Unzipping Cypress        23% 8s
+[TITLE]  Unzipping Cypress        24% 7s
+[TITLE]  Unzipping Cypress        25% 7s
+[TITLE]  Unzipping Cypress        26% 7s
+[TITLE]  Unzipping Cypress        27% 6s
+[TITLE]  Unzipping Cypress        27% 7s
+[TITLE]  Unzipping Cypress        28% 6s
+[TITLE]  Unzipping Cypress        29% 6s
+[TITLE]  Unzipping Cypress        30% 6s
+[TITLE]  Unzipping Cypress        31% 6s
+[TITLE]  Unzipping Cypress        32% 6s
+[TITLE]  Unzipping Cypress        33% 5s
+[TITLE]  Unzipping Cypress        34% 5s
+[TITLE]  Unzipping Cypress        35% 5s
+[TITLE]  Unzipping Cypress        36% 5s
+[TITLE]  Unzipping Cypress        37% 5s
+[TITLE]  Unzipping Cypress        38% 5s
+[TITLE]  Unzipping Cypress        39% 4s
+[TITLE]  Unzipping Cypress        39% 5s
+[TITLE]  Unzipping Cypress        40% 4s
+[TITLE]  Unzipping Cypress        41% 4s
+[TITLE]  Unzipping Cypress        42% 4s
+[TITLE]  Unzipping Cypress        43% 4s
+[TITLE]  Unzipping Cypress        44% 4s
+[TITLE]  Unzipping Cypress        45% 4s
+[TITLE]  Unzipping Cypress        46% 4s
+[TITLE]  Unzipping Cypress        47% 3s
+[TITLE]  Unzipping Cypress        47% 4s
+[TITLE]  Unzipping Cypress        48% 3s
+[TITLE]  Unzipping Cypress        49% 3s
+[TITLE]  Unzipping Cypress        50% 3s
+[TITLE]  Unzipping Cypress        51% 3s
+[TITLE]  Unzipping Cypress        52% 3s
+[TITLE]  Unzipping Cypress        53% 3s
+[TITLE]  Unzipping Cypress        54% 3s
+[TITLE]  Unzipping Cypress        55% 3s
+[TITLE]  Unzipping Cypress        56% 3s
+[TITLE]  Unzipping Cypress        57% 3s
+[TITLE]  Unzipping Cypress        58% 2s
+[TITLE]  Unzipping Cypress        58% 3s
+[TITLE]  Unzipping Cypress        59% 2s
+[TITLE]  Unzipping Cypress        60% 2s
+[TITLE]  Unzipping Cypress        61% 2s
+[TITLE]  Unzipping Cypress        62% 2s
+[TITLE]  Unzipping Cypress        63% 2s
+[TITLE]  Unzipping Cypress        64% 2s
+[TITLE]  Unzipping Cypress        65% 2s
+[TITLE]  Unzipping Cypress        66% 2s
+[TITLE]  Unzipping Cypress        67% 2s
+[TITLE]  Unzipping Cypress        68% 2s
+[TITLE]  Unzipping Cypress        69% 2s
+[TITLE]  Unzipping Cypress        70% 2s
+[TITLE]  Unzipping Cypress        71% 2s
+[TITLE]  Unzipping Cypress        72% 2s
+[TITLE]  Unzipping Cypress        73% 2s
+[TITLE]  Unzipping Cypress        74% 2s
+[TITLE]  Unzipping Cypress        75% 2s
+[TITLE]  Unzipping Cypress        76% 2s
+[TITLE]  Unzipping Cypress        100% 0s
+[TITLE]  Unzipped Cypress       
+[SUCCESS]  Unzipped Cypress       
+[STARTED] Task without title.
+[TITLE]  Finished Installation   /root/.cache/Cypress/9.3.1
+[SUCCESS]  Finished Installation   /root/.cache/Cypress/9.3.1
+
+You can now open Cypress by running: node_modules/.bin/cypress open
+
+https://on.cypress.io/installing-cypress
+
+
+> core-js@3.20.3 postinstall /front-end/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js:[0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://patreon.com/zloirock [0m
+[96m>[94m https://paypal.me/zloirock [0m
+[96m>[94m bitcoin: bc1qlea7544qtsmj2rayg0lthvza9fau63ux0fstcz [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+
+> core-js-pure@3.20.3 postinstall /front-end/node_modules/core-js-pure
+> node -e "try{require('./postinstall')}catch(e){}"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js:[0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://patreon.com/zloirock [0m
+[96m>[94m https://paypal.me/zloirock [0m
+[96m>[94m bitcoin: bc1qlea7544qtsmj2rayg0lthvza9fau63ux0fstcz [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+added 1475 packages in 656.892s
+Removing intermediate container 0c82904ef4da
+ ---> c11b9e355825
+Step 5/18 : RUN npm run-script build
+ ---> Running in 6b4dc8695900
+
+> front-end@0.1.0 build /front-end
+> react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+src/App.js
+  Line 1:8:    'logo' is defined but never used                                                                                               no-unused-vars
+  Line 8:10:   'CustomInput' is defined but never used                                                                                        no-unused-vars
+  Line 8:23:   'FormText' is defined but never used                                                                                           no-unused-vars
+  Line 8:33:   'Button' is defined but never used                                                                                             no-unused-vars
+  Line 15:8:   'Home' is defined but never used                                                                                               no-unused-vars
+  Line 21:3:   'Link' is defined but never used                                                                                               no-unused-vars
+  Line 60:29:  Expected '===' and instead saw '=='                                                                                            eqeqeq
+  Line 72:8:   React Hook useEffect has missing dependencies: 'cookies' and 'setCookie'. Either include them or remove the dependency array   react-hooks/exhaustive-deps
+  Line 82:8:   React Hook useEffect has missing dependencies: 'cookies.Voter' and 'push'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+src/components/Nav.js
+  Line 8:3:    'NavItem' is defined but never used         no-unused-vars
+  Line 9:3:    'NavLink' is defined but never used         no-unused-vars
+  Line 14:3:   'NavbarText' is defined but never used      no-unused-vars
+  Line 16:8:   'CreatePoll' is defined but never used      no-unused-vars
+  Line 17:8:   'ViewPoll' is defined but never used        no-unused-vars
+  Line 22:27:  'Router' is defined but never used          no-unused-vars
+  Line 22:35:  'Switch' is defined but never used          no-unused-vars
+  Line 22:43:  'Route' is defined but never used           no-unused-vars
+  Line 29:9:   'newTo' is assigned a value but never used  no-unused-vars
+
+src/components/Polls/CreatePoll.js
+  Line 3:17:   'Form' is defined but never used                no-unused-vars
+  Line 5:27:   'useHistory' is defined but never used          no-unused-vars
+  Line 5:49:   'Router' is defined but never used              no-unused-vars
+  Line 5:57:   'Switch' is defined but never used              no-unused-vars
+  Line 5:65:   'Route' is defined but never used               no-unused-vars
+  Line 5:72:   'Link' is defined but never used                no-unused-vars
+  Line 6:8:    'ViewPoll' is defined but never used            no-unused-vars
+  Line 18:10:  'pollID' is assigned a value but never used     no-unused-vars
+  Line 21:19:  'setCookie' is assigned a value but never used  no-unused-vars
+  Line 73:15:  Expected '!==' and instead saw '!='             eqeqeq
+
+src/components/Polls/ViewPoll.js
+  Line 4:17:   'Form' is defined but never used                                                                                     no-unused-vars
+  Line 4:23:   'FormGroup' is defined but never used                                                                                no-unused-vars
+  Line 4:34:   'Label' is defined but never used                                                                                    no-unused-vars
+  Line 15:11:  'time' is assigned a value but never used                                                                            no-unused-vars
+  Line 15:31:  'reset' is assigned a value but never used                                                                           no-unused-vars
+  Line 15:46:  'autostart' is assigned a value but never used                                                                       no-unused-vars
+  Line 39:6:   React Hook React.useEffect has a missing dependency: 'readPost'. Either include it or remove the dependency array    react-hooks/exhaustive-deps
+  Line 54:6:   React Hook React.useEffect has a missing dependency: 'totalVotes'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 60:21:  Expected '===' and instead saw '=='                                                                                  eqeqeq
+  Line 60:41:  Expected '===' and instead saw '=='                                                                                  eqeqeq
+  Line 66:20:  Expected '===' and instead saw '=='                                                                                  eqeqeq
+
+src/components/Polls/VotePoll.js
+  Line 3:17:   'Form' is defined but never used                no-unused-vars
+  Line 3:23:   'FormGroup' is defined but never used           no-unused-vars
+  Line 3:34:   'Label' is defined but never used               no-unused-vars
+  Line 4:27:   'useHistory' is defined but never used          no-unused-vars
+  Line 4:49:   'Router' is defined but never used              no-unused-vars
+  Line 4:57:   'Switch' is defined but never used              no-unused-vars
+  Line 4:65:   'Route' is defined but never used               no-unused-vars
+  Line 4:72:   'Link' is defined but never used                no-unused-vars
+  Line 15:19:  'setCookie' is assigned a value but never used  no-unused-vars
+  Line 16:11:  'time' is assigned a value but never used       no-unused-vars
+  Line 16:31:  'reset' is assigned a value but never used      no-unused-vars
+  Line 16:46:  'autostart' is assigned a value but never used  no-unused-vars
+  Line 37:21:  Expected '===' and instead saw '=='             eqeqeq
+  Line 37:41:  Expected '===' and instead saw '=='             eqeqeq
+  Line 43:20:  Expected '===' and instead saw '=='             eqeqeq
+  Line 59:21:  Expected '===' and instead saw '=='             eqeqeq
+
+src/components/UserSigning/AccountNavButtonPart.js
+  Line 1:8:    'react' is defined but never used               no-unused-vars
+  Line 2:8:    'UserPage' is defined but never used            no-unused-vars
+  Line 7:27:   'Router' is defined but never used              no-unused-vars
+  Line 7:35:   'Switch' is defined but never used              no-unused-vars
+  Line 7:43:   'Route' is defined but never used               no-unused-vars
+  Line 13:21:  'setCookie' is assigned a value but never used  no-unused-vars
+  Line 26:36:  Expected '===' and instead saw '=='             eqeqeq
+
+src/components/UserSigning/UserAccountPage.js
+  Line 3:49:   'FormText' is defined but never used                                                                                                                                 no-unused-vars
+  Line 3:59:   'Alert' is defined but never used                                                                                                                                    no-unused-vars
+  Line 4:27:   'useHistory' is defined but never used                                                                                                                               no-unused-vars
+  Line 4:49:   'Router' is defined but never used                                                                                                                                   no-unused-vars
+  Line 4:57:   'Switch' is defined but never used                                                                                                                                   no-unused-vars
+  Line 4:65:   'Route' is defined but never used                                                                                                                                    no-unused-vars
+  Line 4:72:   'Link' is defined but never used                                                                                                                                     no-unused-vars
+  Line 5:9:    'useState' is defined but never used                                                                                                                                 no-unused-vars
+  Line 20:21:  'setCookie' is assigned a value but never used                                                                                                                       no-unused-vars
+  Line 23:11:  'UID' is assigned a value but never used                                                                                                                             no-unused-vars
+  Line 38:8:   React Hook useEffect has missing dependencies: 'JWT', 'polls', 'setEMailAddress', 'setPolls', and 'setUsername'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 57:16:  Expected '!==' and instead saw '!='                                                                                                                                  eqeqeq
+
+src/components/UserSigning/UserPage.js
+  Line 1:8:  'react' is defined but never used  no-unused-vars
+
+src/components/UserSigning/UserSignIn.js
+  Line 3:10:   'useParams' is defined but never used          no-unused-vars
+  Line 5:49:   'FormText' is defined but never used           no-unused-vars
+  Line 5:59:   'Alert' is defined but never used              no-unused-vars
+  Line 6:27:   'useHistory' is defined but never used         no-unused-vars
+  Line 6:49:   'Router' is defined but never used             no-unused-vars
+  Line 6:57:   'Switch' is defined but never used             no-unused-vars
+  Line 6:65:   'Route' is defined but never used              no-unused-vars
+  Line 6:72:   'Link' is defined but never used               no-unused-vars
+  Line 11:17:  'setEmail' is assigned a value but never used  no-unused-vars
+  Line 14:10:  'cookies' is assigned a value but never used   no-unused-vars
+  Line 34:21:  Expected '===' and instead saw '=='            eqeqeq
+  Line 43:21:  Expected '===' and instead saw '=='            eqeqeq
+  Line 57:10:  'submitEmail' is defined but never used        no-unused-vars
+  Line 62:12:  Expected '!==' and instead saw '!='            eqeqeq
+
+src/components/UserSigning/UserSignUp.js
+  Line 3:27:   'Redirect' is defined but never used            no-unused-vars
+  Line 4:49:   'FormText' is defined but never used            no-unused-vars
+  Line 10:9:   'saved' is assigned a value but never used      no-unused-vars
+  Line 16:19:  'setCookie' is assigned a value but never used  no-unused-vars
+  Line 54:26:  Expected '===' and instead saw '=='             eqeqeq
+  Line 71:12:  Expected '!==' and instead saw '!='             eqeqeq
+
+src/index.js
+  Line 7:8:  'Nav' is defined but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  91.61 kB  build/static/js/main.cbcff20f.js
+  1.67 kB   build/static/js/787.d6f7d002.chunk.js
+  827 B     build/static/css/main.d8e80f18.css
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+Removing intermediate container 6b4dc8695900
+ ---> 77b6f85c0d49
+Step 6/18 : FROM gradle as pollstar
+latest: Pulling from library/gradle
+ea362f368469: Pulling fs layer
+524240b3a384: Pulling fs layer
+9c698e5c017e: Pulling fs layer
+a110ada3ad0a: Pulling fs layer
+b0a9e6dd3053: Pulling fs layer
+b8eec479368e: Pulling fs layer
+987208c925a6: Pulling fs layer
+b0a9e6dd3053: Waiting
+b8eec479368e: Waiting
+987208c925a6: Waiting
+a110ada3ad0a: Waiting
+524240b3a384: Verifying Checksum
+524240b3a384: Download complete
+a110ada3ad0a: Verifying Checksum
+a110ada3ad0a: Download complete
+b0a9e6dd3053: Verifying Checksum
+b0a9e6dd3053: Download complete
+b8eec479368e: Verifying Checksum
+b8eec479368e: Download complete
+ea362f368469: Retrying in 5 seconds
+ea362f368469: Retrying in 4 seconds
+ea362f368469: Retrying in 3 seconds
+ea362f368469: Retrying in 2 seconds
+ea362f368469: Retrying in 1 second
+9c698e5c017e: Download complete
+ea362f368469: Verifying Checksum
+ea362f368469: Download complete
+ea362f368469: Pull complete
+524240b3a384: Pull complete
+9c698e5c017e: Pull complete
+a110ada3ad0a: Pull complete
+b0a9e6dd3053: Pull complete
+b8eec479368e: Pull complete
+987208c925a6: Verifying Checksum
+987208c925a6: Download complete
+987208c925a6: Pull complete
+Digest: sha256:b0e49b4642c9bd069f4e6f74482f54159b6d76b48d73506801790440f07e3e20
+Status: Downloaded newer image for gradle:latest
+ ---> 3daabe490485
+Step 7/18 : WORKDIR /pollstar
+ ---> Running in 915e9e62dd83
+Removing intermediate container 915e9e62dd83
+ ---> 8048d0678583
+Step 8/18 : COPY pollstar .
+ ---> 4f74e7ee1100
+Step 9/18 : RUN mkdir -p src/main/resources/static
+ ---> Running in fc86f410d36d
+Removing intermediate container fc86f410d36d
+ ---> b35c1af09f19
+Step 10/18 : COPY --from=front-end /front-end/build src/main/resources/static
+ ---> 72f2f0d91cd9
+Step 11/18 : RUN gradle build -x test
+ ---> Running in e47678382016
+
+Welcome to Gradle 7.3.3!
+
+Here are the highlights of this release:
+ - Easily declare new test suites in Java projects
+ - Support for Java 17
+ - Support for Scala 3
+
+For more details see https://docs.gradle.org/7.3.3/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :compileJava
+[91mNote: /pollstar/src/main/java/com/Toine/pollstar/Api/Config/CorsConfiguration.java uses or overrides a deprecated API.[0m[91m
+[0m[91mNote: Recompile with -Xlint:deprecation for details.
+[0m[91mNote: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.[0m[91m
+[0m
+> Task :processResources
+> Task :classes
+> Task :bootJarMainClassName
+> Task :bootJar
+> Task :bootStartScripts
+> Task :bootDistTar
+> Task :bootDistZip
+> Task :jar
+> Task :startScripts
+> Task :distTar
+> Task :distZip
+> Task :assemble
+> Task :check
+> Task :build
+
+BUILD SUCCESSFUL in 1m 55s
+11 actionable tasks: 11 executed
+Removing intermediate container e47678382016
+ ---> 60785b28b285
+Step 12/18 : FROM openjdk:11
+11: Pulling from library/openjdk
+0e29546d541c: Pulling fs layer
+9b829c73b52b: Pulling fs layer
+cb5b7ae36172: Pulling fs layer
+6494e4811622: Pulling fs layer
+668f6fcc5fa5: Pulling fs layer
+dc120c3e0290: Pulling fs layer
+8f7c0eebb7b1: Pulling fs layer
+668f6fcc5fa5: Waiting
+dc120c3e0290: Waiting
+6494e4811622: Waiting
+8f7c0eebb7b1: Waiting
+9b829c73b52b: Verifying Checksum
+9b829c73b52b: Download complete
+cb5b7ae36172: Verifying Checksum
+cb5b7ae36172: Download complete
+6494e4811622: Verifying Checksum
+6494e4811622: Download complete
+dc120c3e0290: Verifying Checksum
+dc120c3e0290: Download complete
+668f6fcc5fa5: Verifying Checksum
+668f6fcc5fa5: Download complete
+0e29546d541c: Download complete
+0e29546d541c: Pull complete
+9b829c73b52b: Pull complete
+cb5b7ae36172: Pull complete
+6494e4811622: Pull complete
+668f6fcc5fa5: Pull complete
+dc120c3e0290: Pull complete
+8f7c0eebb7b1: Verifying Checksum
+8f7c0eebb7b1: Download complete
+8f7c0eebb7b1: Pull complete
+Digest: sha256:6c4b3c288244600deaa269b4f24285b73d70b33febe1732774d85d013b80b31a
+Status: Downloaded newer image for openjdk:11
+ ---> 5505a9a39df1
+Step 13/18 : COPY --from=pollstar /pollstar/build/libs/pollstar-0.0.1-SNAPSHOT.jar ./app.jar
+ ---> 20c5a8886589
+Step 14/18 : ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ ---> Running in af62a96d9f35
+Removing intermediate container af62a96d9f35
+ ---> f76fa8d5966b
+Step 15/18 : EXPOSE 8080
+ ---> Running in b0da252dd5d0
+Removing intermediate container b0da252dd5d0
+ ---> b88b48d5db19
+Step 16/18 : RUN adduser user
+ ---> Running in 9e242cd1d614
+Adding user `user' ...
+Adding new group `user' (1000) ...
+Adding new user `user' (1000) with group `user' ...
+Creating home directory `/home/user' ...
+Copying files from `/etc/skel' ...
+[91mNew password: Password change has been aborted.
+[0m[91mpasswd: Authentication token manipulation error
+passwd: password unchanged
+[0m[91mUse of uninitialized value $answer in chop at /usr/sbin/adduser line 556.
+Use of uninitialized value $answer in pattern match (m//) at /usr/sbin/adduser line 557.
+[0mTry again? [y/N] Changing the user information for user
+Enter the new value, or press ENTER for the default
+	Full Name []: 	Room Number []: 	Work Phone []: 	Home Phone []: 	Other []: [91mUse of uninitialized value $answer in chop at /usr/sbin/adduser line 582.
+Use of uninitialized value $answer in pattern match (m//) at /usr/sbin/adduser line 583.
+[0mIs the information correct? [Y/n] Removing intermediate container 9e242cd1d614
+ ---> 1abfff98f990
+Step 17/18 : USER user
+ ---> Running in 2a814b993b1a
+Removing intermediate container 2a814b993b1a
+ ---> ea3cd8aede72
+Step 18/18 : CMD [ "sh", "-c", "java -Dserver.port=$PORT -Djava.security.e gd=file:/dev/./urandom -jar app.jar" ]
+ ---> Running in ae57815a999f
+Removing intermediate container ae57815a999f
+ ---> 6f1cad6e145c
+Successfully built 6f1cad6e145c
+Successfully tagged dock-image:latest
+[32;1m$ docker run -p 8080:8080 dock-image[0;m
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.5.5)
+
+2022-01-20 21:13:43.264  INFO 1 --- [           main] com.Toine.PollstarApplication            : Starting PollstarApplication using Java 11.0.13 on f4252361ee26 with PID 1 (/app.jar started by user in /)
+2022-01-20 21:13:43.267  INFO 1 --- [           main] com.Toine.PollstarApplication            : No active profile set, falling back to default profiles: default
+2022-01-20 21:13:44.428  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-01-20 21:13:44.577  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 134 ms. Found 4 JPA repository interfaces.
+2022-01-20 21:13:45.710  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-01-20 21:13:45.734  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-01-20 21:13:45.734  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2022-01-20 21:13:45.829  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-01-20 21:13:45.829  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2490 ms
+2022-01-20 21:13:46.296  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-01-20 21:13:46.390  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.1.Final
+2022-01-20 21:13:46.612  INFO 1 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-01-20 21:13:46.753  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-01-20 21:13:47.340  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-01-20 21:13:47.359  INFO 1 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+Hibernate: alter table choice add constraint FKkubnxwj8spmef2kbwpgqrwatp foreign key (poll_id) references poll (poll_id)
+Hibernate: alter table choice_voter add constraint FKpj1nj9tbh8ywm3j157udi34q foreign key (voterid) references voter (voterid)
+Hibernate: alter table choice_voter add constraint FK9jdaiw6eodv1egsbukqa70d5l foreign key (choiceid) references choice (choiceid)
+Hibernate: alter table poll add constraint FK8gepuja1ts9sqqv4nib7ctji foreign key (user_user_id) references user (userid)
+Hibernate: alter table user add constraint FK6m7ydai974n1d32ho21mb68bh foreign key (voter_voterid) references voter (voterid)
+2022-01-20 21:13:49.221  INFO 1 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-01-20 21:13:49.231  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-01-20 21:13:49.967  WARN 1 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-01-20 21:13:50.274  INFO 1 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-01-20 21:13:50.377  INFO 1 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6b1dc20f, org.springframework.security.web.context.SecurityContextPersistenceFilter@7c36db44, org.springframework.security.web.header.HeaderWriterFilter@42373389, org.springframework.web.filter.CorsFilter@4613311f, org.springframework.security.web.authentication.logout.LogoutFilter@302edb74, com.Toine.pollstar.Api.Filter.JWTAuthenticationFilter@6540cf1d, com.Toine.pollstar.Api.Filter.JWTAuthorizationFilter@ec8f4b9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7903d448, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1f0b3cfe, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@bc042d5, org.springframework.security.web.session.SessionManagementFilter@a62c7cd, org.springframework.security.web.access.ExceptionTranslationFilter@36a6bea6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5300cac]
+2022-01-20 21:13:50.631  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-01-20 21:13:50.646  INFO 1 --- [           main] com.Toine.PollstarApplication            : Started PollstarApplication in 8.237 seconds (JVM running for 9.038)

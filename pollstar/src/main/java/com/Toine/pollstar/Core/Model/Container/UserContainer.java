@@ -123,10 +123,8 @@ public class UserContainer implements IUserContainer
                 user.setEMailAddress(userPatchRequest.getNewEMailAddress());
             }
             if(userPatchRequest.getNewPassword() != null ) {
-            if(userPatchRequest.getNewPassword() == userPatchRequest.getConfirmedNewPassword())
+            if(userPatchRequest.getNewPassword().equals(userPatchRequest.getConfirmedNewPassword()) )
             {
-                System.out.println("1" + userPatchRequest.getNewPassword());
-                System.out.println("2" + userPatchRequest.getConfirmedNewPassword());
                 user.setPassword(passwordEncoder.encode(userPatchRequest.getNewPassword()));
 
             }
