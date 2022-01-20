@@ -44,8 +44,9 @@ public class User {
 
     public User() {     }
 
-    public User(String userName, String eMailAddress, String password, boolean admin)
+    public User(long userID, String userName, String eMailAddress, String password, boolean admin)
     {
+        this.userID = userID;
         this.userName = userName;
         this.eMailAddress = eMailAddress;
         this.password = password;

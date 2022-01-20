@@ -4,7 +4,6 @@ import com.Toine.pollstar.Core.Interface.IUserContainer;
 import com.Toine.pollstar.Core.Model.DTO.JWTPayload;
 import com.Toine.pollstar.Core.Model.DTO.UserDetails.UserDTO;
 import com.Toine.pollstar.Core.Model.Request.UserCreateRequest;
-import com.Toine.pollstar.Core.Model.Request.UserDetailsRequest;
 import com.Toine.pollstar.Core.Model.Request.UserPatchRequest;
 import com.Toine.pollstar.Core.Model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;

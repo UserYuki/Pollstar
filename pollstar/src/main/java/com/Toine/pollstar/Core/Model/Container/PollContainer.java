@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class PollContainer implements IPollContainer
 {
-    private List<Poll> polls;
+    private List<Poll> polls = new ArrayList<>();
     private List<Choice> choices;
 
     @Autowired
@@ -37,6 +37,12 @@ public class PollContainer implements IPollContainer
      polls = new ArrayList<>();
      //choiceContainer = new ChoiceContainer();
 
+    }
+    public PollContainer(IPollStorage pollDAL, IChoiceStorage choiceDAL, IUserContainer IUC)
+    {
+        this.pollDAL = pollDAL;
+        this.choiceDAL = choiceDAL;
+        this.IUC = IUC;
     }
 
     //public Poll dbGetPoll() {pollDAL.getPollByID()}
@@ -112,6 +118,6 @@ public class PollContainer implements IPollContainer
     public void savePoll(Poll poll)
     {
         addPoll(poll);
-        pollDAL.savePoll(poll);
+        pollDAL.savePolltoDB(poll);
     }
 }

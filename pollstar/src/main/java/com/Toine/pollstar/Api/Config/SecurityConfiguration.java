@@ -4,6 +4,8 @@ import com.Toine.pollstar.Api.Filter.JWTAuthenticationFilter;
 import com.Toine.pollstar.Api.Filter.JWTAuthorizationFilter;
 import com.Toine.pollstar.Core.Model.Service.AuthenticationUserDetailService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,18 +19,20 @@ import lombok.RequiredArgsConstructor;
 
 @EnableWebSecurity()
 @RequiredArgsConstructor
+@Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationUserDetailService authenticationUserDetailService;
 
     @Override protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests() //this should all be excess from testing
                 .antMatchers("/login")
-                    .permitAll();
+                .permitAll();
 //                .antMatchers("/**")
 //                    .hasAnyRole("ADMIN", "USER");
-        http.cors();
+
 
 
         http.cors().and().csrf().disable().authorizeRequests()

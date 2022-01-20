@@ -27,6 +27,9 @@ public class PollController
     @Autowired
     IPollContainer IPC;
 
+    //public PollController(IPollContainer IPC){        this.IPC = IPC;    }
+
+
     @GetMapping("/test")
     @ResponseBody
     public String ConfirmTest()
