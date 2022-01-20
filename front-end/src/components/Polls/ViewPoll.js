@@ -23,8 +23,6 @@ const ViewPoll = (props) => {
     },
   })
 
-  const JWT = localStorage.getItem("JWT");
-
   const style = {
     width: '95%',
   };

@@ -13,7 +13,6 @@ const VotePoll = (props) => {
   const [pollID, setPollID] = React.useState();
   const [voted, setVoted] = React.useState(false);
   const [cookies, setCookie] = useCookies(['Voter']);
-  const JWT = localStorage.getItem("JWT");
   const { time, start, pause, reset, status, autostart } = useTimer({
     autostart: true,
     initialTime: 3,

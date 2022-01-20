@@ -48,16 +48,13 @@ export default function App()
     useEffect( () => {
       getData()
       try{
-        console.log(1);
-        if(cookies.get('ID') < 3) {console.log("wat"); return;}
-        console.log(2);
+        if(cookies.get('ID') < 3) {return;}
       }
       catch(Exception)
       {
         try
         {
           if(cookies.JWT === null) {return;}
-          console.log(3);
             axios.get(`${baseURL}api/user/retrieveID`, 
             {headers: {Authorization: cookies.JWT}}).then((res)=>{
               if(res.status == 201){setCookie('ID', res.data, { path: '/' });}

@@ -4,6 +4,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, Alert } from "reactstr
 import { BrowserRouter as useHistory, Redirect, Router, Switch, Route, Link } from "react-router-dom";
 import {useState,useEffect} from 'react'
 import axios from "axios";
+import { useCookies } from 'react-cookie';
 
 
 const baseURL = "http://localhost:8080/";
@@ -16,9 +17,10 @@ const UserAccountPage = (props) => {
     const[confirmNewPassword, setConfirmNewPassword] = react.useState("");
     const[currentPassword, setCurrentPassword] = react.useState("");
     const[redirect, setRedirect] = react.useState();
+    const [cookies, setCookie, removeCookie] = useCookies(['Voter', 'JWT', 'ID' ]);
 
-    const JWT = localStorage.getItem("JWT");
-    const UID = localStorage.getItem("ID");
+    const JWT = cookies.get('JWT');
+    const UID = cookies.get('ID');
 
     useEffect( () => {
         if(polls){return;}
@@ -33,7 +35,7 @@ const UserAccountPage = (props) => {
             setEMailAddress(response.data.emailAddress)
             console.log("reload")
         })
-    }, [])
+    }, [cookies.JWT])
 
     function PollRedirect(e) 
     {  
@@ -45,8 +47,8 @@ const UserAccountPage = (props) => {
     function logout(e)
     {
       e.preventDefault()
-      localStorage.removeItem("JWT");
-      localStorage.removeItem("ID");
+      removeCookie("JWT");
+      removeCookie("ID");
       setRedirect("/User");
       console.log(redirect);
     }

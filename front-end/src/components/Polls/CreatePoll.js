@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Input, Form, FormGroup, Label, Button } from 'reactstrap';
+import { useCookies } from 'react-cookie';
 import { BrowserRouter as useHistory, Redirect, Router, Switch, Route, Link } from "react-router-dom";
 import ViewPoll from "./ViewPoll";
 //import React, {Component} from 'react';
@@ -17,9 +18,10 @@ const CreatePoll = (props) => {
   const [pollID, setPollID] = React.useState();
   const [PostedID, setID] = React.useState();
   const [inputList, setInputList] = useState([{ choiceName: "" }]);
+  const [cookies, setCookie] = useCookies(['Voter', 'JWT', 'ID' ]);
 
-  const JWT = localStorage.getItem("JWT");
-  const UID = localStorage.getItem("ID");
+  const JWT = cookies.get('JWT');
+  const UID = cookies.get('ID');
 
     // handle input change
     const handleInputChange = (e, index) => {

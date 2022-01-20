@@ -1,6 +1,8 @@
-describe('Navigation testing!', function () {
-    it('redirects and confirms the page', function () {
+describe('User functions', function () {
+    it('registers new people', function () {
         cy.visit('http://localhost:3000')
+
+        cy.getCookie('Voter').should('exist')
 
         cy.contains('Options').click()
 
