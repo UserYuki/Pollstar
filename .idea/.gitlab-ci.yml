@@ -23,6 +23,7 @@ package:
     - ls
     - docker build -t dock-image .
     - docker run dock-image ./gradlew test
+    - ls
     
 
 sonarqube-check:
