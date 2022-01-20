@@ -3,9 +3,10 @@ services:
   - docker:dind
   
 stages:
+- package
 - buildtest
 - test
-- package
+
 
 build_and_test:
   image: gradle
